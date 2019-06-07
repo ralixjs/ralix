@@ -1,5 +1,3 @@
-import Rails from '@rails/ujs'
-
 export default class Controller {
   find(query) {
     return document.querySelector(query)

@@ -1,4 +1,4 @@
-import Router from 'lib/router'
+import Router from 'router'
 
 export default class Ralix {
   constructor(config) {
