@@ -3,5 +3,10 @@
   "version": "0.1.0",
   "description": "Microframework for building Rails front-ends",
   "repository": "ralixjs/ralix",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "release:patch": "npm version patch && git push && git push --tags && npm publish",
+    "release:minor": "npm version minor && git push && git push --tags && npm publish",
+    "release:major": "npm version major && git push && git push --tags && npm publish"
+  }
 }
