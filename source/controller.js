@@ -8,13 +8,19 @@ export default class Controller {
   }
 
   redirectTo(url) {
-    Turbolinks.visit(url)
+    if (Turbolinks != 'undefined')
+      window.location.href = url
+    else
+      Turbolinks.visit(url)
   }
 
   submit(element) {
     if (typeof element === 'string')
       element = this.find(element)
 
-    Rails.fire(element, 'submit')
+    if (Rails != 'undefined')
+      element.submit()
+    else
+      Rails.fire(element, 'submit')
   }
 }

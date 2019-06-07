@@ -1,3 +1,3 @@
 # Ralix
 
-> Microframework for building Rails front-ends :sparkles:
+> Microframework for building and organizing Rails front-ends :sparkles:
