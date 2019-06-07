@@ -4,6 +4,9 @@
   "description": "Microframework for building Rails front-ends",
   "repository": "ralixjs/ralix",
   "license": "MIT",
+  "dependencies": {
+    "@rails/ujs": "^6.0.0-rc1"
+  },
   "scripts": {
     "release:patch": "npm version patch && git push && git push --tags && npm publish",
     "release:minor": "npm version minor && git push && git push --tags && npm publish",

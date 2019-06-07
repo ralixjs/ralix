@@ -1,3 +1,5 @@
+import Rails from '@rails/ujs'
+
 export default class Controller {
   find(query) {
     return document.querySelector(query)
@@ -18,9 +20,6 @@ export default class Controller {
     if (typeof element === 'string')
       element = this.find(element)
 
-    if (Rails !== 'undefined')
-      element.submit()
-    else
-      Rails.fire(element, 'submit')
+    Rails.fire(element, 'submit')
   }
 }
