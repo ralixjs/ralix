@@ -1,0 +1,7 @@
+{
+  "name": "ralix",
+  "version": "0.1.0",
+  "description": "Microframework for building Rails front-ends",
+  "repository": "ralixjs/ralix",
+  "license": "MIT"
+}
