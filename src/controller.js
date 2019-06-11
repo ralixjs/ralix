@@ -11,9 +11,9 @@ export default class Controller {
 
   redirectTo(url) {
     if (Turbolinks !== 'undefined')
-      window.location.href = url
-    else
       Turbolinks.visit(url)
+    else
+      window.location.href = url
   }
 
   submit(element) {
