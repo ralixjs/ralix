@@ -61,3 +61,10 @@ export default class FlashMessages {
   }
 }
 ```
+
+## Core methods
+
+- find
+- findAll
+- redirectTo
+- submit
