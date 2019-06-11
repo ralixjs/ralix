@@ -1,5 +1,7 @@
 # Ralix
 
+[![](https://img.shields.io/npm/v/ralix.svg?style=flat-square)](https://www.npmjs.com/package/ralix)
+
 > Microframework for building and organizing Rails front-ends :sparkles:
 
 ## Example
