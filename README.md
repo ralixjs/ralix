@@ -16,8 +16,8 @@ import { RalixApp } from 'ralix'
 import AppCtrl   from 'controllers/app'
 import UsersCtrl from 'controllers/users'
 
-// Components
-import Modal from 'components/modal'
+// Components with auto-start on each DOM load event (turbolinks:load or DOMContentLoaded)
+import FlashMessages from 'components/flash_messages'
 
 const App = new RalixApp({
   routes: {
@@ -25,22 +25,39 @@ const App = new RalixApp({
     '/.*':    AppCtrl
   },
   components: [
-    Modal
+    FlashMessages
   ]
 })
 
 App.start()
 ```
 
-### Controllers
+### Controller
 
 ```js
 import { RalixCtrl } from 'ralix'
+import Modal from 'components/modal'
 
 export default class AppCtrl extends RalixCtrl {
   openModal(url, options) {
     const modal = new Modal(url, options)
     modal.show()
+  }
+}
+```
+
+### Component
+
+```js
+export default class FlashMessages {
+  constructor() {
+    const flashMessages = findAll('.js-close-alert')
+
+    flashMessages.forEach(message => {
+      message.addEventListener('click', () => {
+        message.parentElement.classList.add('hidden')
+      })
+    })
   }
 }
 ```
