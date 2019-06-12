@@ -3,7 +3,7 @@ import Router from './router'
 export default class App {
   constructor(config) {
     this.router = new Router(config.routes)
-    this.components = config.components
+    this.components = config.components || []
 
     global.App = this
   }
