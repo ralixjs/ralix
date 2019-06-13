@@ -1,11 +1,13 @@
 import Router from './router'
+import Events from './events'
 
 export default class App {
   constructor(config) {
     this.router = new Router(config.routes)
+    this.events = new Events
     this.components = config.components || []
 
-    global.App = this
+    window.App = this
   }
 
   get ctrl() {
@@ -17,6 +19,7 @@ export default class App {
 
     document.addEventListener(event, () => {
       this.router.dispatch()
+      this.events.bind()
       this.components.forEach(component => new(component))
     })
   }
