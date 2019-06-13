@@ -1,9 +1,10 @@
 export default class Events {
   constructor() {
+    this.eventsRegex = /^on(\w+)/
     this.availableEvents = []
 
     for (let property in window) {
-      if (/^on(.*)/.test(property))
+      if (this.eventsRegex.test(property))
         this.availableEvents.push(`[${property}]`)
     }
   }
@@ -13,7 +14,7 @@ export default class Events {
       let attributes = Array.from(element.attributes)
 
       let events = attributes.forEach((attr) => {
-        let match = attr.name.match(/^on(.*)/)
+        let match = attr.name.match(this.eventsRegex)
 
         if (match) {
           const [eventType, listener] = match
