@@ -66,5 +66,7 @@ export default class FlashMessages {
 
 - find
 - findAll
+- show
+- hide
 - redirectTo
 - submit
