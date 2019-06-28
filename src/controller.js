@@ -9,6 +9,14 @@ export default class Controller {
     return document.querySelectorAll(query)
   }
 
+  show(query) {
+    find(query).setAttribute('style', '');
+  }
+
+  hide(query) {
+    find(query).setAttribute('style', 'display: none');
+  }
+
   redirectTo(url) {
     if (Turbolinks !== 'undefined')
       Turbolinks.visit(url)
