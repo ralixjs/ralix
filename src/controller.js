@@ -10,24 +10,36 @@ export default class Controller {
   }
 
   show(query) {
-    find(query).setAttribute('style', '');
+    _element(query).setAttribute('style', '')
   }
 
   hide(query) {
-    find(query).setAttribute('style', 'display: none');
+    _element(query).setAttribute('style', 'display: none')
   }
 
-  redirectTo(url) {
+  addClass(query, classList) {
+    _element(query).classList.add(classList)
+  }
+
+  removeClass(query, classList) {
+    _element(query).classList.remove(classList)
+  }
+
+  visit(url) {
     if (Turbolinks !== 'undefined')
       Turbolinks.visit(url)
     else
       window.location.href = url
   }
 
-  submit(element) {
-    if (typeof element === 'string')
-      element = this.find(element)
+  submit(query) {
+    Rails.fire(_element(query), 'submit')
+  }
 
-    Rails.fire(element, 'submit')
+  _element(query) {
+    if (typeof query === 'string')
+      return find(query)
+    else
+      return query
   }
 }
