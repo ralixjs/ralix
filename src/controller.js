@@ -41,7 +41,7 @@ export default class Controller {
   }
 
   getParam(param) {
-    let urlParams = new URL(url()).searchParams
+    const urlParams = new URL(url()).searchParams
 
     if (urlParams.get(`${param}[]`))
       return urlParams.getAll(`${param}[]`)
