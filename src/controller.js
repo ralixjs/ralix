@@ -36,6 +36,21 @@ export default class Controller {
     Rails.fire(_element(query), 'submit')
   }
 
+  url() {
+    return window.location.href
+  }
+
+  urlParams() {
+    return new URL(url()).searchParams
+  }
+
+  getParam(param) {
+    if (urlParams().get(`${param}[]`))
+      return urlParams().getAll(`${param}[]`)
+    else
+      return urlParams().get(param)
+  }
+
   _element(query) {
     if (typeof query === 'string')
       return find(query)
