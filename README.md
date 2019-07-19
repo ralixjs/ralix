@@ -64,11 +64,13 @@ export default class FlashMessages {
 
 ## Core methods
 
-- find
-- findAll
-- show
-- hide
-- addClass
-- removeClass
-- visit
-- submit
+- find(query)
+- findAll(query)
+- show(query)
+- hide(query)
+- addClass(query, classList)
+- removeClass(query, classList)
+- visit(url)
+- submit(query)
+- url()
+- getParam(param)
