@@ -73,5 +73,4 @@ export default class FlashMessages {
 - visit
 - submit
 - url
-- urlParams
-- getParam
+- getParam(param)

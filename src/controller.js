@@ -40,15 +40,13 @@ export default class Controller {
     return window.location.href
   }
 
-  urlParams() {
-    return new URL(url()).searchParams
-  }
-
   getParam(param) {
-    if (urlParams().get(`${param}[]`))
-      return urlParams().getAll(`${param}[]`)
+    let urlParams = new URL(url()).searchParams
+
+    if (urlParams.get(`${param}[]`))
+      return urlParams.getAll(`${param}[]`)
     else
-      return urlParams().get(param)
+      return urlParams.get(param)
   }
 
   _element(query) {
