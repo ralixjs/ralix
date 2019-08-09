@@ -70,6 +70,7 @@ export default class FlashMessages {
 - hide(query)
 - addClass(query, classList)
 - removeClass(query, classList)
+- toggleClass(query, classList)
 - visit(url)
 - submit(query)
 - url()

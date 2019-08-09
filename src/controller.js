@@ -25,6 +25,15 @@ export default class Controller {
     _element(query).classList.remove(classList)
   }
 
+  toggleClass(query, classList) {
+    const element = _element(query)
+
+    if (element.classList.contains(classList))
+      element.classList.remove(classList)
+    else
+      element.classList.add(classList)
+  }
+
   visit(url) {
     if (Turbolinks !== 'undefined')
       Turbolinks.visit(url)
