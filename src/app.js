@@ -5,6 +5,7 @@ export default class App {
   constructor(config) {
     this.router = new Router(config.routes)
     this.events = new Events
+    this.rails_ujs = config.rails_ujs || null
     this.components = config.components || []
 
     window.App = this

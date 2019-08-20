@@ -1,5 +1,3 @@
-import Rails from '@rails/ujs'
-
 export default class Controller {
   find(query) {
     return document.querySelector(query)
@@ -33,7 +31,12 @@ export default class Controller {
   }
 
   submit(query) {
-    Rails.fire(_element(query), 'submit')
+    const form = _element(query)
+
+    if (App.rails_ujs)
+      App.rails_ujs.fire(form, 'submit')
+    else
+      form.submit()
   }
 
   url() {
