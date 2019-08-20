@@ -23,6 +23,10 @@ export default class Controller {
     _element(query).classList.remove(classList)
   }
 
+  toggleClass(query, classList) {
+    _element(query).classList.toggle(classList)
+  }
+
   visit(url) {
     if (Turbolinks !== 'undefined')
       Turbolinks.visit(url)
