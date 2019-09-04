@@ -3,7 +3,7 @@ import Utils from './utils'
 export default class Core {
   inject() {
     Utils.getMethods(this).forEach(method => {
-      if (typeof this[method] === 'function')
+      if (typeof this[method] === 'function' && method != 'inject')
         window[method] = this[method].bind(this)
     })
   }
