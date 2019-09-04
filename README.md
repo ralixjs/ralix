@@ -2,43 +2,61 @@
 
 [![](https://img.shields.io/npm/v/ralix.svg?style=flat-square)](https://www.npmjs.com/package/ralix)
 
-> Microframework for building and organizing Rails front-ends :sparkles:
+> Microframework for building and organizing Rails front-ends via Webpacker :sparkles:
 
 ## Example
 
 ### App
 
 ```js
-// Core
-import { RalixApp } from 'ralix'
+// Dependencies
+import Rails         from '@rails/ujs'
+import Turbolinks    from 'turbolinks'
+import { RalixApp }  from 'ralix'
 
 // Controllers
-import AppCtrl   from 'controllers/app'
-import UsersCtrl from 'controllers/users'
+import AppCtrl       from 'controllers/app'
+import DashboardCtrl from 'controllers/dashboard'
+import BookingsCtrl  from 'controllers/bookings'
+import UsersCtrl     from 'controllers/users'
 
 // Components with auto-start on each DOM load event (turbolinks:load or DOMContentLoaded)
+import FormErrors    from 'components/form_errors'
 import FlashMessages from 'components/flash_messages'
 
 const App = new RalixApp({
+  rails_ujs: Rails,
   routes: {
-    '/users': UsersCtrl,
-    '/.*':    AppCtrl
+    '/dashboard': DashboardCtrl,
+    '/bookings':  BookingsCtrl,
+    '/users':     UsersCtrl,
+    '/.*':        AppCtrl
   },
   components: [
+    FormErrors,
     FlashMessages
   ]
 })
 
+Rails.start()
+Turbolinks.start()
 App.start()
 ```
 
-### Controller
+### Controllers
 
 ```js
-import { RalixCtrl } from 'ralix'
 import Modal from 'components/modal'
 
-export default class AppCtrl extends RalixCtrl {
+export default class AppCtrl {
+  back() {
+    window.history.back()
+  }
+
+  toggleMenu() {
+    toggleClass('#menu', 'hidden')
+  }
+
   openModal(url, options) {
     const modal = new Modal(url, options)
     modal.show()
@@ -46,7 +64,33 @@ export default class AppCtrl extends RalixCtrl {
 }
 ```
 
-### Component
+```js
+import AppCtrl from './app'
+
+export default class UsersCtrl extends AppCtrl {
+  constructor() {
+    super()
+  }
+
+  back() {
+    visit('/dashboard')
+  }
+}
+```
+
+### Views
+
+```html
+<div>
+  <a href="#" onclick="back()">Back</a>
+  <div id="menu">...</div>
+  ...
+  <a href="#" onclick="toggleMenu()">Toggle Menu</a>
+  <a href="#" onclick="openModal('/modals/help')">Help me!</a>
+</div>
+```
+
+### Components
 
 ```js
 export default class FlashMessages {
@@ -55,7 +99,7 @@ export default class FlashMessages {
 
     flashMessages.forEach(message => {
       message.addEventListener('click', () => {
-        message.parentElement.classList.add('hidden')
+        addClass(message.parentElement, 'hidden')
       })
     })
   }
