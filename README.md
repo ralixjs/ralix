@@ -106,6 +106,12 @@ export default class FlashMessages {
 }
 ```
 
+## API
+
+- App.ctrl
+- App.currentElement
+- App.currentEvent
+
 ## Core methods
 
 - find(query)
