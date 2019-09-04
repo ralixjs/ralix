@@ -1,3 +1,5 @@
+import Utils from './utils'
+
 export default class Router {
   constructor(routes) {
     this.routes = routes
@@ -8,42 +10,27 @@ export default class Router {
   }
 
   dispatch() {
-    this.findCtrl()
-  }
-
-  findCtrl() {
-    if (this.ctrl) this.supressCtrl()
+    if (this.ctrl) this._supressCtrl()
 
     for (let route in this.routes) {
       if (this.path.match(route)) {
         this.ctrl = new this.routes[route]
-        this.exposeCtrl()
+        this._exposeCtrl()
         break
       }
     }
   }
 
-  exposeCtrl() {
-    this.getMethods(this.ctrl).forEach(method => {
+  _exposeCtrl() {
+    Utils.getMethods(this.ctrl).forEach(method => {
       if (typeof this.ctrl[method] === 'function')
         window[method] = this.ctrl[method].bind(this.ctrl)
     })
   }
 
-  supressCtrl() {
-    this.getMethods(this.ctrl).forEach(method => {
+  _supressCtrl() {
+    Utils.getMethods(this.ctrl).forEach(method => {
       delete window[method]
     })
-  }
-
-  getMethods(obj) {
-    let methods = new Set()
-
-    while (obj = Reflect.getPrototypeOf(obj)) {
-      let keys = Reflect.ownKeys(obj)
-      keys.forEach(k => methods.add(k))
-    }
-
-    return methods
   }
 }
