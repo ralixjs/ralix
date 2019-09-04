@@ -1,4 +1,13 @@
-export default class Controller {
+import Utils from './utils'
+
+export default class Core {
+  inject() {
+    Utils.getMethods(this).forEach(method => {
+      if (typeof this[method] === 'function' && method != 'inject')
+        window[method] = this[method].bind(this)
+    })
+  }
+
   find(query) {
     return document.querySelector(query)
   }

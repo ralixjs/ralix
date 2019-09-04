@@ -1,10 +1,13 @@
 import Router from './router'
 import Events from './events'
+import Core   from './core'
 
 export default class App {
   constructor(config) {
     this.router = new Router(config.routes)
     this.events = new Events
+    this.core = new Core
+
     this.rails_ujs = config.rails_ujs || null
     this.components = config.components || []
 
@@ -19,6 +22,7 @@ export default class App {
     const event = (typeof Turbolinks !== 'undefined') ? 'turbolinks:load' : 'DOMContentLoaded'
 
     document.addEventListener(event, () => {
+      this.core.inject()
       this.router.dispatch()
       this.events.bind()
       this.components.forEach(component => new(component))
