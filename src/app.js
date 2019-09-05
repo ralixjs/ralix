@@ -19,9 +19,9 @@ export default class App {
   }
 
   start() {
-    const event = (typeof Turbolinks !== 'undefined') ? 'turbolinks:load' : 'DOMContentLoaded'
+    const onLoad = (typeof Turbolinks !== 'undefined') ? 'turbolinks:load' : 'DOMContentLoaded'
 
-    document.addEventListener(event, () => {
+    document.addEventListener(onLoad, () => {
       this.core.inject()
       this.router.dispatch()
       this.events.bind()

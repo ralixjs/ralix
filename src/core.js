@@ -65,6 +65,36 @@ export default class Core {
       return urlParams.get(param)
   }
 
+  currentElement() {
+    return App.currentElement
+  }
+
+  currentEvent() {
+    return App.currentEvent
+  }
+
+  insertHTML(query, html, position = 'inner') {
+    const el = _element(query)
+
+    switch (position) {
+      case 'inner':
+        el.innerHTML = html
+        break
+      case 'prepend':
+        el.insertAdjacentHTML('beforebegin', html)
+        break
+      case 'begin':
+        el.insertAdjacentHTML('afterbegin', html)
+        break
+      case 'end':
+        el.insertAdjacentHTML('beforeend', html)
+        break
+      case 'append':
+        el.insertAdjacentHTML('afterend', html)
+        break
+    }
+  }
+
   _element(query) {
     if (typeof query === 'string')
       return find(query)
