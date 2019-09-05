@@ -6,17 +6,31 @@
 
 Ralix provides barebones and utilities to help enhance your current HTML. Ralix consists basically in 2 concepts: `Controllers` and `Components`.
 
-- Controllers
+- `Controllers`: Controllers are meant to be mounted under a route path, they are like page specific/scoped JavaScript.
 
-Controllers are meant to be mounted under a route path, they are like page specific/scoped JavaScript.
-
-- Components
-
-Components are like widgets you will have in several pages: modals, tooltips, notifications, etc. Components can be also auto-mounted on each DOM load.
+- `Components`: Components are like widgets you will have in several pages: modals, tooltips, notifications, etc. Components can be also auto-mounted on each DOM load, you just need to pass them to the `RalixApp` instance.
 
 On the other hand, Ralix also provides some helpers and utilities to facilitate most common operations like: selectors, manipulations, events, etc. [Check it out here](#core-methods).
 
 ## Example
+
+Structure:
+
+```
+├── components
+│   ├── modal.js
+│   ├── geolocation.js
+│   ├── flash_messages.js
+│   ├── forms.js
+├── controllers
+│   ├── users.js
+│   ├── dashboard.js
+│   ├── bookings.js
+│   └── app.js
+├── packs
+│   └── application.js
+└── app.js
+```
 
 ### App
 
