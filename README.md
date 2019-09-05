@@ -161,6 +161,10 @@ export default class FlashMessages {
 - removeClass(query, classList)
 - toggleClass(query, classList)
 
+### DOM
+
+- insertHTML(query, html, position)
+
 ### Forms
 
 - submit(query)
