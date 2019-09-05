@@ -4,6 +4,18 @@
 
 > Microframework for building and organizing Rails front-ends via Webpacker :sparkles:
 
+Ralix provides barebones and utilities to help enhance your current HTML. Ralix consists basically in 2 concepts: `Controllers` and `Components`.
+
+- Controllers
+
+Controllers are meant to be mounted under a route path, they are like page specific/scoped JavaScript.
+
+- Components
+
+Components are like widgets you will have in several pages: modals, tooltips, notifications, etc. Components can be also auto-mounted on each DOM load.
+
+On the other hand, Ralix also provides some helpers and utilities to facilitate most common operations like: selectors, manipulations, events, etc. [Check it out here](#core-methods).
+
 ## Example
 
 ### App
@@ -21,7 +33,7 @@ import BookingsCtrl  from 'controllers/bookings'
 import UsersCtrl     from 'controllers/users'
 
 // Components with auto-start on each DOM load event (turbolinks:load or DOMContentLoaded)
-import FormErrors    from 'components/form_errors'
+import Forms         from 'components/forms'
 import FlashMessages from 'components/flash_messages'
 
 const App = new RalixApp({
@@ -33,7 +45,7 @@ const App = new RalixApp({
     '/.*':        AppCtrl
   },
   components: [
-    FormErrors,
+    Forms,
     FlashMessages
   ]
 })
@@ -75,19 +87,30 @@ export default class UsersCtrl extends AppCtrl {
   back() {
     visit('/dashboard')
   }
+
+  search() {
+    hide('.search-result')
+    show('.spinner')
+
+    setTimeout(() => {
+      submit('.search-form')
+    }, 300)
+  }
 }
 ```
 
 ### Views
 
 ```html
-<div>
-  <a href="#" onclick="back()">Back</a>
-  <div id="menu">...</div>
-  ...
-  <a href="#" onclick="toggleMenu()">Toggle Menu</a>
-  <a href="#" onclick="openModal('/modals/help')">Help me!</a>
-</div>
+<a href="#" onclick="back()">Back</a>
+<div id="menu">...</div>
+...
+<a href="#" onclick="toggleMenu()">Toggle Menu</a>
+<a href="#" onclick="openModal('/modals/help')">Help me!</a>
+...
+<input type="text" name="query" onkeyup="search()" />
+...
+<div onclick="visit('/sign-up')">...</div>
 ```
 
 ### Components
@@ -106,22 +129,35 @@ export default class FlashMessages {
 }
 ```
 
-## API
-
-- App.ctrl
-- App.currentElement
-- App.currentEvent
-
 ## Core methods
+
+### Selectors
 
 - find(query)
 - findAll(query)
+
+### Visibility
+
 - show(query)
 - hide(query)
+
+### Classes
+
 - addClass(query, classList)
 - removeClass(query, classList)
 - toggleClass(query, classList)
-- visit(url)
+
+### Forms
+
 - submit(query)
+
+### Navigation
+
 - url()
+- visit(url)
 - getParam(param)
+
+### Events
+
+- currentElement()
+- currentEvent()

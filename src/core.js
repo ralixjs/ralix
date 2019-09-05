@@ -65,6 +65,14 @@ export default class Core {
       return urlParams.get(param)
   }
 
+  currentElement() {
+    return App.currentElement
+  }
+
+  currentEvent() {
+    return App.currentEvent
+  }
+
   _element(query) {
     if (typeof query === 'string')
       return find(query)
