@@ -6,7 +6,7 @@
 
 Ralix provides barebones and utilities to help enhance your current Rails views. It integrates well with Turbolinks and Rails-UJS.
 
-Ralix consists basically in 2 concepts: `Controllers` and `Components`:
+Ralix consists basically in 2 concepts, `Controllers` and `Components`:
 
 - `Controllers`: Controllers are meant to be mounted under a route path, they are like page-specific (scoped) JavaScript.
 
