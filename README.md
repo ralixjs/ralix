@@ -4,9 +4,11 @@
 
 > Microframework for building and organizing Rails front-ends via Webpacker :sparkles:
 
-Ralix provides barebones and utilities to help enhance your current HTML. Ralix consists basically in 2 concepts: `Controllers` and `Components`.
+Ralix provides barebones and utilities to help enhance your current Rails views. It integrates well with Turbolinks and Rails-UJS.
 
-- `Controllers`: Controllers are meant to be mounted under a route path, they are like page specific/scoped JavaScript.
+Ralix consists basically in 2 concepts: `Controllers` and `Components`:
+
+- `Controllers`: Controllers are meant to be mounted under a route path, they are like page-specific (scoped) JavaScript.
 
 - `Components`: Components are like widgets you will have in several pages: modals, tooltips, notifications, etc. Components can be also auto-mounted on each DOM load, you just need to pass them to the `RalixApp` instance.
 
@@ -171,8 +173,8 @@ export default class FlashMessages {
 
 ### Navigation
 
-- url()
 - visit(url)
+- url()
 - getParam(param)
 
 ### Events
