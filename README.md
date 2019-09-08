@@ -1,6 +1,7 @@
 # Ralix
 
 [![](https://img.shields.io/npm/v/ralix.svg?style=flat-square)](https://www.npmjs.com/package/ralix)
+[![Maintainability](https://api.codeclimate.com/v1/badges/8e91bd9dc7263d19291c/maintainability)](https://codeclimate.com/github/ralixjs/ralix/maintainability)
 
 > Microframework for building and organizing Rails front-ends via Webpacker :sparkles:
 
