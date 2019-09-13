@@ -17,23 +17,28 @@ export default class Core {
   }
 
   show(query) {
-    _element(query).setAttribute('style', '')
+    const el = _element(query)
+    if (el) el.setAttribute('style', '')
   }
 
   hide(query) {
-    _element(query).setAttribute('style', 'display: none')
+    const el = _element(query)
+    if (el) el.setAttribute('style', 'display: none')
   }
 
   addClass(query, classList) {
-    _element(query).classList.add(classList)
+    const el = _element(query)
+    if (el) el.classList.add(classList)
   }
 
   removeClass(query, classList) {
-    _element(query).classList.remove(classList)
+    const el = _element(query)
+    if (el) el.classList.remove(classList)
   }
 
   toggleClass(query, classList) {
-    _element(query).classList.toggle(classList)
+    const el = _element(query)
+    if (el) el.classList.toggle(classList)
   }
 
   visit(url) {
@@ -45,6 +50,7 @@ export default class Core {
 
   submit(query) {
     const form = _element(query)
+    if (!form) return
 
     if (App.rails_ujs)
       App.rails_ujs.fire(form, 'submit')
@@ -52,12 +58,12 @@ export default class Core {
       form.submit()
   }
 
-  url() {
+  currentUrl() {
     return window.location.href
   }
 
   getParam(param) {
-    const urlParams = new URL(url()).searchParams
+    const urlParams = new URL(currentUrl()).searchParams
 
     if (urlParams.get(`${param}[]`))
       return urlParams.getAll(`${param}[]`)
@@ -75,6 +81,7 @@ export default class Core {
 
   insertHTML(query, html, position = 'inner') {
     const el = _element(query)
+    if (!el) return
 
     switch (position) {
       case 'inner':

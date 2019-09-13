@@ -175,7 +175,7 @@ export default class FlashMessages {
 ### Navigation
 
 - visit(url)
-- url()
+- currentUrl()
 - getParam(param)
 
 ### Events
