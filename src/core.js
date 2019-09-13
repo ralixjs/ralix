@@ -58,12 +58,12 @@ export default class Core {
       form.submit()
   }
 
-  url() {
+  currentUrl() {
     return window.location.href
   }
 
   getParam(param) {
-    const urlParams = new URL(url()).searchParams
+    const urlParams = new URL(currentUrl()).searchParams
 
     if (urlParams.get(`${param}[]`))
       return urlParams.getAll(`${param}[]`)
