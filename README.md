@@ -177,6 +177,7 @@ export default class FlashMessages {
 - visit(url)
 - currentUrl()
 - getParam(param)
+- setParam(param, value)
 
 ### Events
 
