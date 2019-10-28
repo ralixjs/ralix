@@ -71,13 +71,13 @@ export default class Core {
       return urlParams.get(param)
   }
 
-  setParam(param, value) {
-    const url = new URL(currentUrl())
-    url.searchParams.set(param, value)
+  setParam(param, value, url = currentUrl()) {
+    const urlParams = new URL(url)
+    urlParams.searchParams.set(param, value)
 
-    return url.href
+    return urlParams.href
   }
-       
+
   currentElement() {
     return App.currentElement
   }
