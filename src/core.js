@@ -48,6 +48,10 @@ export default class Core {
       window.location.href = url
   }
 
+  reload() {
+    window.location.reload()
+  }
+
   submit(query) {
     const form = _element(query)
     if (!form) return
