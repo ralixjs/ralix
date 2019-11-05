@@ -49,7 +49,7 @@ export default class Core {
   }
 
   reload() {
-    window.location.reload();
+    window.location.reload()
   }
 
   submit(query) {
