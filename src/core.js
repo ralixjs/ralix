@@ -131,4 +131,42 @@ export default class Core {
     else
       return query
   }
+
+  replaceState(state, data = {}) {
+    history.replaceState(data, undefined, state)
+  }
+
+  pushState(state, data = {}) {
+    history.pushState(data, undefined, state)
+  }
+
+  replaceURLHash(value) {
+    if (value.charAt(0) !== "#") value = "#" + value
+    this.replaceState(value)
+  }
+
+  replaceURLParams(params) {
+    const hash = window.location.hash
+    if (params.charAt(0) !== "?") params = "?" + params
+    this.replaceState(params)
+    this.replaceURLHash(hash)
+  }
+
+  appendURLParam(param, value) {
+    const params = new URLSearchParams(window.location.search)
+    params.append(param, value);
+    this.replaceURLParams(params.toString())
+  }
+
+  setURLParam(param, value) {
+    const params = new URLSearchParams(window.location.search)
+    params.set(param, value);
+    this.replaceURLParams(params.toString())
+  }
+
+  deleteURLParam(param) {
+    const params = new URLSearchParams(window.location.search)
+    params.delete(param)
+    this.replaceURLParams(params.toString())
+  }
 }
