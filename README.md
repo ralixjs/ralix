@@ -15,6 +15,22 @@ Ralix consists basically in 2 concepts, `Controllers` and `Components`:
 
 On the other hand, Ralix also provides some helpers and utilities to facilitate most common operations like: selectors, manipulations, events, etc. [Check it out here](#core-methods).
 
+## Installation
+
+To install Ralix in your application, add the `ralix` [npm package](https://www.npmjs.com/package/ralix) to your JavaScript bundle.
+
+Using `npm`:
+
+```
+> npm install ralix
+```
+
+Using `Yarn`:
+
+```
+> yarn add ralix
+```
+
 ## Example
 
 Structure:
