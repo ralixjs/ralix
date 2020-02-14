@@ -75,10 +75,11 @@ export default class Core {
       return urlParams.get(param)
   }
 
-  setParam(param, value, url = currentUrl()) {
+  setParam(param, value, { url = currentUrl(), update = false } = {}) {
     const urlParams = new URL(url)
     urlParams.searchParams.set(param, value)
 
+    if (update) self.setUrl(urlParams.href)
     return urlParams.href
   }
 
@@ -132,41 +133,14 @@ export default class Core {
       return query
   }
 
-  replaceState(state, data = {}) {
-    history.replaceState(data, undefined, state)
-  }
-
-  pushState(state, data = {}) {
-    history.pushState(data, undefined, state)
-  }
-
-  replaceURLHash(value) {
-    if (value.charAt(0) !== "#") value = "#" + value
-    this.replaceState(value)
-  }
-
-  replaceURLParams(params) {
-    const hash = window.location.hash
-    if (params.charAt(0) !== "?") params = "?" + params
-    this.replaceState(params)
-    this.replaceURLHash(hash)
-  }
-
-  appendURLParam(param, value) {
-    const params = new URLSearchParams(window.location.search)
-    params.append(param, value);
-    this.replaceURLParams(params.toString())
-  }
-
-  setURLParam(param, value) {
-    const params = new URLSearchParams(window.location.search)
-    params.set(param, value);
-    this.replaceURLParams(params.toString())
-  }
-
-  deleteURLParam(param) {
-    const params = new URLSearchParams(window.location.search)
-    params.delete(param)
-    this.replaceURLParams(params.toString())
+  setUrl(state, method = 'push', data = {}) {
+    switch (method) {
+      case "push":
+        history.pushState(data, undefined, state)
+        break
+      case "replace":
+        history.replaceState(data, undefined, state)
+        break
+    }
   }
 }
