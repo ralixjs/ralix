@@ -126,13 +126,6 @@ export default class Core {
     }
   }
 
-  _element(query) {
-    if (typeof query === 'string')
-      return find(query)
-    else
-      return query
-  }
-
   setUrl(state, method = 'push', data = {}) {
     switch (method) {
       case "push":
@@ -142,5 +135,12 @@ export default class Core {
         history.replaceState(data, undefined, state)
         break
     }
+  }
+
+  _element(query) {
+    if (typeof query === 'string')
+      return find(query)
+    else
+      return query
   }
 }
