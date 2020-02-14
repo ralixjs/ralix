@@ -52,6 +52,11 @@ export default class Core {
     window.location.reload()
   }
 
+  serialize(query) {
+    const form = _element(query)
+    if (form) return new URLSearchParams(new FormData(form)).toString()
+  }
+
   submit(query) {
     const form = _element(query)
     if (!form) return
