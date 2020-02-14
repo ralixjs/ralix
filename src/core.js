@@ -79,7 +79,7 @@ export default class Core {
     const urlParams = new URL(url)
     urlParams.searchParams.set(param, value)
 
-    if (update) self.setUrl(urlParams.href)
+    if (update) setUrl(urlParams.href)
     return urlParams.href
   }
 
