@@ -80,10 +80,11 @@ export default class Core {
       return urlParams.get(param)
   }
 
-  setParam(param, value, url = currentUrl()) {
+  setParam(param, value, { url = currentUrl(), update = false } = {}) {
     const urlParams = new URL(url)
     urlParams.searchParams.set(param, value)
 
+    if (update) setUrl(urlParams.href)
     return urlParams.href
   }
 
@@ -127,6 +128,17 @@ export default class Core {
     } else {
       el.setAttribute(attribute, value)
       return value
+    }
+  }
+
+  setUrl(state, method = 'push', data = {}) {
+    switch (method) {
+      case "push":
+        history.pushState(data, undefined, state)
+        break
+      case "replace":
+        history.replaceState(data, undefined, state)
+        break
     }
   }
 
