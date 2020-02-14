@@ -194,14 +194,8 @@ export default class FlashMessages {
 - visit(url)
 - currentUrl()
 - getParam(param)
-- setParam(param, value, url)
-- replaceState(state, data)
-- pushState(state, data)
-- replaceURLHash(value)
-- replaceURLParams(params)
-- appendURLParam(param, value)
-- setURLParam(param, value)
-- deleteURLParam(param)
+- setParam(param, value, { url, update })
+- setUrl(state, method, data)
 
 ### Events
 
