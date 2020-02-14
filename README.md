@@ -201,10 +201,7 @@ export default class FlashMessages {
 - currentElement()
 - currentEvent()
 
-### Getters
+### Attributes
 
 - attr(query, attribute)
-
-### Setters
-
 - attr(query, attribute, value)

@@ -115,10 +115,11 @@ export default class Core {
 
   attr(query, attribute, value) {
     const el = _element(query)
+    if (!el) return
 
-    if (el && value == undefined) {
+    if (value == undefined) {
       return el.getAttribute(attribute)
-    } else if (el) {
+    } else {
       el.setAttribute(attribute, value)
       return value
     }
