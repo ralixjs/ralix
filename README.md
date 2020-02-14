@@ -186,6 +186,7 @@ export default class FlashMessages {
 
 ### Forms
 
+- serialize(query)
 - submit(query)
 
 ### Navigation
