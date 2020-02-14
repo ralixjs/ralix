@@ -113,6 +113,17 @@ export default class Core {
     }
   }
 
+  attr(query, attribute, value) {
+    const el = _element(query)
+
+    if (el && value == undefined) {
+      return el.getAttribute(attribute)
+    } else if (el) {
+      el.setAttribute(attribute, value)
+      return value
+    }
+  }
+
   _element(query) {
     if (typeof query === 'string')
       return find(query)
