@@ -123,12 +123,22 @@ export default class Core {
     const el = _element(query)
     if (!el) return
 
-    if (value == undefined) {
+    if (value == undefined)
       return el.getAttribute(attribute)
-    } else {
-      el.setAttribute(attribute, value)
-      return value
-    }
+    else
+      return el.setAttribute(attribute, value)
+  }
+
+  data(query, attribute, value) {
+    const el = _element(query)
+    if (!el) return
+
+    if (attribute != undefined && value != undefined)
+      return el.dataset[attribute] = value
+    else if (attribute != undefined)
+      return el.dataset[attribute]
+    else
+      return el.dataset
   }
 
   setUrl(state, method = 'push', data = {}) {
