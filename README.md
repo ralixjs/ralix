@@ -180,6 +180,11 @@ export default class FlashMessages {
 - removeClass(query, classList)
 - toggleClass(query, classList)
 
+### Attributes
+
+- attr(query, attribute, value)
+- data(query, attribute, value)
+
 ### DOM
 
 - insertHTML(query, html, position)
@@ -202,8 +207,3 @@ export default class FlashMessages {
 
 - currentElement()
 - currentEvent()
-
-### Attributes
-
-- attr(query, attribute)
-- attr(query, attribute, value)
