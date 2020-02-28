@@ -130,8 +130,8 @@ export default class Core {
         return el.setAttribute(attribute, value)
     else if (typeof attribute  === 'object')
       Object.entries(attribute).forEach(entry => {
-        let k = entry[0];
-        let v = entry[1];
+        const k = entry[0];
+        const v = entry[1];
         el.setAttribute(k, v)
       });
   }
@@ -148,8 +148,8 @@ export default class Core {
         return el.dataset[attribute] = value
     else if (typeof attribute  === 'object')
       Object.entries(attribute).forEach(entry => {
-        let k = entry[0]
-        let v = entry[1]
+        const k = entry[0]
+        const v = entry[1]
         return el.dataset[k] = v
       })
   }
