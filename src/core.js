@@ -137,15 +137,15 @@ export default class Core {
         return el.setAttribute(attribute, value)
     else if (typeof attribute  === 'object')
       Object.entries(attribute).forEach(entry => {
-        const k = entry[0];
-        const v = entry[1];
-        el.setAttribute(k, v)
-      });
+        const [key, value] = entry
+        el.setAttribute(key, value)
+      })
   }
 
   data(query, attribute, value) {
     const el = _element(query)
     if (!el) return
+
     if (attribute === undefined && value === undefined) return el.dataset
 
     if (typeof attribute === 'string')
@@ -155,9 +155,8 @@ export default class Core {
         return el.dataset[attribute] = value
     else if (typeof attribute  === 'object')
       Object.entries(attribute).forEach(entry => {
-        const k = entry[0]
-        const v = entry[1]
-        return el.dataset[k] = v
+        const [key, value] = entry
+        el.dataset[key] = value
       })
   }
 
