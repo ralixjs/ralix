@@ -123,10 +123,18 @@ export default class Core {
     const el = _element(query)
     if (!el) return
 
-    if (value == undefined)
-      return el.getAttribute(attribute)
-    else
-      return el.setAttribute(attribute, value)
+    if (attribute instanceof String){
+      if (value === undefined)
+        return el.getAttribute(attribute)
+      else
+        return el.setAttribute(attribute, value)
+    } else if (attribute instanceof Object){
+      Object.entries(attribute).forEach(entry => {
+        let k = entry[0];
+        let v = entry[1];
+        el.setAttribute(k, v)
+      });
+    }
   }
 
   data(query, attribute, value) {
