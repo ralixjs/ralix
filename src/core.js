@@ -123,22 +123,35 @@ export default class Core {
     const el = _element(query)
     if (!el) return
 
-    if (value == undefined)
-      return el.getAttribute(attribute)
-    else
-      return el.setAttribute(attribute, value)
+    if (typeof attribute === 'string')
+      if (value === undefined)
+        return el.getAttribute(attribute)
+      else
+        return el.setAttribute(attribute, value)
+    else if (typeof attribute  === 'object')
+      Object.entries(attribute).forEach(entry => {
+        const k = entry[0];
+        const v = entry[1];
+        el.setAttribute(k, v)
+      });
   }
 
   data(query, attribute, value) {
     const el = _element(query)
     if (!el) return
+    if (attribute === undefined && value === undefined) return el.dataset
 
-    if (attribute != undefined && value != undefined)
-      return el.dataset[attribute] = value
-    else if (attribute != undefined)
-      return el.dataset[attribute]
-    else
-      return el.dataset
+    if (typeof attribute === 'string')
+      if (value === undefined)
+        return el.dataset[attribute]
+      else
+        return el.dataset[attribute] = value
+    else if (typeof attribute  === 'object')
+      Object.entries(attribute).forEach(entry => {
+        const k = entry[0]
+        const v = entry[1]
+        return el.dataset[k] = v
+      })
   }
 
   setUrl(state, method = 'push', data = {}) {
