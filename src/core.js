@@ -88,6 +88,13 @@ export default class Core {
     return urlParams.href
   }
 
+  on(query, type, callback) {
+    const el = _element(query)
+    if (!el) return
+
+    el.addEventListener(type, callback)
+  }
+
   currentElement() {
     return App.currentElement
   }

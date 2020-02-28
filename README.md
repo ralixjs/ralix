@@ -205,5 +205,6 @@ export default class FlashMessages {
 
 ### Events
 
+- on(query, type, callback)
 - currentElement()
 - currentEvent()
