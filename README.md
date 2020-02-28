@@ -179,6 +179,7 @@ export default class FlashMessages {
 - addClass(query, classList)
 - removeClass(query, classList)
 - toggleClass(query, classList)
+- hasClass(query, className)
 
 ### Attributes
 

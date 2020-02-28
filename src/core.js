@@ -41,6 +41,11 @@ export default class Core {
     if (el) el.classList.toggle(classList)
   }
 
+  hasClass(query, className) {
+    const el = _element(query)
+    if (el) el.classList.contains(className)
+  }
+
   visit(url) {
     if (Turbolinks !== 'undefined')
       Turbolinks.visit(url)
