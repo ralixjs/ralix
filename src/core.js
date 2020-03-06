@@ -66,7 +66,7 @@ export default class Core {
     const form = _element(query)
     if (!form) return
 
-    if (App.rails_ujs)
+    if (App.rails_ujs && attr(form, 'data-remote') === 'true')
       App.rails_ujs.fire(form, 'submit')
     else
       form.submit()
