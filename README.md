@@ -189,6 +189,7 @@ export default class FlashMessages {
 ### DOM
 
 - insertHTML(query, html, position)
+- elem(type, attributes)
 
 ### Forms
 

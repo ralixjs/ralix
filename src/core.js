@@ -131,6 +131,13 @@ export default class Core {
     }
   }
 
+  elem(type, attributes) {
+    const el = document.createElement(type)
+    _setAttributes(el, attributes)
+
+    return el
+  }
+
   attr(query, attribute, value) {
     const el = _element(query)
     if (!el) return
@@ -141,10 +148,7 @@ export default class Core {
       else
         return el.setAttribute(attribute, value)
     else if (typeof attribute  === 'object')
-      Object.entries(attribute).forEach(entry => {
-        const [key, value] = entry
-        el.setAttribute(key, value)
-      })
+      _setAttributes(el, attribute)
   }
 
   data(query, attribute, value) {
@@ -159,10 +163,7 @@ export default class Core {
       else
         return el.dataset[attribute] = value
     else if (typeof attribute  === 'object')
-      Object.entries(attribute).forEach(entry => {
-        const [key, value] = entry
-        el.dataset[key] = value
-      })
+      _setDataset(el, attribute)
   }
 
   render(template, data) {
@@ -185,5 +186,19 @@ export default class Core {
       return find(query)
     else
       return query
+  }
+
+  _setAttributes(elem, attributes) {
+    Object.entries(attributes).forEach(entry => {
+      const [key, value] = entry
+      elem.setAttribute(key, value)
+    })
+  }
+
+  _setDataset(elem, attributes) {
+    Object.entries(attributes).forEach(entry => {
+      const [key, value] = entry
+      elem.dataset[key] = value
+    })
   }
 }
