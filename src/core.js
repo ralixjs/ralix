@@ -165,6 +165,10 @@ export default class Core {
       })
   }
 
+  render(template, data) {
+    return App.templates.render(template, data)
+  }
+
   setUrl(state, method = 'push', data = {}) {
     switch (method) {
       case "push":

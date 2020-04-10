@@ -1,14 +1,16 @@
-import Router from './router'
-import Events from './events'
-import Core   from './core'
+import Router    from './router'
+import Events    from './events'
+import Templates from './templates'
+import Core      from './core'
 
 export default class App {
   constructor(config) {
-    this.router = new Router(config.routes)
-    this.events = new Events
-    this.core = new Core
+    this.router     = new Router(config.routes)
+    this.events     = new Events()
+    this.templates  = new Templates(config.templates)
+    this.core       = new Core()
 
-    this.rails_ujs = config.rails_ujs || null
+    this.rails_ujs  = config.rails_ujs || null
     this.components = config.components || []
 
     window.App = this
