@@ -217,7 +217,7 @@ render('todoItem', { id: id, value: value })
 - insertHTML(query, html, position)
 - elem(type, attributes)
 
-## Templates
+### Templates
 
 - render(template, data)
 
