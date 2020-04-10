@@ -138,6 +138,10 @@ export default class Core {
     return el
   }
 
+  render(template, data) {
+    return App.templates.render(template, data)
+  }
+
   attr(query, attribute, value) {
     const el = _element(query)
     if (!el) return
@@ -164,10 +168,6 @@ export default class Core {
         return el.dataset[attribute] = value
     else if (typeof attribute  === 'object')
       _setDataset(el, attribute)
-  }
-
-  render(template, data) {
-    return App.templates.render(template, data)
   }
 
   setUrl(state, method = 'push', data = {}) {
