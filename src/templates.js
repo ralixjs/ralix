@@ -1,6 +1,6 @@
 export default class Templates {
   constructor(templates) {
-    this.templates = templates
+    this.templates = templates || {}
   }
 
   render(template, data) {
