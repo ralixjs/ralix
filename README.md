@@ -176,10 +176,10 @@ const App = new RalixApp({
 })
 
 // app/javascript/templates/index.js
-export const todoItem = ({ id, label }) => `
+export const todoItem = ({ id, value }) => `
   <div class="item_${id}">
     <input type="checkbox">
-    <label>${label}</label>
+    <label>${value}</label>
     <button onclick="destroyItem(${id})"></button>
   </div>
 `
