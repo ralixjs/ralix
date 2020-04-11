@@ -190,6 +190,10 @@ export const todoItem = ({ id, value }) => `
 render('todoItem', { id: id, value: value })
 ```
 
+### More examples
+
+Check a complete Rails application with Ralix here: [Ralix TodoMVC](https://github.com/ralixjs/ralix-todomvc).
+
 ## Core methods
 
 You can find a complete API documentation [here](docs/CORE_API.md).

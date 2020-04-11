@@ -82,7 +82,7 @@ Creates and returns an HTML element and assigns given `attributes`. Example:
 
 - `render(template, data)`
 
-Renders the `template`, passing the `data`. Example:
+Renders the `template`, passing the given `data`. Example:
 
 ```js
 render('todoItem', { id: id, value: value })
@@ -106,7 +106,7 @@ Serializes the given form. Example:
 
 - `submit(query)`
 
-If `rails_ujs` is provided, submits the form via `Rails.fire`, otherwise uses regular submit event.
+If `rails_ujs` is provided in `new RalixApp({})`, submits the form via `Rails.fire`, otherwise uses regular submit event.
 
 ## Navigation
 
@@ -120,19 +120,19 @@ Visits given `url`, uses `Turbolinks.visit` if possible.
 
 - `currentUrl()`
 
-Returns current url.
+Returns the current location.
 
 - `getParam(param)`
 
-Gets `param` name value in current url.
+Gets `param` value for the current location.
 
 - `setParam(param, value, { url, update })`
 
-Sets `param` value to the given url (current url by default). If `update` is *true*, browser history is updated.
+Sets `param` value to the given location (current location by default). If `update` is *true*, browser history is updated too.
 
 - `setUrl(state, method, data)`
 
-Allows to update current url via browser history. `method` accepts: *push* (pushState, default) and *replace* (replaceState).
+Allows to update current location via browser history object. `method` accepts: *push* (pushState, default) and *replace* (replaceState).
 
 ## Events
 
@@ -149,8 +149,8 @@ on(window, 'click', (e) => {
 
 - `currentElement()`
 
-Returns the element which received the current event.
+Returns the element which received the last fired event.
 
 - `currentEvent()`
 
-Returns the current event.
+Returns the last fired event.
