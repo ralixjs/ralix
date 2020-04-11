@@ -138,6 +138,10 @@ export default class Core {
     return el
   }
 
+  render(template, data) {
+    return App.templates.render(template, data)
+  }
+
   attr(query, attribute, value) {
     const el = _element(query)
     if (!el) return

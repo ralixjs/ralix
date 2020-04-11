@@ -10,7 +10,6 @@ Ralix provides barebones and utilities to help enhance your current Rails views.
 Ralix consists basically in 2 concepts, `Controllers` and `Components`:
 
 - `Controllers`: Controllers are meant to be mounted under a route path, they are like page-specific (scoped) JavaScript.
-
 - `Components`: Components are like widgets you will have in several pages: modals, tooltips, notifications, etc. Components can be also auto-mounted on each DOM load, you just need to pass them to the `RalixApp` instance.
 
 On the other hand, Ralix also provides some helpers and utilities to facilitate most common operations like: selectors, manipulations, events, etc. [Check it out here](#core-methods).
@@ -162,6 +161,33 @@ export default class FlashMessages {
 }
 ```
 
+### Templates
+
+Ralix provides also a minimalistic template engine. Under the hood, it uses JavaScript Functions with Template literals.
+
+```js
+// app/javascript/app.js
+import * as Templates from 'templates'
+
+const App = new RalixApp({
+  ...
+  templates: Templates
+  ...
+})
+
+// app/javascript/templates/index.js
+export const todoItem = ({ id, value }) => `
+  <div class="item_${id}">
+    <input type="checkbox">
+    <label>${value}</label>
+    <button onclick="destroyItem(${id})"></button>
+  </div>
+`
+
+// Call it via
+render('todoItem', { id: id, value: value })
+```
+
 ## Core methods
 
 ### Selectors
@@ -190,6 +216,10 @@ export default class FlashMessages {
 
 - insertHTML(query, html, position)
 - elem(type, attributes)
+
+### Templates
+
+- render(template, data)
 
 ### Forms
 
