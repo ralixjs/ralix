@@ -93,6 +93,17 @@ export default class Core {
     return urlParams.href
   }
 
+  setUrl(state, method = 'push', data = {}) {
+    switch (method) {
+      case "push":
+        history.pushState(data, undefined, state)
+        break
+      case "replace":
+        history.replaceState(data, undefined, state)
+        break
+    }
+  }
+
   on(query, type, callback) {
     const el = _element(query)
     if (!el) return
@@ -168,17 +179,6 @@ export default class Core {
         return el.dataset[attribute] = value
     else if (typeof attribute  === 'object')
       _setDataset(el, attribute)
-  }
-
-  setUrl(state, method = 'push', data = {}) {
-    switch (method) {
-      case "push":
-        history.pushState(data, undefined, state)
-        break
-      case "replace":
-        history.replaceState(data, undefined, state)
-        break
-    }
   }
 
   _element(query) {
