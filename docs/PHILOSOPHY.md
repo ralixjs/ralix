@@ -1,4 +1,4 @@
-# Ralix Vision and Philosophy
+# Ralix Design, Vision and Philosophy
 
 Ralix is a microframework with the goal to provide barebones and utilities to help enhance your current Rails (server-side) HTML, using ES6. It pairs really well with Turbolinks and the Rails UJS adapter.
 
@@ -10,9 +10,21 @@ Ralix has no runtime dependencies (relays only in [Webpacker](https://github.com
 
 ## Structure
 
-Ralix aims to provide a basic structure to organize your JavaScript code. There are 2 basic concepts: Router (Controllers) and Components.
+Ralix aims to provide a basic structure to organize your JavaScript code. But gives you a lot of freedom, it just assumes a couple of directories and files.
 
-The Router tries to follow the idea of Rails Controllers. You should define an main controller (for example `ApplicationController.js`) and the other controllers inherits from it. This way, if you define a method in the main controller, you will have access to this method in all pages.
+There are two basic concepts: Router (Controllers) and Components.
+
+The Router tries to follow the idea of Rails Controllers. You should define an main controller (for example `ApplicationController.js`) and the other controllers inherits from it. This way, if you define a method in the main controller, you will have access to this method in all pages or even override this method behavior on per page basis.
+
+The Router uses regular expressions to match the current location (url) with the defined controller. So you can have one controller to match different urls/pages:
+
+```js
+routes: {
+  '/pages/[a-z0-9]': PagesCtrl,
+  '/user/([0-9]+)':  UsersCtrl,
+  '/.*':             AppCtrl
+}
+```
 
 Components part is designed for widgets you will have in several pages: modals, tooltips, forms, etc. Components can be also auto-mounted on each DOM load, you just need to pass them to the `RalixApp` instance.
 

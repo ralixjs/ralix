@@ -14,7 +14,7 @@ Ralix consists basically in 2 concepts, `Controllers` and `Components`:
 
 On the other hand, Ralix also provides some helpers and utilities to facilitate most common operations like: selectors, manipulations, events, etc. [Check it out here](#core-methods).
 
-You can read more about Ralix Vision and Philosophy [here](docs/PHILOSOPHY.md).
+You can read more about Ralix Design, Vision and Philosophy [here](docs/PHILOSOPHY.md).
 
 ## Installation
 
