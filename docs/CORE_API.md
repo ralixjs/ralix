@@ -56,13 +56,25 @@ Gets/sets `query` element attribute. It also accepts and object for multiple ass
 
 - `data(query, attribute, value)`
 
-Similar to `attr()`, but for `dataset`.
+Similar to `attr()`, but for `dataset`. Examples:
+
+```js
+// getters
+> data('#form')
+{ remote: false, url: '/signup' }
+> data('#form', 'remote')
+"false"
+
+// setters
+> data('#form', 'remote', true)
+> data('#form', { remote: true, url: '/signup/free_trial' })
+```
 
 ## DOM
 
 - `insertHTML(query, html, position)`
 
-Inserts passed `html` to the `query` element, based on `position`. `position` accepts the following options: *inner* (default), *prepend*, *append*, *begin*, *end*. Examples:
+Inserts passed `html` to the `query` element, based on `position`. The argument `position` accepts the following options: *inner* (default), *prepend*, *append*, *begin*, *end*. Examples:
 
 ```js
 insertHTML('.total', `Total: <b>${totalItems}</b>`)
@@ -132,7 +144,7 @@ Sets `param` value to the given location (current location by default). If `upda
 
 - `setUrl(state, method, data)`
 
-Allows to update current location via browser history object. `method` accepts: *push* (pushState, default) and *replace* (replaceState).
+Allows to update current location via browser history object. The argument `method` accepts: *push* (pushState, default) and *replace* (replaceState).
 
 ## Events
 
