@@ -165,14 +165,14 @@ export default class Modal {
 
     fetch(this.url, { method: 'GET', credentials: 'include' }).then((result) => {
       result.text().then(content => {
-        modalBody.innerHTML = content
+        insertHTML(modalBody, content)
       })
     })
 
     on(modalClose, 'click', () => {
       removeClass(document.body, 'disable-scroll')
       removeClass(modal, 'open')
-      modalBody.innerHTML = null
+      insertHTML(modalBody, 'Loading ...')
     })
   }
 }
