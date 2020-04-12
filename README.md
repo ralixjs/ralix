@@ -248,3 +248,7 @@ You can find a complete API documentation [here](docs/CORE_API.md).
 - on(query, type, callback)
 - currentElement()
 - currentEvent()
+
+## License
+
+Copyright (c) Ralix Core Team. Ralix is released under the [MIT](LICENSE) License.
