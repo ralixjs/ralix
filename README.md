@@ -103,8 +103,8 @@ export default class AppCtrl {
     toggleClass('#menu', 'hidden')
   }
 
-  openModal(url, options) {
-    const modal = new Modal(url, options)
+  openModal(url) {
+    const modal = new Modal(url)
     modal.show()
   }
 }
@@ -150,14 +150,29 @@ export default class UsersCtrl extends AppCtrl {
 ### Components
 
 ```js
-export default class FlashMessages {
-  constructor() {
-    const flashMessages = findAll('.js-close-alert')
+export default class Modal {
+  constructor(url) {
+    this.url = url
+  }
 
-    flashMessages.forEach(message => {
-      message.addEventListener('click', () => {
-        addClass(message.parentElement, 'hidden')
+  show() {
+    const modal      = find('#modal')
+    const modalBody  = find('#modal__body')
+    const modalClose = find('#modal__close')
+
+    addClass(document.body, 'disable-scroll')
+    addClass(modal, 'open')
+
+    fetch(this.url, { method: 'GET', credentials: 'include' }).then((result) => {
+      result.text().then(content => {
+        modalBody.innerHTML = content
       })
+    })
+
+    on(modalClose, 'click', () => {
+      removeClass(document.body, 'disable-scroll')
+      removeClass(modal, 'open')
+      modalBody.innerHTML = null
     })
   }
 }
