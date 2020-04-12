@@ -66,7 +66,7 @@ export default class Core {
     const form = _element(query)
     if (!form) return
 
-    if (App.rails_ujs && attr(form, 'data-remote') === 'true')
+    if (App.rails_ujs && data(form, 'remote') === 'true')
       App.rails_ujs.fire(form, 'submit')
     else
       form.submit()
@@ -90,6 +90,7 @@ export default class Core {
     urlParams.searchParams.set(param, value)
 
     if (update) setUrl(urlParams.href)
+
     return urlParams.href
   }
 
@@ -153,12 +154,12 @@ export default class Core {
     return App.templates.render(template, data)
   }
 
-  attr(query, attribute, value) {
+  attr(query, attribute, value = null) {
     const el = _element(query)
     if (!el) return
 
     if (typeof attribute === 'string')
-      if (value === undefined)
+      if (!value)
         return el.getAttribute(attribute)
       else
         return el.setAttribute(attribute, value)
@@ -166,14 +167,14 @@ export default class Core {
       _setAttributes(el, attribute)
   }
 
-  data(query, attribute, value) {
+  data(query, attribute = null, value = null) {
     const el = _element(query)
     if (!el) return
 
-    if (attribute === undefined && value === undefined) return el.dataset
+    if (!attribute && !value) return el.dataset
 
     if (typeof attribute === 'string')
-      if (value === undefined)
+      if (!value)
         return el.dataset[attribute]
       else
         return el.dataset[attribute] = value
