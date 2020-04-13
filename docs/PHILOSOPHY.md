@@ -28,7 +28,23 @@ routes: {
 
 The Components are designed to encapsulate code for widgets you will have in several pages: modals, tooltips, forms, etc.
 
-Components can be also auto-mounted on each DOM load, you just need to pass them to the `RalixApp` instance and Ralix will call the `constructor` method automatically.
+Components can be also auto-mounted on each DOM load, you just need to pass them to the `RalixApp` instance and Ralix will call the `onload` static method automatically. Example:
+
+```js
+export default class Tooltip {
+  static onload() {
+    findAll('.tooltip').forEach(el => {
+      on(el, 'click', () => {
+        new Tooltip(data(el))
+      })
+    })
+  }
+
+  constructor(options = {}) {
+    ...
+  }
+}
+````
 
 ## Utilities
 
