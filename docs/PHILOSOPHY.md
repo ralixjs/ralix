@@ -32,8 +32,8 @@ Components can be also auto-mounted on each DOM load, you just need to pass them
 
 ## Utilities
 
-Utilities, aka Core methods, are helpers to help you write most common operations with a nicer and shorter API: finders, manage classes, manage elements attributes and data-attributes, submit forms, change browser history, events and more. You can find all helpers documentation [here](CORE_API.md).
+Utilities, aka Core methods, are helpers to help you write most common operations with a nicer and shorter API: finders, manage classes, manage elements attributes and data-attributes, submit forms, change browser history, listeners and more. You can find all helpers documentation [here](CORE_API.md).
 
 ## Logo
 
-We use a bear, a sloth bear, inspired by Baloo (from The Jungle Book) performing the song "The Bare Necessities".
+We use a bear, a sloth bear, inspired by **Baloo** (from **The Jungle Book**) performing the song **The Bare Necessities**.
