@@ -40,7 +40,6 @@ Structure:
 ├── components
 │   ├── modal.js
 │   ├── geolocation.js
-│   ├── flash_messages.js
 │   ├── forms.js
 ├── controllers
 │   ├── users.js
@@ -68,7 +67,7 @@ import UsersCtrl     from 'controllers/users'
 
 // Components with auto-start on each DOM load event (turbolinks:load or DOMContentLoaded)
 import Forms         from 'components/forms'
-import FlashMessages from 'components/flash_messages'
+import Modal         from 'components/modal'
 
 const App = new RalixApp({
   rails_ujs: Rails,
@@ -78,10 +77,7 @@ const App = new RalixApp({
     '/users':     UsersCtrl,
     '/.*':        AppCtrl
   },
-  components: [
-    Forms,
-    FlashMessages
-  ]
+  components: [Forms, Modal]
 })
 
 Rails.start()

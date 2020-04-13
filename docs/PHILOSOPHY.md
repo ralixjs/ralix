@@ -44,7 +44,7 @@ export default class Tooltip {
     ...
   }
 }
-````
+```
 
 ## Utilities
 
