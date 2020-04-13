@@ -34,7 +34,7 @@ Components can be also auto-mounted on each DOM load, you just need to pass them
 export default class Tooltip {
   static onload() {
     findAll('.tooltip').forEach(el => {
-      on(el, 'click', () => {
+      on(el, 'mouseover', () => {
         new Tooltip(data(el))
       })
     })
