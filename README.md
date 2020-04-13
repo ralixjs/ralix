@@ -122,20 +122,6 @@ export default class UsersCtrl extends AppCtrl {
 }
 ```
 
-### Views
-
-```html
-<a href="#" onclick="back()">Back</a>
-<div id="menu">...</div>
-...
-<a href="#" onclick="toggleMenu()">Toggle Menu</a>
-<a href="#" class="fire-modal" data-url="/modals/help">Help me!</a>
-...
-<input type="text" name="query" onkeyup="search()" />
-...
-<div onclick="visit('/sign-up')">...</div>
-```
-
 ### Components
 
 ```js
@@ -174,6 +160,20 @@ export default class Modal {
     })
   }
 }
+```
+
+### Views
+
+```html
+<a href="#" onclick="back()">Back</a>
+<div id="menu">...</div>
+...
+<a href="#" onclick="toggleMenu()">Toggle Menu</a>
+<a href="#" class="fire-modal" data-url="/modals/help">Help me!</a>
+...
+<input type="text" name="query" onkeyup="search()" />
+...
+<div onclick="visit('/sign-up')">...</div>
 ```
 
 ### Templates
