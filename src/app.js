@@ -27,7 +27,10 @@ export default class App {
       this.core.inject()
       this.router.dispatch()
       this.events.bind()
-      this.components.forEach(component => component.onload())
+      this.components.forEach(component => {
+        if (typeof component.onload === 'function')
+          component.onload()
+      })
     })
   }
 }
