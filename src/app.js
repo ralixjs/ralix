@@ -21,13 +21,16 @@ export default class App {
   }
 
   start() {
-    const onLoad = (typeof Turbolinks !== 'undefined') ? 'turbolinks:load' : 'DOMContentLoaded'
+    const loadEvent = (typeof Turbolinks !== 'undefined') ? 'turbolinks:load' : 'DOMContentLoaded'
 
-    document.addEventListener(onLoad, () => {
+    document.addEventListener(loadEvent, () => {
       this.core.inject()
       this.router.dispatch()
       this.events.bind()
-      this.components.forEach(component => new(component))
+      this.components.forEach(component => {
+        if (typeof component.onload === 'function')
+          component.onload()
+      })
     })
   }
 }

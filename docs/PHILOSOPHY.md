@@ -28,12 +28,28 @@ routes: {
 
 The Components are designed to encapsulate code for widgets you will have in several pages: modals, tooltips, forms, etc.
 
-Components can be also auto-mounted on each DOM load, you just need to pass them to the `RalixApp` instance and Ralix will call the `constructor` method automatically.
+Components can be also auto-mounted on each DOM load, you just need to pass them to the `RalixApp` instance and Ralix will call the `onload` static method automatically. Example:
+
+```js
+export default class Tooltip {
+  static onload() {
+    findAll('.tooltip').forEach(el => {
+      on(el, 'mouseover', () => {
+        new Tooltip(data(el))
+      })
+    })
+  }
+
+  constructor(options = {}) {
+    ...
+  }
+}
+```
 
 ## Utilities
 
-Utilities, aka Core methods, are helpers to help you write most common operations with a nicer and shorter API: finders, manage classes, manage elements attributes and data-attributes, submit forms, change browser history, events and more. You can find all helpers documentation [here](CORE_API.md).
+Utilities, aka Core methods, are helpers to help you write most common operations with a nicer and shorter API: finders, manage classes, manage elements attributes and data-attributes, submit forms, change browser history, listeners and more. You can find all helpers documentation [here](CORE_API.md).
 
 ## Logo
 
-We use a bear, a sloth bear, inspired by Baloo (from The Jungle Book) performing the song "The Bare Necessities".
+We use a bear, a sloth bear, inspired by **Baloo** (from **The Jungle Book**) performing the song **The Bare Necessities**.
