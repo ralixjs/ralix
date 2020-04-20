@@ -153,9 +153,8 @@ Allows to update current location via browser history object. The argument `meth
 Wraps `addEventListener`. Example:
 
 ```js
-on(window, 'click', (e) => {
-  const edit = find('input.edit')
-  if (edit && !edit.contains(e.target)) saveItem(edit)
+on(document, 'scroll', (e) => {
+  addClass('body', 'scrolling')
 })
 ```
 

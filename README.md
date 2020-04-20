@@ -38,20 +38,21 @@ Structure:
 
 ```
 ├── components
-│   ├── modal.js
 │   ├── geolocation.js
-│   ├── forms.js
+│   ├── modal.js
+│   ├── tooltip.js
 ├── controllers
-│   ├── users.js
+│   ├── app.js
 │   ├── dashboard.js
-│   ├── bookings.js
-│   └── app.js
+│   └── users.js
 ├── packs
 │   └── application.js
 └── app.js
 ```
 
 ### App
+
+The "main" application file (`app/javascript/app.js`), where you should load your modules and create a `RalixApp` instance: `new RalixApp({})`. Then, you should start your Ralix application by calling: `App.start()`.
 
 ```js
 // Dependencies
@@ -62,22 +63,20 @@ import { RalixApp }  from 'ralix'
 // Controllers
 import AppCtrl       from 'controllers/app'
 import DashboardCtrl from 'controllers/dashboard'
-import BookingsCtrl  from 'controllers/bookings'
 import UsersCtrl     from 'controllers/users'
 
 // Components with auto-start on each DOM load event (turbolinks:load or DOMContentLoaded)
-import Forms         from 'components/forms'
 import Modal         from 'components/modal'
+import Tooltip       from 'components/tooltip'
 
 const App = new RalixApp({
   rails_ujs: Rails,
   routes: {
     '/dashboard': DashboardCtrl,
-    '/bookings':  BookingsCtrl,
     '/users':     UsersCtrl,
     '/.*':        AppCtrl
   },
-  components: [Forms, Modal]
+  components: [Modal, Tooltip]
 })
 
 Rails.start()
