@@ -43,7 +43,7 @@ export default class Core {
 
   hasClass(query, className) {
     const el = _element(query)
-    if (el) el.classList.contains(className)
+    if (el) return el.classList.contains(className)
   }
 
   visit(url) {
