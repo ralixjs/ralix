@@ -148,13 +148,21 @@ Allows to update current location via browser history object. The argument `meth
 
 ## Events
 
-- `on(query, type, callback)`
+- `on(query, events, callback)`
 
 Wraps `addEventListener`. Example:
 
 ```js
 on(document, 'scroll', (e) => {
   addClass('body', 'scrolling')
+})
+```
+
+Accepts multiple events:
+
+```js
+on('.input-submit', 'change keyup', (e) => {
+  submit('#form')
 })
 ```
 
