@@ -105,11 +105,11 @@ export default class Core {
     }
   }
 
-  on(query, type, callback) {
+  on(query, events, callback) {
     const el = _element(query)
     if (!el) return
 
-    el.addEventListener(type, callback)
+    events.split(' ').forEach(event => el.addEventListener(event, callback))
   }
 
   currentElement() {

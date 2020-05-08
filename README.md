@@ -257,7 +257,7 @@ You can find a complete API documentation [here](docs/CORE_API.md).
 
 ### Events
 
-- on(query, type, callback)
+- on(query, events, callback)
 - currentElement()
 - currentEvent()
 
