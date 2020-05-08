@@ -158,7 +158,7 @@ on(document, 'scroll', (e) => {
 })
 ```
 
-Allows multiple events:
+Accepts multiple events:
 
 ```js
 on('.input-submit', 'change keyup', (e) => {
