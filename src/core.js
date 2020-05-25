@@ -27,18 +27,30 @@ export default class Core {
   }
 
   addClass(query, classList) {
-    const el = _element(query)
-    if (el) el.classList.add(classList)
+    if (Array.isArray(query))
+      query.map(el => addClass(el, classList))
+    else {
+      const el = _element(query)
+      if (el) el.classList.add(classList)
+    }
   }
 
   removeClass(query, classList) {
-    const el = _element(query)
-    if (el) el.classList.remove(classList)
+    if (Array.isArray(query))
+      query.map(el => removeClass(el, classList))
+    else {
+      const el = _element(query)
+      if (el) el.classList.remove(classList)
+    }
   }
 
   toggleClass(query, classList) {
-    const el = _element(query)
-    if (el) el.classList.toggle(classList)
+    if (Array.isArray(query))
+      query.map(el => toggleClass(el, classList))
+    else {
+      const el = _element(query)
+      if (el) el.classList.toggle(classList)
+    }
   }
 
   hasClass(query, className) {
