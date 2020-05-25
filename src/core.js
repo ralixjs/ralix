@@ -193,17 +193,7 @@ export default class Core {
       const el = _element(query)
       if (!el) return
 
-      switch (operation) {
-        case 'add':
-          el.classList.add(classList)
-          break
-        case 'remove':
-          el.classList.remove(classList)
-          break
-        case 'toggle':
-          el.classList.toggle(classList)
-          break
-      }
+      el.classList[operation](classList)
     })
   }
 
