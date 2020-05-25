@@ -27,30 +27,30 @@ export default class Core {
   }
 
   addClass(query, classList) {
-    const queries = _queryToArray(query)
-
-    queries.forEach( _query => {
-      const el = _element(_query)
+    if (Array.isArray(query))
+      query.map(el => addClass(el, classlist))
+    else {
+      const el = _element(query)
       if (el) el.classList.add(classList)
-    })
+    }
   }
 
   removeClass(query, classList) {
-    const queries = _queryToArray(query)
-
-    queries.forEach( _query => {
-      const el = _element(_query)
+    if (Array.isArray(query))
+      query.map(el => removeClass(el, classlist))
+    else {
+      const el = _element(query)
       if (el) el.classList.remove(classList)
-    })
+    }
   }
 
   toggleClass(query, classList) {
-    const queries = _queryToArray(query)
-
-    queries.forEach( _query => {
-      const el = _element(_query)
+    if (Array.isArray(query))
+      query.map(el => toggleClass(el, classlist))
+    else {
+      const el = _element(query)
       if (el) el.classList.toggle(classList)
-    })
+    }
   }
 
   hasClass(query, className) {
@@ -213,9 +213,5 @@ export default class Core {
       const [key, value] = entry
       elem.dataset[key] = value
     })
-  }
-
-  _queryToArray(query) {
-    return Array.isArray(query) ? query : [query]
   }
 }
