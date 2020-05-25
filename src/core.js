@@ -28,7 +28,7 @@ export default class Core {
 
   addClass(query, classList) {
     if (Array.isArray(query))
-      query.map(el => addClass(el, classlist))
+      query.map(el => addClass(el, classList))
     else {
       const el = _element(query)
       if (el) el.classList.add(classList)
@@ -37,7 +37,7 @@ export default class Core {
 
   removeClass(query, classList) {
     if (Array.isArray(query))
-      query.map(el => removeClass(el, classlist))
+      query.map(el => removeClass(el, classList))
     else {
       const el = _element(query)
       if (el) el.classList.remove(classList)
@@ -46,7 +46,7 @@ export default class Core {
 
   toggleClass(query, classList) {
     if (Array.isArray(query))
-      query.map(el => toggleClass(el, classlist))
+      query.map(el => toggleClass(el, classList))
     else {
       const el = _element(query)
       if (el) el.classList.toggle(classList)
