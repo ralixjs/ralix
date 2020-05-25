@@ -1,6 +1,6 @@
 {
   "name": "ralix",
-  "version": "0.7.3",
+  "version": "0.7.4",
   "description": "Microframework for building Rails front-ends",
   "repository": "ralixjs/ralix",
   "license": "MIT",
