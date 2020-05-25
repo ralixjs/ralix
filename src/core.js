@@ -27,30 +27,15 @@ export default class Core {
   }
 
   addClass(query, classList) {
-    if (Array.isArray(query))
-      query.map(el => addClass(el, classList))
-    else {
-      const el = _element(query)
-      if (el) el.classList.add(classList)
-    }
+    _classModifier('add', query, classList)
   }
 
   removeClass(query, classList) {
-    if (Array.isArray(query))
-      query.map(el => removeClass(el, classList))
-    else {
-      const el = _element(query)
-      if (el) el.classList.remove(classList)
-    }
+    _classModifier('remove', query, classList)
   }
 
   toggleClass(query, classList) {
-    if (Array.isArray(query))
-      query.map(el => toggleClass(el, classList))
-    else {
-      const el = _element(query)
-      if (el) el.classList.toggle(classList)
-    }
+    _classModifier('toggle', query, classList)
   }
 
   hasClass(query, className) {
@@ -199,6 +184,27 @@ export default class Core {
       return find(query)
     else
       return query
+  }
+
+  _classModifier(operation, query, classList) {
+    queries = Array.isArray(query) ? query : [query]
+
+    queries.forEach(query => {
+      const el = _element(query)
+      if (!el) return
+
+      switch (operation) {
+        case 'add':
+          el.classList.add(classList)
+          break
+        case 'remove':
+          el.classList.remove(classList)
+          break
+        case 'toggle':
+          el.classList.toggle(classList)
+          break
+      }
+    })
   }
 
   _setAttributes(elem, attributes) {
