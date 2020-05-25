@@ -187,7 +187,7 @@ export default class Core {
   }
 
   _classModifier(operation, query, classList) {
-    queries = Array.isArray(query) ? query : [query]
+    const queries = Array.isArray(query) ? query : [query]
 
     queries.forEach(query => {
       const el = _element(query)
