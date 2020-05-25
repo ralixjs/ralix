@@ -24,15 +24,23 @@ Adds `display: none` to the given element.
 
 - `addClass(query, classList)`
 
-Wraps `classList.add`.
+Wraps `classList.add`. The parameter _query_ could be also an array of elements.
+```js
+// classic
+> addClass('body', 'awesome-class')
+// multiple classes
+> addClass('body', 'awesome-class too-awesome-class')
+// multiple targets
+> addClass(['#id1', '.class1'], 'awesome-class')
+```
 
 - `removeClass(query, classList)`
 
-Wraps `classList.remove`.
+Wraps `classList.remove`. The parameter _query_ could be also an array of elements.
 
 - `toggleClass(query, classList)`
 
-Wraps `classList.toggle`.
+Wraps `classList.toggle`. The parameter _query_ could be also an array of elements.
 
 - `hasClass(query, className)`
 
