@@ -191,9 +191,7 @@ export default class Core {
 
     queries.forEach(query => {
       const el = _element(query)
-      if (!el) return
-
-      el.classList[operation](classList)
+      if (el) el.classList[operation](classList)
     })
   }
 
