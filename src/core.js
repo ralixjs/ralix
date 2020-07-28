@@ -179,6 +179,29 @@ export default class Core {
       _setDataset(el, attribute)
   }
 
+  ajax(path, params = {}, options = {}) {
+    const defaults = { method: 'GET' }
+    options = Object.assign({}, defaults, options)
+
+    if ( ['POST', 'PATCH', 'PUT'].includes(options['method']) ){
+      options = Object.assign({}, { body: JSON.stringify(params) }, options)
+    } else {
+      path = `${path}?${_encodeParams(params)}`
+    }
+
+    return fetch(path, options)
+  }
+
+  get(path, params = {}, options = {}) {
+    options['method'] = 'GET'
+    return ajax(path, params, options)
+  }
+
+  post(path, params = {}, options = {}) {
+    options['method'] = 'POST'
+    return ajax(path, params, options)
+  }
+
   _element(query) {
     if (typeof query === 'string')
       return find(query)
@@ -207,5 +230,11 @@ export default class Core {
       const [key, value] = entry
       elem.dataset[key] = value
     })
+  }
+
+  _encodeParams(params){
+    return Object.keys(params)
+                .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(params[k]))
+                .join('&')
   }
 }
