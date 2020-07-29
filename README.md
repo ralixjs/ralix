@@ -261,6 +261,12 @@ You can find a complete API documentation [here](docs/CORE_API.md).
 - currentElement()
 - currentEvent()
 
+### Ajax
+
+- ajax(path, params, options)
+- get(path, params, options)
+- post(path, params, options)
+
 ## License
 
 Copyright (c) Ralix Core Team. Ralix is released under the [MIT](LICENSE) License.

@@ -174,7 +174,6 @@ Returns the element which received the last fired event.
 
 Returns the last fired event.
 
-
 ## Ajax
 
 - `ajax(path, params, options)`
