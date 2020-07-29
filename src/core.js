@@ -184,7 +184,7 @@ export default class Core {
     options = Object.assign({}, defaults, options)
 
     if (['POST', 'PATCH', 'PUT'].includes(options.method)) options = Object.assign({}, { body: JSON.stringify(params) }, options)
-    else path = `${path}?${_encodeParams(params)}`
+    else if (Object.keys(params).length > 0) path = `${path}?${_encodeParams(params)}`
 
     return fetch(path, options)
   }
