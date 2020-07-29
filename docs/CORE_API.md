@@ -173,3 +173,18 @@ Returns the element which received the last fired event.
 - `currentEvent()`
 
 Returns the last fired event.
+
+
+## Ajax
+
+- `ajax(path, params, options)`
+
+Wraps `fetch`. Adds the object `params` to `path` or `options.body` depending on `options.method`. The object `options` can include the same options as `fetch` such as *headers*, *body*, *credentials*, *method*, etc. The default options are *GET* for `options.method` and *include* for `options.credentials`.
+
+- `get(path, params, options)`
+
+Alias for `ajax` method with `options.method` as *GET*.
+
+- `post(path, params, options)`
+
+Alias for `ajax` method with `options.method` as *POST*.

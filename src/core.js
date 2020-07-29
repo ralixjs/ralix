@@ -186,10 +186,7 @@ export default class Core {
     if (['POST', 'PATCH', 'PUT'].includes(options.method)) options = Object.assign({}, { body: JSON.stringify(params) }, options)
     else path = `${path}?${_encodeParams(params)}`
 
-    return fetch(path, options).then(res => {
-      if (options.headers && options.headers["Content-Type"] === 'application/json') return res.json()
-      else return res
-    })
+    return fetch(path, options)
   }
 
   get(path, params = {}, options = {}) {
