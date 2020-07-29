@@ -103,10 +103,23 @@ export default class Core {
   }
 
   on(query, events, callback) {
-    const el = _element(query)
-    if (!el) return
+    let elements = _elements(query)
+    if (!elements) return
 
-    events.split(' ').forEach(event => el.addEventListener(event, callback))
+    if (elements.length == undefined) elements = [elements]
+
+    elements.forEach(component => {
+      events.split(' ').forEach(event => component.addEventListener(event, callback))
+    })
+  }
+
+  _elements(query) {
+    if (typeof query === 'string' && query[0] != '#')
+      return findAll(query)
+    else if (typeof query === 'string')
+      return find(query)
+    else
+      return query
   }
 
   currentElement() {
