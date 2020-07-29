@@ -180,16 +180,16 @@ export default class Core {
   }
 
   ajax(path, params = {}, options = {}) {
-    const defaults = { method: 'GET' }
+    const defaults = { method: 'GET', credentials: 'include' }
     options = Object.assign({}, defaults, options)
 
-    if ( ['POST', 'PATCH', 'PUT'].includes(options['method']) ){
-      options = Object.assign({}, { body: JSON.stringify(params) }, options)
-    } else {
-      path = `${path}?${_encodeParams(params)}`
-    }
+    if (['POST', 'PATCH', 'PUT'].includes(options.method)) options = Object.assign({}, { body: JSON.stringify(params) }, options)
+    else path = `${path}?${_encodeParams(params)}`
 
-    return fetch(path, options)
+    return fetch(path, options).then(res => {
+      if (options.headers && options.headers["Content-Type"] === 'application/json') return res.json()
+      else return res
+    })
   }
 
   get(path, params = {}, options = {}) {
@@ -232,9 +232,9 @@ export default class Core {
     })
   }
 
-  _encodeParams(params){
+  _encodeParams(params) {
     return Object.keys(params)
-                .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(params[k]))
-                .join('&')
+                 .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(params[k]))
+                 .join('&')
   }
 }
