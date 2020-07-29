@@ -114,10 +114,8 @@ export default class Core {
   }
 
   _elements(query) {
-    if (typeof query === 'string' && query[0] != '#')
+    if (typeof query === 'string')
       return findAll(query)
-    else if (typeof query === 'string')
-      return find(query)
     else
       return query
   }
