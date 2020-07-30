@@ -179,14 +179,16 @@ export default class Core {
       _setDataset(el, attribute)
   }
 
-  ajax(path, params = {}, options = {}) {
+  async ajax(path, params = {}, options = {}, dataType = 'text') {
     const defaults = { method: 'GET', credentials: 'include' }
     options = Object.assign({}, defaults, options)
 
     if (['POST', 'PATCH', 'PUT'].includes(options.method)) options = Object.assign({}, { body: JSON.stringify(params) }, options)
     else if (Object.keys(params).length > 0) path = `${path}?${_encodeParams(params)}`
 
-    return fetch(path, options)
+    const response = await fetch(path, options)
+    if (dataType.toLowerCase() === 'json') return response.json()
+    else return response.text()
   }
 
   get(path, params = {}, options = {}) {

@@ -263,9 +263,9 @@ You can find a complete API documentation [here](docs/CORE_API.md).
 
 ### Ajax
 
-- ajax(path, params, options)
-- get(path, params, options)
-- post(path, params, options)
+- ajax(path, params, options, dataType)
+- get(path, params, options, dataType)
+- post(path, params, options, dataType)
 
 ## License
 

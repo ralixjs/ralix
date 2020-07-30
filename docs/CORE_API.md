@@ -176,14 +176,18 @@ Returns the last fired event.
 
 ## Ajax
 
-- `ajax(path, params, options)`
+- `ajax(path, params, options, dataType)`
 
-Wraps `fetch`. Adds the object `params` to `path` or `options.body` depending on `options.method`. The object `options` can include the same options as `fetch` such as *headers*, *body*, *credentials*, *method*, etc. The default options are *GET* for `options.method` and *include* for `options.credentials`.
+Wraps `fetch`. Adds the object `params` to `path` or `options.body` depending on `options.method`. 
 
-- `get(path, params, options)`
+The object `options` can include the same options as `fetch` such as *headers*, *body*, *credentials*, *method*, etc. The default options are *GET* for `options.method` and *include* for `options.credentials`.
+
+Returns the response body in text. If the argument `dataType` is *json* the response body will be returned in json format.
+
+- `get(path, params, options, dataType)`
 
 Alias for `ajax` method with `options.method` as *GET*.
 
-- `post(path, params, options)`
+- `post(path, params, options, dataType)`
 
 Alias for `ajax` method with `options.method` as *POST*.
