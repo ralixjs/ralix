@@ -146,10 +146,8 @@ export default class Modal {
     addClass(document.body, 'disable-scroll')
     addClass(modal, 'open')
 
-    fetch(this.url, { method: 'GET', credentials: 'include' }).then((result) => {
-      result.text().then(content => {
-        insertHTML(modalBody, content)
-      })
+    get(this.url).then((result) => {
+      insertHTML(modalBody, result)
     })
 
     on(modalClose, 'click', () => {
@@ -263,9 +261,9 @@ You can find a complete API documentation [here](docs/CORE_API.md).
 
 ### Ajax
 
-- ajax(path, params, options, dataType)
-- get(path, params, options, dataType)
-- post(path, params, options, dataType)
+- ajax(path, { params, options })
+- get(path, { params, options })
+- post(path, { params, options })
 
 ## License
 
