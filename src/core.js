@@ -104,7 +104,7 @@ export default class Core {
 
   on(query, events, callback) {
     let elements = _elements(query)
-    if (!elements) return
+    if (elements.length == 0) return
 
     elements.forEach(component => {
       events.split(' ').forEach(event => component.addEventListener(event, callback))
@@ -201,11 +201,11 @@ export default class Core {
     queries.forEach(query => {
       let elements = _elements(query)
 
-      if (elements) {
-        elements.forEach(el => {
-          el.classList[operation](classList)
-        })
-      }
+      if (elements.length == 0) return
+
+      elements.forEach(el => {
+        el.classList[operation](classList)
+      })
     })
   }
 
