@@ -106,18 +106,9 @@ export default class Core {
     let elements = _elements(query)
     if (!elements) return
 
-    if (elements.length == undefined) elements = [elements]
-
     elements.forEach(component => {
       events.split(' ').forEach(event => component.addEventListener(event, callback))
     })
-  }
-
-  _elements(query) {
-    if (typeof query === 'string')
-      return findAll(query)
-    else
-      return query
   }
 
   currentElement() {
@@ -197,12 +188,24 @@ export default class Core {
       return query
   }
 
+  _elements(query) {
+    const elements = (typeof query === 'string') ? findAll(query) : query
+    if (elements.length == undefined) elements = [elements]
+
+    return elements
+  }
+
   _classModifier(operation, query, classList) {
     const queries = Array.isArray(query) ? query : [query]
 
     queries.forEach(query => {
-      const el = _element(query)
-      if (el) el.classList[operation](classList)
+      let elements = _elements(query)
+
+      if (elements) {
+        elements.forEach(el => {
+          el.classList[operation](classList)
+        })
+      }
     })
   }
 
