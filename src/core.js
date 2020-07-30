@@ -191,14 +191,14 @@ export default class Core {
     else return response.text()
   }
 
-  get(path, params = {}, options = {}) {
+  get(path, params = {}, options = {}, dataType = 'text') {
     options['method'] = 'GET'
-    return ajax(path, params, options)
+    return ajax(path, params, options, dataType)
   }
 
-  post(path, params = {}, options = {}) {
+  post(path, params = {}, options = {}, dataType = 'text') {
     options['method'] = 'POST'
-    return ajax(path, params, options)
+    return ajax(path, params, options, dataType)
   }
 
   _element(query) {
