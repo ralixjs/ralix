@@ -178,7 +178,7 @@ Returns the last fired event.
 
 - `ajax(path, { params, options })`
 
-Wraps `fetch`. Adds the object `params` to `path` or `options.body` depending on `options.method`. 
+Wraps `fetch`. Adds the object `params` to `path` or `options.body` depending on `options.method`.
 
 The object `options` can include the same options as `fetch` such as *headers*, *body*, *credentials*, *method*, etc. with the additional option *format*. The default options are *GET* for `options.method` and *include* for `options.credentials`.
 
@@ -186,22 +186,10 @@ Returns the response body in text. If the argument `options.format` is *json* th
 
 Examples:
 
-Get:
-
 ```js
 ajax('/path/resource')
-```
-
-Post:
-
-```js
-ajax('/path/resource', { params: { id: 1 }, options: { method: 'POST', format: 'json' }})
-```
-
-Response in JSON format:
-
-```js
-ajax('/path/resource', options: { format: 'json' }})
+ajax('/path/resource', { params: { id: 1 }, options: { method: 'POST' }})
+ajax('/path/resource', { options: { format: 'json' }})
 ```
 
 - `get(path, { params, options })`

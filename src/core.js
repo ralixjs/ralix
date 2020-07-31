@@ -181,17 +181,17 @@ export default class Core {
 
   async ajax(path, { params = {}, options = {} } = {}) {
     let format = 'text'
-    if ("format" in options){
+    if ("format" in options) {
       format = options.format
       delete options.format
     }
-    
+
     const defaults = { method: 'GET', credentials: 'include' }
     options = Object.assign({}, defaults, options)
 
     if (['POST', 'PATCH', 'PUT'].includes(options.method))
       options = Object.assign({}, { body: JSON.stringify(params) }, options)
-    else if (Object.keys(params).length > 0) 
+    else if (Object.keys(params).length > 0)
       path = `${path}?${_encodeParams(params)}`
 
     const response = await fetch(path, options)
@@ -203,12 +203,14 @@ export default class Core {
 
   get(path, { params = {}, options = {} } = {}) {
     options.method = 'GET'
-    return ajax(path, { params: params, options: options})
+
+    return ajax(path, { params: params, options: options })
   }
 
   post(path, { params = {}, options = {} } = {}) {
     options.method = 'POST'
-    return ajax(path, { params: params, options: options})
+
+    return ajax(path, { params: params, options: options })
   }
 
   _element(query) {
