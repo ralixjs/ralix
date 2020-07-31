@@ -17,13 +17,17 @@ export default class Core {
   }
 
   show(query) {
-    const el = _element(query)
-    if (el) el.setAttribute('style', '')
+    const elements = _elements(query)
+    if (elements.length == 0) return
+
+    elements.forEach(el => { el.setAttribute('style', '') })
   }
 
   hide(query) {
-    const el = _element(query)
-    if (el) el.setAttribute('style', 'display: none')
+    const elements = _elements(query)
+    if (elements.length == 0) return
+
+    elements.forEach(el => { el.setAttribute('style', 'display: none') })
   }
 
   addClass(query, classList) {
@@ -106,8 +110,8 @@ export default class Core {
     let elements = _elements(query)
     if (elements.length == 0) return
 
-    elements.forEach(component => {
-      events.split(' ').forEach(event => component.addEventListener(event, callback))
+    elements.forEach(el => {
+      events.split(' ').forEach(event => el.addEventListener(event, callback))
     })
   }
 
@@ -223,18 +227,17 @@ export default class Core {
   }
 
   _elements(query) {
-    let elements = (typeof query === 'string') ? findAll(query) : query
-    if (elements.length == undefined) elements = [elements]
-
-    return elements
+    if (typeof query === 'string')
+      return findAll(query)
+    else
+      return query
   }
 
   _classModifier(operation, query, classList) {
     const queries = Array.isArray(query) ? query : [query]
 
     queries.forEach(query => {
-      let elements = _elements(query)
-
+      const elements = _elements(query)
       if (elements.length == 0) return
 
       elements.forEach(el => {
