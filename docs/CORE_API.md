@@ -173,3 +173,29 @@ Returns the element which received the last fired event.
 - `currentEvent()`
 
 Returns the last fired event.
+
+## Ajax
+
+- `ajax(path, { params, options })`
+
+Wraps `fetch`. Adds the object `params` to `path` or `options.body` depending on `options.method`.
+
+The object `options` can include the same options as `fetch` such as *headers*, *body*, *credentials*, *method*, etc. with the additional option *format*. The default options are *GET* for `options.method` and *include* for `options.credentials`.
+
+Returns the response body in text. If the argument `options.format` is *json* the response body will be returned in json format.
+
+Examples:
+
+```js
+ajax('/path/resource')
+ajax('/path/resource', { params: { id: 1 }, options: { method: 'POST' }})
+ajax('/path/resource', { options: { format: 'json' }})
+```
+
+- `get(path, { params, options })`
+
+Alias for `ajax` method with `options.method` as *GET*.
+
+- `post(path, { params, options })`
+
+Alias for `ajax` method with `options.method` as *POST*.
