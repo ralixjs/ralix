@@ -191,13 +191,13 @@ export default class Core {
 
     if (['POST', 'PATCH', 'PUT'].includes(options.method))
       options = Object.assign({}, { body: JSON.stringify(params) }, options)
-    else if
-      (Object.keys(params).length > 0) path = `${path}?${_encodeParams(params)}`
+    else if (Object.keys(params).length > 0) 
+      path = `${path}?${_encodeParams(params)}`
 
     const response = await fetch(path, options)
     if (format.toLowerCase() === 'json')
       return response.json()
-    else 
+    else
       return response.text()
   }
 
