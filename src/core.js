@@ -55,8 +55,14 @@ export default class Core {
   }
 
   serialize(query) {
-    const form = _element(query)
-    if (form) return new URLSearchParams(new FormData(form)).toString()
+    if (query instanceof Element || typeof query == 'string') {
+      const form = _element(query)
+      if (form) return new URLSearchParams(new FormData(form)).toString()
+    } else {
+      return Object.keys(query)
+                   .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(query[k]))
+                   .join('&')
+    }
   }
 
   submit(query) {
@@ -192,7 +198,7 @@ export default class Core {
     if (['POST', 'PATCH', 'PUT'].includes(options.method))
       options = Object.assign({}, { body: JSON.stringify(params) }, options)
     else if (Object.keys(params).length > 0)
-      path = `${path}?${_encodeParams(params)}`
+      path = `${path}?${serialize(params)}`
 
     const response = await fetch(path, options)
     if (format.toLowerCase() === 'json')
@@ -241,11 +247,5 @@ export default class Core {
       const [key, value] = entry
       elem.dataset[key] = value
     })
-  }
-
-  _encodeParams(params) {
-    return Object.keys(params)
-                 .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(params[k]))
-                 .join('&')
   }
 }
