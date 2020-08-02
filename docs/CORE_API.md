@@ -120,6 +120,15 @@ Serializes the given form. Example:
 
 If `rails_ujs` is provided in `new RalixApp({})`, submits the form via `Rails.fire`, otherwise uses regular submit event.
 
+It could also be used for hash elements like the example below:
+
+```js
+> hash = { x: "1", y: "2" }
+Object { x: "1", y: "2" }
+> serialize(hash)
+"x=1&y=2"
+```
+
 ## Navigation
 
 - `reload()`
