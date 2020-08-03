@@ -116,6 +116,13 @@ Serializes the given form. Example:
 "x=1&y=2"
 ```
 
+It could also be used for hash elements like the example below:
+
+```js
+> serialize({ x: "1", y: "2" })
+"x=1&y=2"
+```
+
 - `submit(query)`
 
 If `rails_ujs` is provided in `new RalixApp({})`, submits the form via `Rails.fire`, otherwise uses regular submit event.
