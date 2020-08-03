@@ -233,10 +233,10 @@ export default class Core {
   }
 
   _elements(query) {
-    if (typeof query === 'string')
-      return findAll(query)
-    else
-      return query
+    let elements = (typeof query === 'string') ? findAll(query) : query
+    if (elements.length == undefined) elements = [elements]
+
+    return elements
   }
 
   _classModifier(operation, query, classList) {
