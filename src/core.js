@@ -17,13 +17,17 @@ export default class Core {
   }
 
   show(query) {
-    const el = _element(query)
-    if (el) el.setAttribute('style', '')
+    const elements = _elements(query)
+    if (elements.length == 0) return
+
+    elements.forEach(el => { el.setAttribute('style', '') })
   }
 
   hide(query) {
-    const el = _element(query)
-    if (el) el.setAttribute('style', 'display: none')
+    const elements = _elements(query)
+    if (elements.length == 0) return
+
+    elements.forEach(el => { el.setAttribute('style', 'display: none') })
   }
 
   addClass(query, classList) {
@@ -109,10 +113,12 @@ export default class Core {
   }
 
   on(query, events, callback) {
-    const el = _element(query)
-    if (!el) return
+    let elements = _elements(query)
+    if (elements.length == 0) return
 
-    events.split(' ').forEach(event => el.addEventListener(event, callback))
+    elements.forEach(el => {
+      events.split(' ').forEach(event => el.addEventListener(event, callback))
+    })
   }
 
   currentElement() {
@@ -226,12 +232,23 @@ export default class Core {
       return query
   }
 
+  _elements(query) {
+    let elements = (typeof query === 'string') ? findAll(query) : query
+    if (elements.length == undefined) elements = [elements]
+
+    return elements
+  }
+
   _classModifier(operation, query, classList) {
     const queries = Array.isArray(query) ? query : [query]
 
     queries.forEach(query => {
-      const el = _element(query)
-      if (el) el.classList[operation](classList)
+      const elements = _elements(query)
+      if (elements.length == 0) return
+
+      elements.forEach(el => {
+        el.classList[operation](classList)
+      })
     })
   }
 

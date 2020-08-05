@@ -1,7 +1,7 @@
 ![Ralix.js](https://raw.githubusercontent.com/ralixjs/ralix/master/logos/cover.png)
 
 [![](https://img.shields.io/npm/v/ralix.svg?style=flat-square)](https://www.npmjs.com/package/ralix)
-[![Maintainability](https://api.codeclimate.com/v1/badges/8e91bd9dc7263d19291c/maintainability)](https://codeclimate.com/github/ralixjs/ralix/maintainability)
+[![](https://img.shields.io/npm/l/ralix?style=flat-square)](https://github.com/ralixjs/ralix/blob/master/LICENSE)
 
 > Microframework for building and organizing Rails front-ends via Webpacker :sparkles:
 
