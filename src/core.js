@@ -233,6 +233,8 @@ export default class Core {
   }
 
   _elements(query) {
+    if (query == null) return []
+
     let elements = (typeof query === 'string') ? findAll(query) : query
     if (elements.length == undefined) elements = [elements]
 
