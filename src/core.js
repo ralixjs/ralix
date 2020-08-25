@@ -9,22 +9,30 @@ export default class Core {
   }
 
   find(query) {
-    return document.querySelector(query)
+    if (typeof query === 'string')
+      return document.querySelector(query)
+    else
+      return query
   }
 
   findAll(query) {
-    return document.querySelectorAll(query)
+    if (query == null) return []
+
+    let elements = (typeof query === 'string') ? document.querySelectorAll(query) : query
+    if (elements.length == undefined) elements = [elements]
+
+    return elements
   }
 
   show(query) {
-    const elements = _elements(query)
+    const elements = findAll(query)
     if (elements.length == 0) return
 
     elements.forEach(el => { el.setAttribute('style', '') })
   }
 
   hide(query) {
-    const elements = _elements(query)
+    const elements = findAll(query)
     if (elements.length == 0) return
 
     elements.forEach(el => { el.setAttribute('style', 'display: none') })
@@ -43,7 +51,7 @@ export default class Core {
   }
 
   hasClass(query, className) {
-    const el = _element(query)
+    const el = find(query)
     if (el) return el.classList.contains(className)
   }
 
@@ -60,7 +68,7 @@ export default class Core {
 
   serialize(query) {
     if (query instanceof Element || typeof query == 'string') {
-      const form = _element(query)
+      const form = find(query)
       if (form) return new URLSearchParams(new FormData(form)).toString()
     } else {
       return Object.keys(query)
@@ -70,7 +78,7 @@ export default class Core {
   }
 
   submit(query) {
-    const form = _element(query)
+    const form = find(query)
     if (!form) return
 
     if (App.rails_ujs && data(form, 'remote') === 'true')
@@ -113,7 +121,7 @@ export default class Core {
   }
 
   on(query, events, callback) {
-    let elements = _elements(query)
+    let elements = findAll(query)
     if (elements.length == 0) return
 
     elements.forEach(el => {
@@ -130,7 +138,7 @@ export default class Core {
   }
 
   insertHTML(query, html, position = 'inner') {
-    const el = _element(query)
+    const el = find(query)
     if (!el) return
 
     switch (position) {
@@ -164,7 +172,7 @@ export default class Core {
   }
 
   attr(query, attribute, value = null) {
-    const el = _element(query)
+    const el = find(query)
     if (!el) return
 
     if (typeof attribute === 'string')
@@ -177,7 +185,7 @@ export default class Core {
   }
 
   data(query, attribute = null, value = null) {
-    const el = _element(query)
+    const el = find(query)
     if (!el) return
 
     if (!attribute && !value) return el.dataset
@@ -225,27 +233,11 @@ export default class Core {
     return ajax(path, { params: params, options: options })
   }
 
-  _element(query) {
-    if (typeof query === 'string')
-      return find(query)
-    else
-      return query
-  }
-
-  _elements(query) {
-    if (query == null) return []
-
-    let elements = (typeof query === 'string') ? findAll(query) : query
-    if (elements.length == undefined) elements = [elements]
-
-    return elements
-  }
-
   _classModifier(operation, query, classList) {
     const queries = Array.isArray(query) ? query : [query]
 
     queries.forEach(query => {
-      const elements = _elements(query)
+      const elements = findAll(query)
       if (elements.length == 0) return
 
       elements.forEach(el => {
