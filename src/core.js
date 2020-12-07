@@ -19,9 +19,11 @@ export default class Core {
     if (query == null) return []
 
     let elements = (typeof query === 'string') ? document.querySelectorAll(query) : query
-    if (elements.length == undefined) elements = [elements]
 
-    return elements
+    if (Array.isArray(elements) || NodeList.prototype.isPrototypeOf(elements))
+      return elements
+    else
+      return [elements]
   }
 
   show(query) {
