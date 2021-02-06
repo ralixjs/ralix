@@ -12,7 +12,7 @@ Ralix has no runtime dependencies (relays only in [Webpacker](https://github.com
 
 Ralix aims to provide a basic structure to organize your JavaScript code. But gives you a lot of freedom, it just assumes a couple of directories and files, but you can create more to split your code, for example: `app/javascript/services/`, `app/javascript/validators/`, etc.
 
-There are two basic concepts: Router (Controllers) and Components.
+There are two basic concepts in a Ralix app: Router (Controllers) and Components.
 
 The Router tries to follow the idea of Rails Controllers. You should define an main controller (for example `ApplicationController.js`) and the other controllers inherit from it. This way, if you define a method in the main controller, you will have access to this method in all pages or even override this method behavior on per page basis.
 
@@ -46,8 +46,8 @@ export default class Tooltip {
 
 ## Helpers
 
-Utilities, aka _Helpers_, are functions to help you write most common operations with a nicer and shorter API: finders, manage classes, manage elements attributes and data-attributes, submit forms, change browser history, listeners and more. You can find the complete documentation [here](HELPERS_API.md).
+Utilities, aka _Helpers_, are a set of functions to help you write most common operations with a nicer and shorter API: finders, manage classes, manage elements attributes and data-attributes, submit forms, change browser history, listeners and more. You can find the complete documentation [here](HELPERS_API.md).
 
 ## Logo
 
-We use a bear, a sloth bear, inspired by **Baloo** (from **The Jungle Book**) performing the song **The Bare Necessities**. You can find all logo version [here](../logos/).
+We use a bear, a sloth bear, inspired by **Baloo** (from **The Jungle Book**) performing the song **The Bare Necessities**. You can find all logo versions [here](../logos/).
