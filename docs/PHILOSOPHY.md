@@ -16,7 +16,7 @@ There are two basic concepts: Router (Controllers) and Components.
 
 The Router tries to follow the idea of Rails Controllers. You should define an main controller (for example `ApplicationController.js`) and the other controllers inherit from it. This way, if you define a method in the main controller, you will have access to this method in all pages or even override this method behavior on per page basis.
 
-The Router uses regular expressions to match the current location (url) with the defined controller. So you can have one controller to match different urls/pages:
+The Router uses regular expressions to match the current location (url) with the defined controller. So you can have one controller to match different urls/pages too. Example:
 
 ```js
 routes: {
@@ -33,10 +33,8 @@ Components can be also auto-mounted on each DOM load, you just need to pass them
 ```js
 export default class Tooltip {
   static onload() {
-    findAll('.tooltip').forEach(el => {
-      on(el, 'mouseover', () => {
-        new Tooltip(data(el))
-      })
+    on('.tooltip', 'mouseover', (event) => {
+      new Tooltip(data(event.target))
     })
   }
 
@@ -46,10 +44,10 @@ export default class Tooltip {
 }
 ```
 
-## Utilities
+## Helpers
 
-Utilities, aka Core methods, are helpers to help you write most common operations with a nicer and shorter API: finders, manage classes, manage elements attributes and data-attributes, submit forms, change browser history, listeners and more. You can find all helpers documentation [here](CORE_API.md).
+Utilities, aka _Helpers_, are functions to help you write most common operations with a nicer and shorter API: finders, manage classes, manage elements attributes and data-attributes, submit forms, change browser history, listeners and more. You can find the complete documentation [here](HELPERS_API.md).
 
 ## Logo
 
-We use a bear, a sloth bear, inspired by **Baloo** (from **The Jungle Book**) performing the song **The Bare Necessities**.
+We use a bear, a sloth bear, inspired by **Baloo** (from **The Jungle Book**) performing the song **The Bare Necessities**. You can find all logo version [here](../logos/).
