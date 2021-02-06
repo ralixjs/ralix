@@ -26,7 +26,7 @@ routes: {
 }
 ```
 
-The Components are designed to encapsulate code for widgets you will have in several pages: modals, tooltips, forms, etc.
+Components are designed to encapsulate code for widgets you will have in several pages/parts of your app: modals, tooltips, forms, etc.
 
 Components can be also auto-mounted on each DOM load, you just need to pass them to the `RalixApp` instance and Ralix will call the `onload` static method automatically. Example:
 
@@ -34,7 +34,9 @@ Components can be also auto-mounted on each DOM load, you just need to pass them
 export default class Tooltip {
   static onload() {
     on('.tooltip', 'mouseover', (event) => {
-      new Tooltip(data(event.target))
+      const el = event.target
+
+      new Tooltip(data(el))
     })
   }
 
@@ -50,4 +52,4 @@ Utilities, aka _Helpers_, are a set of functions to help you write most common o
 
 ## Logo
 
-We use a bear, a sloth bear, inspired by **Baloo** (from **The Jungle Book**) performing the song **The Bare Necessities**. You can find all logo versions [here](../logos/).
+The logo is a sloth bear, inspired by **Baloo** (from **The Jungle Book**) performing the song **The Bare Necessities**. You can find all logo versions [here](../logos/).

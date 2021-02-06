@@ -51,7 +51,7 @@ Structure:
 
 ### App
 
-The "main" application file (`app/javascript/app.js`), where you should load your modules and create a `RalixApp` instance: `new RalixApp({})`. Then, you should start your Ralix application by calling: `App.start()`.
+The "main" application file (`app/javascript/app.js`), where you should load your modules and create a `RalixApp` instance: `new RalixApp()`. Then, you should start your Ralix application by calling: `App.start()`.
 
 ```js
 // Dependencies
@@ -217,60 +217,60 @@ You can find the complete API documentation [here](docs/HELPERS_API.md).
 
 ### Selectors
 
-- find(query)
-- findAll(query)
+- find
+- findAll
 
 ### Visibility
 
-- show(query)
-- hide(query)
+- show
+- hide
 
 ### Classes
 
-- addClass(query, classList)
-- removeClass(query, classList)
-- toggleClass(query, classList)
-- hasClass(query, className)
+- addClass
+- removeClass
+- toggleClass
+- hasClass
 
 ### Attributes
 
-- attr(query, attribute, value)
-- data(query, attribute, value)
+- attr
+- data
 
 ### DOM
 
-- insertHTML(query, html, position)
-- elem(type, attributes)
+- insertHTML
+- elem
 
 ### Templates
 
-- render(template, data)
+- render
 
 ### Forms
 
-- serialize(query)
-- submit(query)
+- serialize
+- submit
 
 ### Navigation
 
-- reload()
-- visit(url)
-- currentUrl()
-- getParam(param)
-- setParam(param, value, { url, update })
-- setUrl(state, method, data)
+- reload
+- visit
+- currentUrl
+- getParam
+- setParam
+- setUrl
 
 ### Events
 
-- on(query, events, callback)
-- currentElement()
-- currentEvent()
+- on
+- currentElement
+- currentEvent
 
 ### Ajax
 
-- ajax(path, { params, options })
-- get(path, { params, options })
-- post(path, { params, options })
+- ajax
+- get
+- post
 
 ## License
 
