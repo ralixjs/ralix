@@ -1,4 +1,4 @@
-# Core methods API
+# Helpers API
 
 ## Selectors
 

@@ -12,7 +12,7 @@ Ralix consists basically in 2 concepts, `Controllers` and `Components`:
 - `Controllers`: Controllers are meant to be mounted under a route path, they are like page-specific (scoped) JavaScript.
 - `Components`: Components are like widgets you will have in several pages: modals, tooltips, notifications, etc. Components can be also auto-mounted on each DOM load, you just need to pass them to the `RalixApp` instance (and implement the static method `onload`).
 
-On the other hand, Ralix also provides some helpers and utilities to facilitate most common operations like: selectors, manipulations, events, etc. [Check it out here](#core-methods).
+On the other hand, Ralix also provides some helpers and utilities to facilitate most common operations like: selectors, manipulations, events, etc. [Check it out here](#helpers).
 
 You can read more about Ralix Design, Vision and Philosophy [here](docs/PHILOSOPHY.md).
 
@@ -38,9 +38,8 @@ Structure:
 
 ```
 ├── components
-│   ├── geolocation.js
 │   ├── modal.js
-│   ├── tooltip.js
+│   └── tooltip.js
 ├── controllers
 │   ├── app.js
 │   ├── dashboard.js
@@ -83,6 +82,12 @@ Rails.start()
 Turbolinks.start()
 App.start()
 ```
+
+In your main entrypoint file (`app/packs/application.js`), you should just import the main application:
+
+```js
+import App from '../app'
+````
 
 ### Controllers
 
@@ -161,6 +166,8 @@ export default class Modal {
 
 ### Views
 
+In your regular HTML views, you can call directly Ralix Helpers or the methods provided by the _current_ Ralix controller.
+
 ```html
 <a href="#" onclick="back()">Back</a>
 <div id="menu">...</div>
@@ -204,9 +211,9 @@ render('todoItem', { id: id, value: value })
 
 Check a complete Rails application with Ralix here: [Ralix TodoMVC](https://github.com/ralixjs/ralix-todomvc).
 
-## Core methods
+## Helpers
 
-You can find a complete API documentation [here](docs/CORE_API.md).
+You can find the complete API documentation [here](docs/HELPERS_API.md).
 
 ### Selectors
 

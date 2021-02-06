@@ -1,6 +1,6 @@
-import Utils from './utils'
+import * as Utils from './internal_utils'
 
-export default class Core {
+export default class Helpers {
   inject() {
     Utils.getMethods(this).forEach(method => {
       if (typeof this[method] === 'function' && method != 'inject')
