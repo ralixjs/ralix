@@ -21,7 +21,9 @@ export default class App {
   }
 
   start() {
-    const loadEvent = (typeof Turbolinks !== 'undefined') ? 'turbolinks:load' : 'DOMContentLoaded'
+    let loadEvent = 'DOMContentLoaded'
+    if (typeof Turbolinks !== 'undefined') loadEvent = 'turbolinks:load'
+    if (typeof Turbo !== 'undefined') loadEvent = 'turbo:load'
 
     document.addEventListener(loadEvent, () => {
       this.helpers.inject()

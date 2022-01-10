@@ -1,6 +1,6 @@
 # Ralix Design, Vision and Philosophy
 
-Ralix is a lightweight framework with the goal to provide barebones and utilities to help enhance your current Rails (server-side) HTML, using ES6. It pairs really well with Turbolinks and the Rails UJS adapter.
+Ralix is a lightweight framework with the goal to provide barebones and utilities to help enhance your current Rails (server-side) HTML, using ES6. It pairs really well with Turbolinks and the Rails UJS adapter or just TurboRails.
 
 Following the spirit of frameworks like [Stimulus](https://github.com/stimulusjs/stimulus), Ralix doesn't seek to take over your entire front-end logic and rendering. Instead, it's designed to enhance your HTML with just enough behavior to make it shine.
 

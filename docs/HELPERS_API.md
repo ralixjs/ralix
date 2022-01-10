@@ -135,7 +135,7 @@ Reloads current page.
 
 - `visit(url)`
 
-Visits given `url`, uses `Turbolinks.visit` if possible.
+Visits given `url`, uses `Turbolinks.visit` or `Turbo.visit` if possible.
 
 - `currentUrl()`
 

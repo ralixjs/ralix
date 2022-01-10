@@ -58,8 +58,10 @@ export default class Helpers {
   }
 
   visit(url) {
-    if (Turbolinks !== 'undefined')
+    if (typeof Turbolinks !== 'undefined')
       Turbolinks.visit(url)
+    else if (typeof Turbo !== 'undefined')
+      Turbo.visit(url)
     else
       window.location.href = url
   }
