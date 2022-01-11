@@ -5,7 +5,7 @@
 
 > Microframework for building and organizing Rails front-ends via Webpacker :sparkles:
 
-Ralix provides barebones and utilities to help enhance your current Rails views. It integrates well with Turbolinks and Rails-UJS.
+Ralix provides barebones and utilities to help enhance your current Rails views. It integrates well with Turbo/Turbolinks and Rails-UJS.
 
 Ralix consists basically in 2 concepts, `Controllers` and `Components`:
 
@@ -64,7 +64,7 @@ import AppCtrl       from 'controllers/app'
 import DashboardCtrl from 'controllers/dashboard'
 import UsersCtrl     from 'controllers/users'
 
-// Components with auto-start on each DOM load event (turbolinks:load or DOMContentLoaded)
+// Components with auto-start on each DOM load event (turbo:load, turbolinks:load or DOMContentLoaded)
 import Modal         from 'components/modal'
 import Tooltip       from 'components/tooltip'
 
