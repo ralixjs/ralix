@@ -1,20 +1,20 @@
 # Ralix Design, Vision and Philosophy
 
-Ralix is a lightweight framework with the goal to provide barebones and utilities to help enhance your current Rails (server-side) HTML, using ES6. It pairs really well with Turbo/Turbolinks and the Rails UJS adapter.
+Ralix is a modest and lightweight framework with the goal to provide barebones and utilities to help enhance your current server-side rendered HTML, using ES6. It pairs really well with [Rails-Turbo](RAILS_INTEGRATION.md) applications.
 
-Following the spirit of frameworks like [Stimulus](https://github.com/stimulusjs/stimulus), Ralix doesn't seek to take over your entire front-end logic and rendering. Instead, it's designed to enhance your HTML with just enough behavior to make it shine.
+Following the spirit of frameworks like [Stimulus](https://github.com/stimulusjs/stimulus) or [Alpine.js](https://github.com/alpinejs/alpine), Ralix doesn't seek to take over your entire front-end logic and rendering. Instead, it's designed to enhance your HTML with just enough behavior to make it shine.
 
-The learning curve is really flat, so you can understand the whole framework in few minutes.
+The learning curve is really flat, you can understand the whole framework in few minutes.
 
-Ralix has no runtime dependencies (relays only in [Webpacker](https://github.com/rails/webpacker) in your host Rails app) and all codebase is really small, around 300 LOC.
+Ralix has no runtime dependencies and all codebase is really small, around 400 LOC.
 
 ## Structure
 
-Ralix aims to provide a basic structure to organize your JavaScript code. But gives you a lot of freedom, it just assumes a couple of directories and files, but you can create more to split your code, for example: `app/javascript/services/`, `app/javascript/validators/`, etc.
+Ralix aims to provide a basic structure to organize your JavaScript code. But gives you a lot of freedom, it just assumes a couple of directories, but you can create more to split your code, for example: `app/javascript/services/`, `app/javascript/validators/`, etc.
 
-There are two basic concepts in a Ralix app: Router (Controllers) and Components.
+There are two basic structural components in a Ralix app: Controllers (_The Router_) and Components.
 
-The Router tries to follow the idea of Rails Controllers. You should define an main controller (for example `ApplicationController.js`) and the other controllers inherit from it. This way, if you define a method in the main controller, you will have access to this method in all pages or even override this method behavior on per page basis.
+The Router tries to follow the idea of the Rails Controllers. You should define an main controller (for example `ApplicationController.js`) and the other controllers should inherit from it. This way, if you define a method in the main controller, you will have access to this method in all pages and eventually override its behavior on per page basis.
 
 The Router uses regular expressions to match the current location (url) with the defined controller. So you can have one controller to match different urls/pages too. Example:
 
@@ -28,7 +28,7 @@ routes: {
 
 Components are designed to encapsulate code for widgets you will have in several pages/parts of your app: modals, tooltips, forms, etc.
 
-Components can be also auto-mounted on each DOM load, you just need to pass them to the `RalixApp` instance and Ralix will call the `onload` static method automatically. Example:
+Components can be also auto-mounted on each DOM load event (`turbo:load` if using `Turbo`). You just need to pass them to the `RalixApp` instance (via the `components` option) and Ralix will call the `onload` static method automatically. Example:
 
 ```js
 export default class Tooltip {
@@ -46,10 +46,14 @@ export default class Tooltip {
 }
 ```
 
+**NOTE** Not all components need to be auto-mounted (and define the `onload` method), you can use the folder to write other components that you will initialize manually in some controllers.
+
 ## Helpers
 
-Utilities, aka _Helpers_, are a set of functions to help you write most common operations with a nicer and shorter API: finders, manage classes, manage elements attributes and data-attributes, submit forms, change browser history, listeners and more. You can find the complete documentation [here](HELPERS_API.md).
+Utilities, aka _Helpers_, are a set of functions to help to write most common operations with a nicer and shorter API: finders, manage classes, manage elements attributes and data-attributes, submit forms, change browser history, listeners and more. You can find the complete documentation [here](HELPERS_API.md).
+
+These provided helpers can be called in all the layers of your application: in the controllers, the components or directly in your views.
 
 ## Logo
 
-The logo is a sloth bear, inspired by **Baloo** (from **The Jungle Book**) performing the song **The Bare Necessities**. You can find all logo versions [here](../logos/).
+Created by [Alexander Lloyd](https://www.alexanderlloyd.info).
