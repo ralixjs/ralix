@@ -15,7 +15,7 @@ Ralix consists basically in 3 pieces:
 
 You can read more about Ralix Design, Vision and Philosophy [here](docs/PHILOSOPHY.md).
 
-Ralix pairs really well with `Rails` and `Turbo` based applications. Check out [more information here](docs/RAILS_INTEGRATION.md).
+Ralix pairs well with `Rails` and `Turbo` based applications. Check out [more information here](docs/RAILS_INTEGRATION.md).
 
 ## Installation
 

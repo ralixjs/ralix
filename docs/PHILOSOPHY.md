@@ -46,6 +46,8 @@ export default class Tooltip {
 }
 ```
 
+**NOTE** Not all components need to be auto-mounted (and define the `onload` method), you can use the folder to write other components that you will initialize manually in some controllers.
+
 ## Helpers
 
 Utilities, aka _Helpers_, are a set of functions to help to write most common operations with a nicer and shorter API: finders, manage classes, manage elements attributes and data-attributes, submit forms, change browser history, listeners and more. You can find the complete documentation [here](HELPERS_API.md).
