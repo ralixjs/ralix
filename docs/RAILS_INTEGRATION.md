@@ -1,8 +1,8 @@
 # Ralix + Rails
 
-Ralix pairs really well with Turbo-based (Turbo or Turbolinks) Rails applications.
+Ralix pairs really well with Turbo-based (_Turbo_ or _Turbolinks_) Rails applications.
 
-It also integrates with the RailsUJS adapter. In that case, you need to pass the instance via the `rails_ujs` option in the constructor.
+It also integrates with the _RailsUJS_ adapter. In that case, you need to pass the instance via the `rails_ujs` option in the constructor.
 
 Your main entrypoint (`app/javascript/application.js`) should look like something similar to:
 
