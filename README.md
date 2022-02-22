@@ -1,4 +1,4 @@
-![Ralix.js](https://raw.githubusercontent.com/ralixjs/ralix/master/logos/cover.png)
+![Ralix.js](https://raw.githubusercontent.com/ralixjs/ralix/master/logos/cover.jpg)
 
 [![](https://img.shields.io/npm/v/ralix.svg?style=flat-square)](https://www.npmjs.com/package/ralix)
 [![](https://img.shields.io/npm/l/ralix?style=flat-square)](https://github.com/ralixjs/ralix/blob/master/LICENSE)
