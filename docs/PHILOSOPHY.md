@@ -1,12 +1,12 @@
 # Ralix Design, Vision and Philosophy
 
-Ralix is a lightweight framework with the goal to provide barebones and utilities to help enhance your current Rails (server-side) HTML, using ES6. It pairs really well with Turbo/Turbolinks and the Rails UJS adapter.
+Ralix is a modest and lightweight framework with the goal to provide barebones and utilities to help enhance your current server-side rendered HTML, using ES6. It pairs really well with [Rails/Turbo/RailsUJS](RAILS_INTEGRATION.md) applications.
 
-Following the spirit of frameworks like [Stimulus](https://github.com/stimulusjs/stimulus), Ralix doesn't seek to take over your entire front-end logic and rendering. Instead, it's designed to enhance your HTML with just enough behavior to make it shine.
+Following the spirit of frameworks like [Stimulus](https://github.com/stimulusjs/stimulus) and [Alpine.js](https://github.com/alpinejs/alpine), Ralix doesn't seek to take over your entire front-end logic and rendering. Instead, it's designed to enhance your HTML with just enough behavior to make it shine.
 
 The learning curve is really flat, so you can understand the whole framework in few minutes.
 
-Ralix has no runtime dependencies (relays only in [Webpacker](https://github.com/rails/webpacker) in your host Rails app) and all codebase is really small, around 300 LOC.
+Ralix has no runtime dependencies and all codebase is really small, around 400 LOC.
 
 ## Structure
 
@@ -48,8 +48,10 @@ export default class Tooltip {
 
 ## Helpers
 
-Utilities, aka _Helpers_, are a set of functions to help you write most common operations with a nicer and shorter API: finders, manage classes, manage elements attributes and data-attributes, submit forms, change browser history, listeners and more. You can find the complete documentation [here](HELPERS_API.md).
+Utilities, aka _Helpers_, are a set of functions to help to write most common operations with a nicer and shorter API: finders, manage classes, manage elements attributes and data-attributes, submit forms, change browser history, listeners and more. You can find the complete documentation [here](HELPERS_API.md).
+
+These provided helpers can be called in all the layers of your application
 
 ## Logo
 
-The logo is a sloth bear, inspired by **Baloo** (from **The Jungle Book**) performing the song **The Bare Necessities**. You can find all logo versions [here](../logos/).
+Created by [Alexander Lloyd](https://www.alexanderlloyd.info).
