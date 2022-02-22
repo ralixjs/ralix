@@ -7,7 +7,7 @@
 
 Ralix is a modest JavaScript framework that provides barebones and utilities to help enhance your server-side rendered webapps.
 
-Ralix consists basically in 3 pieces, `Controllers`, `Components` and `Helpers`:
+Ralix consists basically in 3 pieces:
 
 - `Controllers`: Controllers are meant to be mounted under a route path, they are like page-specific (scoped) JavaScript.
 - `Components`: Components are like widgets you will have in several pages: modals, tooltips, notifications, etc.
@@ -15,7 +15,7 @@ Ralix consists basically in 3 pieces, `Controllers`, `Components` and `Helpers`:
 
 You can read more about Ralix Design, Vision and Philosophy [here](docs/PHILOSOPHY.md).
 
-Ralix automatically pairs really well with `Rails` and `Turbo` based applications. Check out [more information here](docs/RAILS_INTEGRATION.md).
+Ralix pairs really well with `Rails` and `Turbo` based applications. Check out [more information here](docs/RAILS_INTEGRATION.md).
 
 ## Installation
 
@@ -50,19 +50,19 @@ Structure:
 
 ### App
 
-It's the entrypoint for your application (`app.js`), where you should load your modules and create a `RalixApp` instance: `new RalixApp()`. Then, you can *start* your Ralix application by calling: `App.start()`.
+It's the entrypoint for your application (`app.js`), where you should load your modules and create a `RalixApp` instance: `new RalixApp()`. Then, you can _start_ your Ralix application by calling: `App.start()`.
 
 ```js
 import { RalixApp }  from 'ralix'
 
 // Controllers
-import AppCtrl       from 'controllers/application'
-import DashboardCtrl from 'controllers/dashboard'
-import UsersCtrl     from 'controllers/users'
+import AppCtrl       from './controllers/application'
+import DashboardCtrl from './controllers/dashboard'
+import UsersCtrl     from './controllers/users'
 
 // Components with auto-start
-import Modal         from 'components/modal'
-import Tooltip       from 'components/tooltip'
+import Modal         from './components/modal'
+import Tooltip       from './components/tooltip'
 
 const App = new RalixApp({
   rails_ujs: Rails,
@@ -81,7 +81,7 @@ App.start()
 
 ```js
 export default class AppCtrl {
-  back() {
+  goBack() {
     window.history.back()
   }
 
@@ -92,14 +92,14 @@ export default class AppCtrl {
 ```
 
 ```js
-import AppCtrl from './app'
+import AppCtrl from './application'
 
 export default class UsersCtrl extends AppCtrl {
   constructor() {
     super()
   }
 
-  back() {
+  goBack() {
     visit('/dashboard')
   }
 
@@ -157,7 +157,7 @@ export default class Modal {
 In your regular HTML code, now you can call directly Ralix Helpers or the methods provided by the _current_ Ralix controller.
 
 ```html
-<a href="#" onclick="back()">Back</a>
+<a href="#" onclick="goBack()">Back</a>
 <div id="menu">...</div>
 ...
 <a href="#" onclick="toggleMenu()">Toggle Menu</a>
@@ -194,8 +194,8 @@ render('todoItem', { id: id, value: value })
 
 ### More examples
 
-- Rails with Ralix, via Webpack: [Ralix TodoMVC](https://github.com/ralixjs/ralix-todomvc)
-- Middleman with Ralix and Tailwind: [Ralix TodoMVC](https://github.com/ralixjs/middleman-ralix-tailwind)
+- Rails with Ralix, via Webpack: https://github.com/ralixjs/ralix-todomvc
+- Middleman with Ralix and Tailwind: https://github.com/ralixjs/middleman-ralix-tailwind
 
 ## Helpers
 
