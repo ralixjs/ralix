@@ -13,7 +13,7 @@ Ralix consists basically in 3 pieces:
 - `Components`: Components are like widgets you will have in several pages: modals, tooltips, notifications, etc.
 - `Helpers`: Utilities to facilitate most common operations like: selectors, manipulations, events, ajax, etc. [Check it out here](#helpers).
 
-You can read more about Ralix Design, Vision and Philosophy [here](docs/PHILOSOPHY.md).
+You can read more about Ralix Design, Vision and Philosophy [here](docs/DESIGN.md).
 
 Ralix pairs well with `Rails` and `Turbo` based applications. Check out [more information here](docs/RAILS_INTEGRATION.md).
 
@@ -158,13 +158,8 @@ In your regular HTML code, now you can call directly Ralix Helpers or the method
 
 ```html
 <a href="#" onclick="goBack()">Back</a>
-<div id="menu">...</div>
-...
 <a href="#" onclick="toggleMenu()">Toggle Menu</a>
-<a href="#" class="fire-modal" data-url="/modals/help">Help me!</a>
-...
-<input type="text" name="query" onkeyup="search()" />
-...
+<input type="text" name="query" onkeyup="search()">
 <div onclick="visit('/sign-up')">...</div>
 ```
 
@@ -192,7 +187,7 @@ export const todoItem = ({ id, value }) => `
 render('todoItem', { id: id, value: value })
 ```
 
-### More examples
+### Application templates and examples
 
 - Rails with Ralix, via Webpack: https://github.com/ralixjs/ralix-todomvc
 - Middleman with Ralix and Tailwind: https://github.com/ralixjs/middleman-ralix-tailwind

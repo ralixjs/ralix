@@ -36,4 +36,4 @@ Turbolinks.start()
 App.start()
 ```
 
-Check a full Rails example app with Ralix, in the [Ralix TodoMVC](https://github.com/ralixjs/ralix-todomvc) repository.
+You can check out a full Rails example with Ralix, in the [Ralix TodoMVC](https://github.com/ralixjs/ralix-todomvc) repository.
