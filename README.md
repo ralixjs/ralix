@@ -191,6 +191,7 @@ render('todoItem', { id: id, value: value })
 
 - Rails with Ralix, via Webpack: https://github.com/ralixjs/ralix-todomvc
 - Middleman with Ralix and Tailwind: https://github.com/ralixjs/middleman-ralix-tailwind
+- Ralix and Tailwind, with Parcel: https://github.com/ralixjs/ralix-tailwind
 
 ## Helpers
 
