@@ -11,7 +11,7 @@ Ralix consists basically in 3 pieces:
 
 - `Controllers`: Controllers are meant to be mounted under a route path, they are like page-specific (scoped) JavaScript.
 - `Components`: Components are like widgets you will have in several pages: modals, tooltips, notifications, etc.
-- `Helpers`: Utilities to facilitate most common operations like: selectors, manipulations, events, ajax, etc. [Check it out here](#helpers).
+- `Helpers`: Utilities to facilitate most common operations like: selectors, manipulations, events, ajax, etc. [Check it out here](docs/HELPERS_API.md).
 
 You can read more about Ralix Design, Vision and Philosophy [here](docs/DESIGN.md).
 
@@ -33,24 +33,25 @@ Using `Yarn`:
 > yarn add ralix
 ```
 
-## Example
+## Example application
 
 Structure:
 
 ```
-├── components
+source/
+├── components/
 │   ├── modal.js
 │   └── tooltip.js
-├── controllers
+├── controllers/
 │   ├── application.js
 │   ├── dashboard.js
 │   └── users.js
 └── app.js
 ```
 
-### App
+### App object
 
-It's the entrypoint for your application (`app.js`), where you should load your modules and create a `RalixApp` instance: `new RalixApp()`. Then, you can _start_ your Ralix application by calling: `App.start()`.
+It's the entrypoint for your application (`source/app.js`), where you should load your modules and create a `RalixApp` instance: `new RalixApp()`. Then, you can _start_ your Ralix application by calling: `App.start()`. Don't forget to include your entrypoint in your layout.
 
 ```js
 import { RalixApp }  from 'ralix'
@@ -65,7 +66,6 @@ import Modal         from './components/modal'
 import Tooltip       from './components/tooltip'
 
 const App = new RalixApp({
-  rails_ujs: Rails,
   routes: {
     '/dashboard': DashboardCtrl,
     '/users':     UsersCtrl,
@@ -80,6 +80,8 @@ App.start()
 ### Controllers
 
 ```js
+// source/controllers/app.js
+
 export default class AppCtrl {
   goBack() {
     window.history.back()
@@ -92,6 +94,8 @@ export default class AppCtrl {
 ```
 
 ```js
+// source/controllers/users.js
+
 import AppCtrl from './application'
 
 export default class UsersCtrl extends AppCtrl {
@@ -117,6 +121,8 @@ export default class UsersCtrl extends AppCtrl {
 ### Components
 
 ```js
+// source/components/modal.js
+
 export default class Modal {
   static onload() {
     findAll('.fire-modal').forEach(el => {
@@ -187,72 +193,11 @@ export const todoItem = ({ id, value }) => `
 render('todoItem', { id: id, value: value })
 ```
 
-### Application templates and examples
+## Starter Kits and example apps
 
 - Rails with Ralix, via Webpack: https://github.com/ralixjs/ralix-todomvc
 - Middleman with Ralix and Tailwind: https://github.com/ralixjs/middleman-ralix-tailwind
 - Ralix and Tailwind, with Parcel: https://github.com/ralixjs/ralix-tailwind
-
-## Helpers
-
-You can find the complete API documentation [here](docs/HELPERS_API.md).
-
-### Selectors
-
-- find
-- findAll
-
-### Visibility
-
-- show
-- hide
-
-### Classes
-
-- addClass
-- removeClass
-- toggleClass
-- hasClass
-
-### Attributes
-
-- attr
-- data
-
-### DOM
-
-- insertHTML
-- elem
-
-### Templates
-
-- render
-
-### Forms
-
-- serialize
-- submit
-
-### Navigation
-
-- reload
-- visit
-- currentUrl
-- getParam
-- setParam
-- setUrl
-
-### Events
-
-- on
-- currentElement
-- currentEvent
-
-### Ajax
-
-- ajax
-- get
-- post
 
 ## License
 

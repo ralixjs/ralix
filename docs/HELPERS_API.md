@@ -1,5 +1,16 @@
 # Helpers API
 
+- [Selectors](#selectors)
+- [Visibility](#visibility)
+- [Classes](#classes)
+- [Attributes](#attributes)
+- [DOM](#dom)
+- [Templates](#templates)
+- [Forms](#forms)
+- [Navigation](#navigation)
+- [Events](#events)
+- [Ajax](#ajax)
+
 ## Selectors
 
 - `find(query)`
