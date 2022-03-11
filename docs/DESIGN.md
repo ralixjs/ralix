@@ -14,6 +14,8 @@ Ralix aims to provide a basic structure to organize your JavaScript code. But gi
 
 There are two basic structural components in a Ralix app: Controllers (_The Router_) and Components.
 
+### Controllers
+
 The Router tries to follow the idea of the Rails Controllers. You should define a _main_ controller (for example `AppCtrl.js`) and the other controllers should inherit from it.
 
 ```js
@@ -36,6 +38,8 @@ routes: {
 }
 ```
 
+### Components
+
 Components are designed to encapsulate code for widgets you will have in several pages/parts of your app: modals, tooltips, forms, etc.
 
 Components can be also auto-mounted on each DOM load event (`turbo:load` if using `Turbo`). You just need to pass them to the `RalixApp` instance (via the `components` option) and Ralix will call the `onload` static method automatically. Example:
@@ -56,11 +60,11 @@ export default class Tooltip {
 }
 ```
 
-**NOTE** Not all components need to be auto-mounted (and define the `onload` method), you can use the folder to place other components that you will initialize manually in only some specific controllers.
+**NOTE** Not all components need to be auto-mounted (and define the `onload` method), you can use the directory to place other components that you will initialize manually only in some specific controllers.
 
-## Helpers
+### Helpers
 
-Utilities, aka _Helpers_, are a set of functions to help to write most common operations with a nicer and shorter API: finders, manage classes, manage elements attributes and data-attributes, submit forms, change browser history, listeners and more. You can find the complete documentation [here](HELPERS_API.md).
+Utilities, aka _Helpers_, are a set of functions to write most common operations with a nicer and shorter API: finders, manage classes, manage elements attributes and data-attributes, submit forms, change browser history, listeners and more. You can find the complete documentation [here](HELPERS_API.md).
 
 These provided helpers can be called in all the layers of your application: in the controllers, the components or directly in your views.
 
