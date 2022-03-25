@@ -101,6 +101,14 @@ Creates and returns an HTML element and assigns given `attributes`. Example:
 <input type="numeric" class="input-number">
 ```
 
+### `remove(query)`
+
+Removes an element from the DOM (if it exists). Example:
+
+```js
+> remove('#btnSumbit')
+```
+
 ## Templates
 
 ### `render(template, data)`

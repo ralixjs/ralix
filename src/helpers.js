@@ -171,6 +171,13 @@ export default class Helpers {
     return el
   }
 
+  remove(query) {
+    const el = find(query)
+    if (!el || el.parentNode === null) return
+
+    el.parentNode.removeChild(el)
+  }
+
   render(template, data) {
     return App.templates.render(template, data)
   }
