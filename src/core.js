@@ -168,8 +168,10 @@ export default class Core {
     if (!el) return
 
     if (typeof attribute === 'string')
-      if (!value)
+      if (value === null)
         return el.getAttribute(attribute)
+      else if (value === false)
+        return el.removeAttribute(attribute)
       else
         return el.setAttribute(attribute, value)
     else if (typeof attribute  === 'object')
@@ -183,8 +185,10 @@ export default class Core {
     if (!attribute && !value) return el.dataset
 
     if (typeof attribute === 'string')
-      if (!value)
+      if (value === null)
         return el.dataset[attribute]
+      else if (value === false)
+        return delete el.dataset[attribute]
       else
         return el.dataset[attribute] = value
     else if (typeof attribute  === 'object')
