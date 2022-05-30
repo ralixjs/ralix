@@ -53,7 +53,7 @@ Wraps `classList.contains`.
 
 ### `attr(query, attribute, value)`
 
-Gets/sets `query` element attribute. It also accepts and object for multiple assigment. Examples:
+Gets/sets `query` element attribute. It also accepts and object for multiple assigment. If the value is `false` it will remove the attribute. Examples:
 
 ```js
 // getter
