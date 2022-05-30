@@ -1,14 +1,14 @@
+import Helpers   from './helpers'
 import Router    from './router'
 import Events    from './events'
 import Templates from './templates'
-import Core      from './core'
 
 export default class App {
   constructor(config) {
-    this.router     = new Router(config.routes)
-    this.events     = new Events()
-    this.templates  = new Templates(config.templates)
-    this.core       = new Core()
+    this.helpers   = new Helpers()
+    this.router    = new Router(config.routes)
+    this.events    = new Events()
+    this.templates = new Templates(config.templates)
 
     this.rails_ujs  = config.rails_ujs || null
     this.components = config.components || []
@@ -21,10 +21,12 @@ export default class App {
   }
 
   start() {
-    const loadEvent = (typeof Turbolinks !== 'undefined') ? 'turbolinks:load' : 'DOMContentLoaded'
+    let loadEvent = 'DOMContentLoaded'
+    if (typeof Turbo !== 'undefined') loadEvent = 'turbo:load'
+    if (typeof Turbolinks !== 'undefined') loadEvent = 'turbolinks:load'
 
     document.addEventListener(loadEvent, () => {
-      this.core.inject()
+      this.helpers.inject()
       this.router.dispatch()
       this.events.bind()
       this.components.forEach(component => {

@@ -1,4 +1,4 @@
-import Utils from './utils'
+import * as Utils from './internal_utils'
 
 export default class Router {
   constructor(routes) {

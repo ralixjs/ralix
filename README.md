@@ -1,24 +1,25 @@
-![Ralix.js](https://raw.githubusercontent.com/ralixjs/ralix/master/logos/cover.png)
+![Ralix.js](https://raw.githubusercontent.com/ralixjs/ralix/master/logos/cover.jpg)
 
 [![](https://img.shields.io/npm/v/ralix.svg?style=flat-square)](https://www.npmjs.com/package/ralix)
 [![](https://img.shields.io/npm/l/ralix?style=flat-square)](https://github.com/ralixjs/ralix/blob/master/LICENSE)
 
-> Microframework for building and organizing Rails front-ends via Webpacker :sparkles:
+> Microframework for building and organizing your front-end :sparkles:
 
-Ralix provides barebones and utilities to help enhance your current Rails views. It integrates well with Turbolinks and Rails-UJS.
+Ralix is a modest JavaScript framework that provides barebones and utilities to help enhance your server-side rendered webapps.
 
-Ralix consists basically in 2 concepts, `Controllers` and `Components`:
+Ralix consists basically in 3 pieces:
 
 - `Controllers`: Controllers are meant to be mounted under a route path, they are like page-specific (scoped) JavaScript.
-- `Components`: Components are like widgets you will have in several pages: modals, tooltips, notifications, etc. Components can be also auto-mounted on each DOM load, you just need to pass them to the `RalixApp` instance (and implement the static method `onload`).
+- `Components`: Components are like widgets you will have in several pages: modals, tooltips, notifications, etc.
+- `Helpers`: Utilities to facilitate most common operations like: selectors, manipulations, events, ajax, etc. [Check it out here](docs/HELPERS_API.md).
 
-On the other hand, Ralix also provides some helpers and utilities to facilitate most common operations like: selectors, manipulations, events, etc. [Check it out here](#core-methods).
+You can read more about Ralix Design, Vision and Philosophy [here](docs/DESIGN.md).
 
-You can read more about Ralix Design, Vision and Philosophy [here](docs/PHILOSOPHY.md).
+Ralix pairs well with `Rails` and `Turbo` based applications. Check out [more information here](docs/RAILS_INTEGRATION.md).
 
 ## Installation
 
-To install Ralix in your application, add the `ralix` [npm package](https://www.npmjs.com/package/ralix) to your JavaScript bundle.
+To install Ralix in your application, add the `ralix` [package](https://www.npmjs.com/package/ralix) to your JavaScript bundle.
 
 Using `npm`:
 
@@ -32,45 +33,39 @@ Using `Yarn`:
 > yarn add ralix
 ```
 
-## Example
+## Example application
 
 Structure:
 
 ```
-├── components
-│   ├── geolocation.js
-│   ├── modal.js
-│   ├── tooltip.js
-├── controllers
-│   ├── app.js
-│   ├── dashboard.js
-│   └── users.js
-├── packs
-│   └── application.js
+source/
+├── components/
+│   ├── modal.js
+│   └── tooltip.js
+├── controllers/
+│   ├── application.js
+│   ├── dashboard.js
+│   └── users.js
 └── app.js
 ```
 
-### App
+### App object
 
-The "main" application file (`app/javascript/app.js`), where you should load your modules and create a `RalixApp` instance: `new RalixApp({})`. Then, you should start your Ralix application by calling: `App.start()`.
+It's the entrypoint for your application (`source/app.js`), where you should load your modules and create a `RalixApp` instance: `new RalixApp()`. Then, you can _start_ your Ralix application by calling: `App.start()`. Don't forget to include your entrypoint in your layout.
 
 ```js
-// Dependencies
-import Rails         from '@rails/ujs'
-import Turbolinks    from 'turbolinks'
-import { RalixApp }  from 'ralix'
+import { RalixApp }  from 'ralix'
 
 // Controllers
-import AppCtrl       from 'controllers/app'
-import DashboardCtrl from 'controllers/dashboard'
-import UsersCtrl     from 'controllers/users'
+import AppCtrl       from './controllers/application'
+import DashboardCtrl from './controllers/dashboard'
+import UsersCtrl     from './controllers/users'
 
-// Components with auto-start on each DOM load event (turbolinks:load or DOMContentLoaded)
-import Modal         from 'components/modal'
-import Tooltip       from 'components/tooltip'
+// Components with auto-start
+import Modal         from './components/modal'
+import Tooltip       from './components/tooltip'
 
 const App = new RalixApp({
-  rails_ujs: Rails,
   routes: {
     '/dashboard': DashboardCtrl,
     '/users':     UsersCtrl,
@@ -79,16 +74,16 @@ const App = new RalixApp({
   components: [Modal, Tooltip]
 })
 
-Rails.start()
-Turbolinks.start()
 App.start()
 ```
 
 ### Controllers
 
 ```js
+// source/controllers/app.js
+
 export default class AppCtrl {
-  back() {
+  goBack() {
     window.history.back()
   }
 
@@ -99,14 +94,16 @@ export default class AppCtrl {
 ```
 
 ```js
-import AppCtrl from './app'
+// source/controllers/users.js
+
+import AppCtrl from './application'
 
 export default class UsersCtrl extends AppCtrl {
   constructor() {
     super()
   }
 
-  back() {
+  goBack() {
     visit('/dashboard')
   }
 
@@ -124,6 +121,8 @@ export default class UsersCtrl extends AppCtrl {
 ### Components
 
 ```js
+// source/components/modal.js
+
 export default class Modal {
   static onload() {
     findAll('.fire-modal').forEach(el => {
@@ -161,33 +160,27 @@ export default class Modal {
 
 ### Views
 
+In your regular HTML code, now you can call directly Ralix Helpers or the methods provided by the _current_ Ralix controller.
+
 ```html
-<a href="#" onclick="back()">Back</a>
-<div id="menu">...</div>
-...
+<a href="#" onclick="goBack()">Back</a>
 <a href="#" onclick="toggleMenu()">Toggle Menu</a>
-<a href="#" class="fire-modal" data-url="/modals/help">Help me!</a>
-...
-<input type="text" name="query" onkeyup="search()" />
-...
+<input type="text" name="query" onkeyup="search()">
 <div onclick="visit('/sign-up')">...</div>
 ```
 
 ### Templates
 
-Ralix provides also a minimalistic template engine. Under the hood, it uses JavaScript Functions with Template literals.
+Ralix provides also a minimalistic template engine, useful to DRY small snippets you need to render from your front-end. Under the hood, it uses JavaScript Functions with Template literals.
 
 ```js
-// app/javascript/app.js
 import * as Templates from 'templates'
 
 const App = new RalixApp({
-  ...
   templates: Templates
-  ...
 })
 
-// app/javascript/templates/index.js
+// Define your templates
 export const todoItem = ({ id, value }) => `
   <div class="item_${id}">
     <input type="checkbox">
@@ -200,70 +193,11 @@ export const todoItem = ({ id, value }) => `
 render('todoItem', { id: id, value: value })
 ```
 
-### More examples
+## Starter Kits and example apps
 
-Check a complete Rails application with Ralix here: [Ralix TodoMVC](https://github.com/ralixjs/ralix-todomvc).
-
-## Core methods
-
-You can find a complete API documentation [here](docs/CORE_API.md).
-
-### Selectors
-
-- find(query)
-- findAll(query)
-
-### Visibility
-
-- show(query)
-- hide(query)
-
-### Classes
-
-- addClass(query, classList)
-- removeClass(query, classList)
-- toggleClass(query, classList)
-- hasClass(query, className)
-
-### Attributes
-
-- attr(query, attribute, value)
-- data(query, attribute, value)
-
-### DOM
-
-- insertHTML(query, html, position)
-- elem(type, attributes)
-
-### Templates
-
-- render(template, data)
-
-### Forms
-
-- serialize(query)
-- submit(query)
-
-### Navigation
-
-- reload()
-- visit(url)
-- currentUrl()
-- getParam(param)
-- setParam(param, value, { url, update })
-- setUrl(state, method, data)
-
-### Events
-
-- on(query, events, callback)
-- currentElement()
-- currentEvent()
-
-### Ajax
-
-- ajax(path, { params, options })
-- get(path, { params, options })
-- post(path, { params, options })
+- Rails with Ralix, via Webpack: https://github.com/ralixjs/ralix-todomvc
+- Middleman with Ralix and Tailwind: https://github.com/ralixjs/middleman-ralix-tailwind
+- Ralix and Tailwind, with Parcel: https://github.com/ralixjs/ralix-tailwind
 
 ## License
 

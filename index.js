@@ -1,3 +1,3 @@
-import RalixApp  from './src/app'
+import RalixApp from './src/app'
 
 export { RalixApp }

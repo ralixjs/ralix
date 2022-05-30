@@ -1,46 +1,57 @@
-# Core methods API
+# Helpers API
+
+- [Selectors](#selectors)
+- [Visibility](#visibility)
+- [Classes](#classes)
+- [Attributes](#attributes)
+- [DOM](#dom)
+- [Templates](#templates)
+- [Forms](#forms)
+- [Navigation](#navigation)
+- [Events](#events)
+- [Ajax](#ajax)
 
 ## Selectors
 
-- `find(query)`
+### `find(query)`
 
 Finds one element, via `querySelector`.
 
-- `findAll(query)`
+### `findAll(query)`
 
 Finds multiple elements, via `querySelectorAll`.
 
 ## Visibility
 
-- `show(query)`
+### `show(query)`
 
 Clean up style attribute.
 
-- `hide(query)`
+### `hide(query)`
 
 Adds `display: none` to the given element.
 
 ## Classes
 
-- `addClass(query, classList)`
+### `addClass(query, classList)`
 
 Wraps `classList.add`. The parameter _query_ could be also an array of elements.
 
-- `removeClass(query, classList)`
+### `removeClass(query, classList)`
 
 Wraps `classList.remove`. The parameter _query_ could be also an array of elements.
 
-- `toggleClass(query, classList)`
+### `toggleClass(query, classList)`
 
 Wraps `classList.toggle`. The parameter _query_ could be also an array of elements.
 
-- `hasClass(query, className)`
+### `hasClass(query, className)`
 
 Wraps `classList.contains`.
 
 ## Attributes
 
-- `attr(query, attribute, value)`
+### `attr(query, attribute, value)`
 
 Gets/sets `query` element attribute. It also accepts and object for multiple assigment. Examples:
 
@@ -54,7 +65,7 @@ Gets/sets `query` element attribute. It also accepts and object for multiple ass
 > attr('#form input.name', { class: 'input-large', required: true })
 ```
 
-- `data(query, attribute, value)`
+### `data(query, attribute, value)`
 
 Similar to `attr()`, but for `dataset`. Examples:
 
@@ -72,7 +83,7 @@ Similar to `attr()`, but for `dataset`. Examples:
 
 ## DOM
 
-- `insertHTML(query, html, position)`
+### `insertHTML(query, html, position)`
 
 Inserts passed `html` to the `query` element, based on `position`. The argument `position` accepts the following options: *inner* (default), *prepend*, *append*, *begin*, *end*. Examples:
 
@@ -81,7 +92,7 @@ insertHTML('.total', `Total: <b>${totalItems}</b>`)
 insertHTML('ul.items', '<li>new item</li>', 'end')
 ```
 
-- `elem(type, attributes)`
+### `elem(type, attributes)`
 
 Creates and returns an HTML element and assigns given `attributes`. Example:
 
@@ -92,7 +103,7 @@ Creates and returns an HTML element and assigns given `attributes`. Example:
 
 ## Templates
 
-- `render(template, data)`
+### `render(template, data)`
 
 Renders the `template`, passing the given `data`. Example:
 
@@ -102,7 +113,7 @@ render('todoItem', { id: id, value: value })
 
 ## Forms
 
-- `serialize(query)`
+### `serialize(query)`
 
 Serializes the given form. Example:
 
@@ -123,39 +134,39 @@ It could also be used for hash elements like the example below:
 "x=1&y=2"
 ```
 
-- `submit(query)`
+### `submit(query)`
 
-If `rails_ujs` is provided in `new RalixApp({})`, submits the form via `Rails.fire`, otherwise uses regular submit event.
+If `rails_ujs` is provided in `new RalixApp()`, submits the form via `Rails.fire`, otherwise uses regular submit event.
 
 ## Navigation
 
-- `reload()`
+### `reload()`
 
 Reloads current page.
 
-- `visit(url)`
+### `visit(url)`
 
-Visits given `url`, uses `Turbolinks.visit` if possible.
+Visits given `url`, uses `Turbo.visit` (or `Turbolinks.visit`) if possible.
 
-- `currentUrl()`
+### `currentUrl()`
 
 Returns the current location.
 
-- `getParam(param)`
+### `getParam(param)`
 
 Gets `param` value for the current location.
 
-- `setParam(param, value, { url, update })`
+### `setParam(param, value, { url, update })`
 
 Sets `param` value to the given location (current location by default). If `update` is *true*, browser history is updated too.
 
-- `setUrl(state, method, data)`
+### `setUrl(state, method, data)`
 
 Allows to update current location via browser history object. The argument `method` accepts: *push* (pushState, default) and *replace* (replaceState).
 
 ## Events
 
-- `on(query, events, callback)`
+### `on(query, events, callback)`
 
 Wraps `addEventListener`. Example:
 
@@ -173,17 +184,17 @@ on('.input-submit', 'change keyup', (e) => {
 })
 ```
 
-- `currentElement()`
+### `currentElement()`
 
 Returns the element which received the last fired event.
 
-- `currentEvent()`
+### `currentEvent()`
 
 Returns the last fired event.
 
 ## Ajax
 
-- `ajax(path, { params, options })`
+### `ajax(path, { params, options })`
 
 Wraps `fetch`. Adds the object `params` to `path` or `options.body` depending on `options.method`.
 
@@ -199,10 +210,10 @@ ajax('/path/resource', { params: { id: 1 }, options: { method: 'POST' }})
 ajax('/path/resource', { options: { format: 'json' }})
 ```
 
-- `get(path, { params, options })`
+### `get(path, { params, options })`
 
 Alias for `ajax` method with `options.method` as *GET*.
 
-- `post(path, { params, options })`
+### `post(path, { params, options })`
 
 Alias for `ajax` method with `options.method` as *POST*.
