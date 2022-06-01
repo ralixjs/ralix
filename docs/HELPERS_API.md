@@ -53,7 +53,7 @@ Wraps `classList.contains`.
 
 ### `attr(query, attribute, value)`
 
-Gets/sets `query` element attribute. It also accepts and object for multiple assigment. If the value is `false` it will remove the attribute. Examples:
+Gets/sets `query` element attribute. It also accepts an object for multiple assignment. Examples:
 
 ```js
 // getter
@@ -63,6 +63,17 @@ Gets/sets `query` element attribute. It also accepts and object for multiple ass
 // setters
 > attr('#main_menu', 'class', 'foo')
 > attr('#form input.name', { class: 'input-large', required: true })
+```
+
+### `removeAttr(query, attribute)`
+
+Remove `query` element attribute. It also accepts an array of attributes. Examples:
+
+```js
+> removeAttr('#main_menu', 'remote')
+
+// array of attributes
+> removeAttr('#main_menu', ['remote', 'url'])
 ```
 
 ### `data(query, attribute, value)`
@@ -79,6 +90,20 @@ Similar to `attr()`, but for `dataset`. Examples:
 // setters
 > data('#form', 'remote', true)
 > data('#form', { remote: true, url: '/signup/free_trial' })
+```
+
+### `removeData(query, attribute)`
+
+Similar to `removeAttr()`, but for `dataset`. It also accepts `null` to be able to delete all dataset. Examples:
+
+```js
+> removeData('form', "remote")
+
+// all dataset attributes
+> removeData('form')
+
+// array of dataset attributes
+> removeData('form', ['remote', 'url'])
 ```
 
 ## DOM
