@@ -94,7 +94,7 @@ Similar to `attr()`, but for `dataset`. Examples:
 
 ### `removeData(query, attribute)`
 
-Similar to `removeAttr()`, but for `dataset`. It also accepts `null` to be able to delete all dataset. Examples:
+Similar to `removeAttr()`, but for `dataset`. If no attribute or attributes are passed all dataset attributes will be deleted. Examples:
 
 ```js
 > removeData('form', "remote")
