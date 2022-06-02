@@ -180,7 +180,7 @@ export default class Helpers {
     if (!el) return
 
     if (typeof attribute === 'string')
-      if (!value)
+      if (value === null)
         return el.getAttribute(attribute)
       else
         return el.setAttribute(attribute, value)
@@ -195,12 +195,42 @@ export default class Helpers {
     if (!attribute && !value) return el.dataset
 
     if (typeof attribute === 'string')
-      if (!value)
+      if (value === null)
         return el.dataset[attribute]
       else
         return el.dataset[attribute] = value
     else if (typeof attribute  === 'object')
       _setDataset(el, attribute)
+  }
+
+  removeAttr(query, attribute) {
+    const el = find(query)
+    if (!el) return
+
+    if (Array.isArray(attribute)) {
+      attribute.forEach((attr) => {
+        el.removeAttribute(attr)
+      })
+    } else if (typeof attribute === "string") {
+      el.removeAttribute(attribute)
+    }
+  }
+
+  removeData(query, attribute = null) {
+    const el = find(query)
+    if (!el) return
+
+    if (Array.isArray(attribute)) {
+      attribute.forEach((attr) => {
+        delete el.dataset[attr]
+      })
+    } else if (typeof attribute === "string") {
+      delete el.dataset[attribute]
+    } else if (attribute === null) {
+      for( attr in el.dataset ) {
+        delete el.dataset[attr]
+      }
+    }
   }
 
   async ajax(path, { params = {}, options = {} } = {}) {
