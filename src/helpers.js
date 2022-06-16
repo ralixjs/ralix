@@ -243,8 +243,13 @@ export default class Helpers {
     const defaults = { method: 'GET', credentials: 'include' }
     options = Object.assign({}, defaults, options)
 
-    if (['POST', 'PATCH', 'PUT'].includes(options.method))
-      options = Object.assign({}, { body: JSON.stringify(params) }, options)
+    if (['POST', 'PATCH', 'PUT'].includes(options.method)) {
+      if (params instanceof FormData) {
+        if ("headers" in options) delete options.headers["Content-Type"]
+        options = Object.assign({}, { body: params }, options)
+      } else
+        options = Object.assign({}, { body: JSON.stringify(params) }, options)
+    }
     else if (Object.keys(params).length > 0)
       path = `${path}?${serialize(params)}`
 
