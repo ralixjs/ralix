@@ -280,7 +280,10 @@ export default class Helpers {
       if (elements.length == 0) return
 
       elements.forEach(el => {
-        el.classList[operation](classList)
+        if (Array.isArray(classList))
+          el.classList[operation](...classList)
+        else
+          el.classList[operation](classList)
       })
     })
   }
