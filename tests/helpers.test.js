@@ -317,3 +317,53 @@ describe('Attributes', () => {
     })
   })
 });
+
+describe('DOM', () => {
+  beforeEach(() => {
+    element.innerHTML = 'Some content for testing';
+  });
+
+  describe('insertHTML', () => {
+    test('default/inner position', () => {
+      insertHTML(element, 'Diferent content');
+
+      expect(element.innerHTML).toBe('Diferent content')
+
+      insertHTML(element, 'More diferent content', 'inner');
+
+      expect(element.innerHTML).toBe('More diferent content')
+    })
+
+    test('prepend position', () => {
+      insertHTML(element, 'Before div', 'prepend');
+
+      expect(document.body.innerHTML).toBe('Before div<div>Some content for testing</div><div></div>')
+    })
+
+    test('append position', () => {
+      insertHTML(element, 'After div', 'append');
+
+      expect(document.body.innerHTML).toBe('<div>Some content for testing</div>After div<div></div>')
+    })
+
+    test('begin position', () => {
+      insertHTML(element, '<span>Before content</span>', 'begin');
+
+      expect(document.body.innerHTML).toBe('<div><span>Before content</span>Some content for testing</div><div></div>')
+    })
+
+    test('end position', () => {
+      insertHTML(element, '<span>After content</span>', 'end');
+
+      expect(document.body.innerHTML).toBe('<div>Some content for testing<span>After content</span></div><div></div>')
+    })
+  })
+
+  test('elem', () => {
+    element = elem('span', { id: 'new_span', class: 'test' })
+
+    expect(element.tagName).toBe('SPAN')
+    expect(element.getAttribute('id')).toBe('new_span')
+    expect(element.getAttribute('class')).toBe('test')
+  })
+})
