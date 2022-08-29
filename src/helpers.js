@@ -133,7 +133,7 @@ export default class Helpers {
     })
   }
 
-  currentElement() {
+  currentElement() {
     return App.currentElement
   }
 

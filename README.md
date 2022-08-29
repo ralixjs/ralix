@@ -180,17 +180,18 @@ const App = new RalixApp({
   templates: Templates
 })
 
-// Define your templates
-export const todoItem = ({ id, value }) => `
-  <div class="item_${id}">
-    <input type="checkbox">
-    <label>${value}</label>
-    <button onclick="destroyItem(${id})"></button>
+export const itemCard = ({ title, description }) => `
+  <div class="item-card">
+    <h1>${title}</h1>
+    <p>${description}</p>
   </div>
 `
 
 // Call it via
-render('todoItem', { id: id, value: value })
+render('itemCard', {
+  title: item.title,
+  description: item.description
+})
 ```
 
 ## Starter Kits and example apps

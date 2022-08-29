@@ -38,9 +38,8 @@ Adds `display: none` to the given element.
 Wraps `classList.add`. The parameter _query_ could be also an array of elements. The parameter _classList_ can be a string or array of strings.
 
 ```js
-> addClass('#target', 'class')
-
-> addClass('#target', ['class_one', 'class_two'])
+addClass('#target', 'class')
+addClass('#target', ['class_one', 'class_two'])
 ```
 
 ### `removeClass(query, classList)`
@@ -48,9 +47,8 @@ Wraps `classList.add`. The parameter _query_ could be also an array of elements.
 Wraps `classList.remove`. The parameter _query_ could be also an array of elements. The parameter _classList_ can be a string or array of strings.
 
 ```js
-> removeClass('#target', 'class')
-
-> removeClass('#target', ['class_one', 'class_two'])
+removeClass('#target', 'class')
+removeClass('#target', ['class_one', 'class_two'])
 ```
 
 ### `toggleClass(query, classList)`
@@ -69,12 +67,11 @@ Gets/sets `query` element attribute. It also accepts an object for multiple assi
 
 ```js
 // getter
-> attr('#main_menu', 'class')
-"menu"
+attr('#main_menu', 'class')
 
 // setters
-> attr('#main_menu', 'class', 'foo')
-> attr('#form input.name', { class: 'input-large', required: true })
+attr('#main_menu', 'class', 'foo')
+attr('#form input.name', { class: 'input-large', required: true })
 ```
 
 ### `removeAttr(query, attribute)`
@@ -82,10 +79,10 @@ Gets/sets `query` element attribute. It also accepts an object for multiple assi
 Remove `query` element attribute. It also accepts an array of attributes. Examples:
 
 ```js
-> removeAttr('#main_menu', 'remote')
+removeAttr('#main_menu', 'remote')
 
 // array of attributes
-> removeAttr('#main_menu', ['remote', 'url'])
+removeAttr('#main_menu', ['remote', 'url'])
 ```
 
 ### `data(query, attribute, value)`
@@ -94,14 +91,14 @@ Similar to `attr()`, but for `dataset`. Examples:
 
 ```js
 // getters
-> data('#form')
-{ remote: false, url: '/signup' }
-> data('#form', 'remote')
-"false"
+data('#form')
+// { remote: false, url: '/signup' }
+data('#form', 'remote')
+// "false"
 
 // setters
-> data('#form', 'remote', true)
-> data('#form', { remote: true, url: '/signup/free_trial' })
+data('#form', 'remote', true)
+data('#form', { remote: true, url: '/signup/free_trial' })
 ```
 
 ### `removeData(query, attribute)`
@@ -109,13 +106,13 @@ Similar to `attr()`, but for `dataset`. Examples:
 Similar to `removeAttr()`, but for `dataset`. If no attribute or attributes are passed all dataset attributes will be deleted. Examples:
 
 ```js
-> removeData('form', "remote")
+removeData('form', "remote")
 
 // all dataset attributes
-> removeData('form')
+removeData('form')
 
 // array of dataset attributes
-> removeData('form', ['remote', 'url'])
+removeData('form', ['remote', 'url'])
 ```
 
 ## DOM
@@ -134,8 +131,8 @@ insertHTML('ul.items', '<li>new item</li>', 'end')
 Creates and returns an HTML element and assigns given `attributes`. Example:
 
 ```js
-> elem('input', { type: 'numeric', class: 'input-number' })
-<input type="numeric" class="input-number">
+elem('input', { type: 'numeric', class: 'input-number' })
+// <input type="numeric" class="input-number">
 ```
 
 ## Templates
@@ -145,7 +142,10 @@ Creates and returns an HTML element and assigns given `attributes`. Example:
 Renders the `template`, passing the given `data`. Example:
 
 ```js
-render('todoItem', { id: id, value: value })
+render('itemCard', {
+  title: item.title,
+  description: item.description
+})
 ```
 
 ## Forms
@@ -159,16 +159,18 @@ Serializes the given form. Example:
   <input type="text" name="x" value="1"></label>
   <input type="text" name="y" value="2"></label>
 </form>
+```
 
-> serialize("#form")
-"x=1&y=2"
+```js
+serialize("#form")
+// "x=1&y=2"
 ```
 
 It could also be used for hash elements like the example below:
 
 ```js
-> serialize({ x: "1", y: "2" })
-"x=1&y=2"
+serialize({ x: "1", y: "2" })
+// "x=1&y=2"
 ```
 
 ### `submit(query)`
