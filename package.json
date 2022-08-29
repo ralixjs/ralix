@@ -7,12 +7,28 @@
   "scripts": {
     "release:patch": "npm version patch && git push && git push --tags && npm publish",
     "release:minor": "npm version minor && git push && git push --tags && npm publish",
-    "release:major": "npm version major && git push && git push --tags && npm publish"
+    "release:major": "npm version major && git push && git push --tags && npm publish",
+    "test": "jest"
   },
   "keywords": [
     "html",
     "frontend",
     "microframework",
     "lightweight"
-  ]
+  ],
+  "devDependencies": {
+    "@babel/preset-env": "^7.18.10",
+    "babel-jest": "^29.0.1",
+    "jest": "^29.0.1",
+    "jest-environment-jsdom": "^29.0.1"
+  },
+  "jest": {
+    "moduleDirectories": [
+      "node_modules",
+      "src"
+    ],
+    "transformIgnorePatterns": [
+      "<rootDir>/node_modules/"
+    ]
+  }
 }
