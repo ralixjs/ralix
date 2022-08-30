@@ -1,7 +1,6 @@
 # Helpers API
 
 - [Selectors](#selectors)
-- [Visibility](#visibility)
 - [Classes](#classes)
 - [Attributes](#attributes)
 - [DOM](#dom)
