@@ -26,20 +26,6 @@ export default class Helpers {
       return [elements]
   }
 
-  show(query) {
-    const elements = findAll(query)
-    if (elements.length == 0) return
-
-    elements.forEach(el => { el.setAttribute('style', '') })
-  }
-
-  hide(query) {
-    const elements = findAll(query)
-    if (elements.length == 0) return
-
-    elements.forEach(el => { el.setAttribute('style', 'display: none') })
-  }
-
   addClass(query, classList) {
     _classModifier('add', query, classList)
   }
