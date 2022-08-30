@@ -108,8 +108,8 @@ export default class UsersCtrl extends AppCtrl {
   }
 
   search() {
-    hide('.search-result')
-    show('.spinner')
+    addClass('.search-result', 'hidden')
+    removeClass('.spinner', 'hidden')
 
     setTimeout(() => {
       submit('.search-form')

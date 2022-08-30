@@ -21,16 +21,6 @@ Finds one element, via `querySelector`.
 
 Finds multiple elements, via `querySelectorAll`.
 
-## Visibility
-
-### `show(query)`
-
-Clean up style attribute.
-
-### `hide(query)`
-
-Adds `display: none` to the given element.
-
 ## Classes
 
 ### `addClass(query, classList)`
