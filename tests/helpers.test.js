@@ -3,6 +3,7 @@
  */
 
 import Helpers from '../src/helpers'
+import { jest } from '@jest/globals'
 
 const helpers = new Helpers();
 let element, element2;
@@ -14,14 +15,32 @@ beforeAll(() => {
 beforeEach(() => {
   element = document.createElement('div');
   element2 = document.createElement('div');
-  document.body.appendChild(element)
-  document.body.appendChild(element2)
+  document.body.appendChild(element);
+  document.body.appendChild(element2);
 });
 
 afterEach(() => {
+  jest.restoreAllMocks();
   document.body.innerHTML = '';
   document.head.innerHTML = '';
-})
+});
+
+describe('Selectors', () => {
+  beforeEach(() => {
+    element.classList.add('test-class');
+    element2.classList.add('test-class');
+  });
+
+  test('find', () => {
+    expect(find('.test-class')).toEqual(element);
+    expect(find('.test')).toBeNull();
+  });
+
+  test('findAll', () => {
+    expect(Array.from(findAll('.test-class'))).toEqual([element, element2]);
+    expect(Array.from(findAll('.test'))).toEqual([]);
+  });
+});
 
 describe('Classes', () => {
   beforeEach(() => {
@@ -293,3 +312,115 @@ describe('DOM', () => {
     expect(element.getAttribute('class')).toBe('test');
   });
 });
+
+describe('Forms', () => {
+  beforeEach(() => {
+    document.body.innerHTML =
+      '<form id="form"><input type="number" name="first" value="1"><input type="text" name="second" value="2"></form>';
+  });
+
+  describe('serialize', () => {
+    test('with form', () => {
+      expect(serialize('#form')).toBe('first=1&second=2');
+      expect(serialize(find('#form'))).toBe('first=1&second=2');
+    });
+
+    test('with object', () => {
+      expect(serialize({ first: '1', second: '2' })).toBe('first=1&second=2');
+    });
+  });
+
+  describe('submit', () => {
+    beforeAll(() => {
+      delete window.App;
+    });
+
+    afterAll(() => {
+      delete window.App;
+    });
+
+    test('without rails_ujs', () => {
+      // Mock App
+      window.App = {
+        rails_ujs: false
+      };
+      const form = document.body.querySelector('form');
+      // Mock submit function to prevent errors
+      form.submit = jest.fn();
+      const spy = jest.spyOn(form, 'submit');
+
+      submit('#form');
+
+      expect(spy).toHaveBeenCalledTimes(1);
+    });
+
+    test('with rails_ujs & data-remote', () => {
+      // Mock App & rails_ujs
+      window.App = {
+        rails_ujs: {
+          fire: jest.fn()
+        }
+      };
+      document.body.innerHTML =
+        '<form id="form" data-remote="true"><input type="number" name="first" value="1"><input type="text" name="second" value="2"></form>';
+      const form = document.body.querySelector('form');
+      // Mock submit function to prevent errors
+      form.submit = jest.fn();
+      const spy = jest.spyOn(form, 'submit');
+
+      submit('#form');
+
+      expect(spy).toHaveBeenCalledTimes(0);
+    });
+  });
+});
+
+describe('Navigation', () => {
+  const location = window;
+
+  beforeAll(() => {
+    delete window.location;
+    window.location = {
+      reload: jest.fn(),
+      href: ''
+    };
+  });
+
+  afterAll(() => {
+    window.location = location;
+  });
+
+  test('reload', () => {
+    reload();
+
+    expect(window.location.reload).toHaveBeenCalledTimes(1);
+  });
+
+  test('visit', () => {
+    visit('url');
+
+    expect(window.location.href).toBe('url');
+  });
+
+  test('currentUrl', () => {
+    window.location.href = 'test/url';
+
+    expect(currentUrl()).toBe('test/url');
+  });
+
+  describe('getParam', () => {
+    test('single param', () => {
+      window.location.href = 'http://test.com/url?test=1';
+
+      expect(getParam('test')).toBe('1');
+    });
+
+    test('array of params', () => {
+      window.location.href = 'http://test.com/url?test[]=1&test[]=2';
+
+      expect(getParam('test')).toEqual(['1', '2']);
+    });
+  })
+});
+
+

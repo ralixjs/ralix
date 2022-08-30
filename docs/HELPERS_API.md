@@ -145,8 +145,8 @@ Serializes the given form. Example:
 
 ```html
 <form id="form">
-  <input type="text" name="x" value="1"></label>
-  <input type="text" name="y" value="2"></label>
+  <input type="text" name="x" value="1">
+  <input type="text" name="y" value="2">
 </form>
 ```
 
