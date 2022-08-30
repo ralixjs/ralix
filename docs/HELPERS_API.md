@@ -1,7 +1,6 @@
 # Helpers API
 
 - [Selectors](#selectors)
-- [Visibility](#visibility)
 - [Classes](#classes)
 - [Attributes](#attributes)
 - [DOM](#dom)
@@ -20,16 +19,6 @@ Finds one element, via `querySelector`.
 ### `findAll(query)`
 
 Finds multiple elements, via `querySelectorAll`.
-
-## Visibility
-
-### `show(query)`
-
-Clean up style attribute.
-
-### `hide(query)`
-
-Adds `display: none` to the given element.
 
 ## Classes
 
