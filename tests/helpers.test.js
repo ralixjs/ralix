@@ -420,7 +420,75 @@ describe('Navigation', () => {
 
       expect(getParam('test')).toEqual(['1', '2']);
     });
-  })
+  });
+
+  describe('setParam', () => {
+    let historyPush;
+
+    beforeEach(() => {
+      historyPush = history.pushState;
+      history.pushState = jest.fn();
+      window.location.href = 'http://test.com/';
+    });
+
+    afterEach(() => {
+      history.pushState = historyPush;
+    });
+
+    test('default url', () => {
+      expect(setParam('foo', 'test')).toBe('http://test.com/?foo=test');
+      expect(window.location.href).toBe('http://test.com/');
+    });
+
+    test('with url', () => {
+      expect(setParam('foo', 'test', { url: 'http://url.com/?foo=test' })).toBe('http://url.com/?foo=test');
+      expect(window.location.href).toBe('http://test.com/');
+    });
+
+    test('with update', () => {
+      const spy = jest.spyOn(history, 'pushState');
+
+      expect(setParam('foo', 'test', { update: true })).toBe('http://test.com/?foo=test');
+      expect(spy).toHaveBeenCalledWith({}, undefined, 'http://test.com/?foo=test');
+    });
+  });
+
+  describe('setUrl', () => {
+    let historyPush, historyReplace;
+
+    beforeEach(() => {
+      historyPush = history.pushState;
+      historyReplace = history.replaceState;
+      history.pushState = jest.fn();
+      history.replaceState = jest.fn();
+      window.location.href = 'http://test.com/';
+    });
+
+    afterEach(() => {
+      history.pushState = historyPush;
+      history.replaceState = historyReplace;
+    });
+
+    test('default', () => {
+      const spyPush = jest.spyOn(history, 'pushState');
+      const spyReplace = jest.spyOn(history, 'replaceState');
+
+      setUrl('http://url.com/');
+
+      expect(spyPush).toHaveBeenCalledWith({}, undefined, 'http://url.com/');
+      expect(spyReplace).toHaveBeenCalledTimes(0);
+    });
+
+    test('with replace', () => {
+      const spyPush = jest.spyOn(history, 'pushState');
+      const spyReplace = jest.spyOn(history, 'replaceState');
+
+      setUrl('http://url.com/', 'replace');
+
+      expect(spyReplace).toHaveBeenCalledWith({}, undefined, 'http://url.com/');
+      expect(spyPush).toHaveBeenCalledTimes(0);
+    });
+  });
 });
 
 
