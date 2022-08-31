@@ -491,4 +491,75 @@ describe('Navigation', () => {
   });
 });
 
+describe('Events', () => {
+  describe('on', () => {
+    test('with multiple targets & multiple events', () => {
+      const callback = jest.fn();
+      element.addEventListener = jest.fn();
+      element2.addEventListener = jest.fn();
+      const spyElement = jest.spyOn(element, 'addEventListener');
+      const spyElement2 = jest.spyOn(element2, 'addEventListener');
+
+      on('div', 'click blur', callback);
+
+      expect(spyElement).toHaveBeenNthCalledWith(1, 'click', callback);
+      expect(spyElement).toHaveBeenNthCalledWith(2, 'blur', callback);
+      expect(spyElement2).toHaveBeenNthCalledWith(1, 'click', callback);
+      expect(spyElement2).toHaveBeenNthCalledWith(2, 'blur', callback);
+    });
+  });
+});
+
+describe('Ajax', () => {
+  const realFetch = global.fetch;
+
+  beforeEach(() => {
+    global.fetch = () => {
+      return { text: jest.fn(), json: jest.fn() }
+    };
+  });
+
+  afterEach(() => {
+    global.fetch = realFetch;
+  });
+
+  test('get', () => {
+    const spy = jest.spyOn(global, 'fetch');
+
+    ajax('http://test.com/', { params: { foo: 'test' } })
+
+    expect(spy).toHaveBeenCalledWith('http://test.com/?foo=test', { method: 'GET', credentials: 'include' })
+  });
+
+  describe('post', () => {
+    test('with JSON', () => {
+      const spy = jest.spyOn(global, 'fetch');
+
+      ajax('http://test.com/', { params: { foo: 'test' }, options: { method: 'POST' } });
+
+      expect(spy).toHaveBeenCalledWith('http://test.com/', { method: 'POST', credentials: 'include', body: JSON.stringify({ foo: 'test' }) });
+    });
+
+    test('with FormData', () => {
+      const spy = jest.spyOn(global, 'fetch');
+      const form = new FormData();
+      form.append('foo', 'test');
+
+      ajax('http://test.com/', { params: form, options: { method: 'POST' } });
+
+      expect(spy).toHaveBeenCalledWith('http://test.com/', { method: 'POST', credentials: 'include', body: form });
+    });
+
+    test('with FormData deletes Content-Type header', () => {
+      const spy = jest.spyOn(global, 'fetch');
+      const form = new FormData();
+      form.append('foo', 'test');
+
+      ajax('http://test.com/', { params: form, options: { method: 'POST', headers: { 'Content-Type': 'text/plain' } } });
+
+      expect(spy).toHaveBeenCalledWith('http://test.com/', { method: 'POST', credentials: 'include', body: form, headers: {} });
+    });
+  });
+});
+
 
