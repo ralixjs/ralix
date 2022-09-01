@@ -1,22 +1,27 @@
-import Template from '../src/templates'
-import * as Templates from './templates'
+import Templates from '../src/templates'
+import * as ExampleTemplates from './fixtures/templates'
 
-let template
+let templates
 
 beforeAll(() => {
-  template = new Template(Templates)
+  templates = new Templates(ExampleTemplates)
 })
 
 describe('render', () => {
   test('with correct template', () => {
-    const element = template.render('divTemplate', 'Test template')
+    let result = templates.render('template1')
+    expect(result).toBe('<div>default</div>')
 
-    expect(element).toBe('<div>Test template</div>')
+    result = templates.render('template1', 'test template')
+    expect(result).toBe('<div>test template</div>')
+
+    result = templates.render('template2', { title: 'title' })
+    expect(result).toBe('<h1>title</h1>')
   })
 
   test('with incorrect template', () => {
     expect(() => {
-      template.render('spanTemplate', 'Test template')
-    }).toThrow("[Ralix] Template 'spanTemplate' not found")
+      templates.render('foo')
+    }).toThrow("[Ralix] Template 'foo' not found")
   })
 })
