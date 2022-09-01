@@ -1,7 +1,8 @@
 ![Ralix.js](https://raw.githubusercontent.com/ralixjs/ralix/master/logos/cover.jpg)
 
-[![](https://img.shields.io/npm/v/ralix.svg?style=flat-square)](https://www.npmjs.com/package/ralix)
-[![](https://img.shields.io/npm/l/ralix?style=flat-square)](https://github.com/ralixjs/ralix/blob/master/LICENSE)
+[![](https://github.com/ralixjs/ralix/actions/workflows/ci.yml/badge.svg)](https://github.com/ralixjs/ralix/actions/workflows/ci.yml)
+[![](https://img.shields.io/npm/v/ralix.svg)](https://www.npmjs.com/package/ralix)
+[![](https://img.shields.io/npm/l/ralix)](https://github.com/ralixjs/ralix/blob/master/LICENSE)
 
 > Microframework for building and organizing your front-end :sparkles:
 
@@ -199,6 +200,22 @@ render('itemCard', {
 - Rails with Ralix, via Webpack: https://github.com/ralixjs/ralix-todomvc
 - Middleman with Ralix and Tailwind: https://github.com/ralixjs/middleman-ralix-tailwind
 - Ralix and Tailwind, with Parcel: https://github.com/ralixjs/ralix-tailwind
+
+## Development
+
+Any kind of feedback, bug report, idea or enhancement are much appreciated.
+
+To contribute, just fork the repo, hack on it and send a pull request. Don't forget to add tests for behaviour changes and run the test suite by:
+
+```
+> yarn test
+```
+
+If you also want to see the code coverage:
+
+```
+> yarn test --collectCoverage
+```
 
 ## License
 
