@@ -197,9 +197,15 @@ render('itemCard', {
 
 ## Starter Kits and example apps
 
-- Rails with Ralix, via Webpack: https://github.com/ralixjs/ralix-todomvc
+**Templates:**
+
+- Rails with Ralix and Tailwind, via esbuild: https://github.com/ralixjs/rails-ralix-tailwind
 - Middleman with Ralix and Tailwind: https://github.com/ralixjs/middleman-ralix-tailwind
 - Ralix and Tailwind, with Parcel: https://github.com/ralixjs/ralix-tailwind
+
+**Demo apps:**
+
+- TodoMVC built with Ralix, bundled with Parcel: https://github.com/ralixjs/ralix-todomvc
 
 ## Development
 
