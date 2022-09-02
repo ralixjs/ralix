@@ -16,17 +16,12 @@ export default class Events {
 
         if (match) {
           const [eventType, listener] = match
+          const originalEvent = element[eventType]
+          element[eventType] = null
 
-          this._addListener(element, eventType, listener)
+          addListener(element, listener, originalEvent)
         }
       })
     })
-  }
-
-  _addListener(element, eventType, listener) {
-    const originalEvent = element[eventType]
-    element[eventType] = null
-
-    addListener(element, listener, originalEvent)
   }
 }
