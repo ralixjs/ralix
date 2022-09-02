@@ -1,10 +1,7 @@
-import Helpers from './helpers'
-
 export default class Events {
   constructor() {
     this.eventsRegex = /^on(\w+)/
     this.availableEvents = []
-    this.helpers = new Helpers()
 
     for (let property in window) {
       if (this.eventsRegex.test(property))
@@ -30,6 +27,6 @@ export default class Events {
     const originalEvent = element[eventType]
     element[eventType] = null
 
-    this.helpers.addListener(element, listener, originalEvent)
+    addListener(element, listener, originalEvent)
   }
 }
