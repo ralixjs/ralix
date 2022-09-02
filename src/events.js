@@ -1,3 +1,5 @@
+import Helpers from '../src/helpers'
+
 export default class Events {
   constructor() {
     this.eventsRegex = /^on(\w+)/
@@ -27,14 +29,6 @@ export default class Events {
     const originalEvent = element[eventType]
     element[eventType] = null
 
-    element.addEventListener(listener, (event) => {
-      if (listener == 'click')
-        event.preventDefault()
-
-      App.currentElement = element
-      App.currentEvent   = event
-
-      originalEvent.call()
-    })
+    Helpers.addListener(element, listener, originalEvent)
   }
 }
