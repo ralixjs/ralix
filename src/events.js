@@ -19,7 +19,7 @@ export default class Events {
           const originalEvent = element[eventType]
           element[eventType] = null
 
-          addListener(element, listener, originalEvent)
+          on(element, listener, originalEvent)
         }
       })
     })

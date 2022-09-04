@@ -115,7 +115,7 @@ export default class Helpers {
     if (elements.length == 0) return
 
     elements.forEach(el => {
-      events.split(' ').forEach(event => addListener(el, event, callback))
+      events.split(' ').forEach(event => _addListener(el, event, callback))
     })
   }
 
@@ -127,7 +127,7 @@ export default class Helpers {
     return App.currentEvent
   }
 
-  addListener(element, event, callback) {
+  _addListener(element, event, callback) {
     element.addEventListener(event, (e) => {
       if (event == 'click')
         e.preventDefault()
