@@ -16,25 +16,12 @@ export default class Events {
 
         if (match) {
           const [eventType, listener] = match
+          const originalEvent = element[eventType]
+          element[eventType] = null
 
-          this._addListener(element, eventType, listener)
+          on(element, listener, originalEvent)
         }
       })
-    })
-  }
-
-  _addListener(element, eventType, listener) {
-    const originalEvent = element[eventType]
-    element[eventType] = null
-
-    element.addEventListener(listener, (event) => {
-      if (listener == 'click')
-        event.preventDefault()
-
-      App.currentElement = element
-      App.currentEvent   = event
-
-      originalEvent.call()
     })
   }
 }

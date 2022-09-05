@@ -115,7 +115,7 @@ export default class Helpers {
     if (elements.length == 0) return
 
     elements.forEach(el => {
-      events.split(' ').forEach(event => el.addEventListener(event, callback))
+      events.split(' ').forEach(event => _addListener(el, event, callback))
     })
   }
 
@@ -125,6 +125,21 @@ export default class Helpers {
 
   currentEvent() {
     return App.currentEvent
+  }
+
+  _addListener(element, event, callback) {
+    element.addEventListener(event, (e) => {
+      if (event == 'click')
+        e.preventDefault()
+
+      App.currentElement = element
+      App.currentEvent   = e
+
+      callback.call(this, e)
+
+      App.currentElement = null
+      App.currentEvent   = null
+    })
   }
 
   insertHTML(query, html, position = 'inner') {

@@ -502,10 +502,10 @@ describe('Events', () => {
 
       on('div', 'click blur', callback)
 
-      expect(spyElement).toHaveBeenNthCalledWith(1, 'click', callback)
-      expect(spyElement).toHaveBeenNthCalledWith(2, 'blur', callback)
-      expect(spyElement2).toHaveBeenNthCalledWith(1, 'click', callback)
-      expect(spyElement2).toHaveBeenNthCalledWith(2, 'blur', callback)
+      expect(spyElement).toHaveBeenNthCalledWith(1, 'click', expect.any(Function))
+      expect(spyElement).toHaveBeenNthCalledWith(2, 'blur', expect.any(Function))
+      expect(spyElement2).toHaveBeenNthCalledWith(1, 'click', expect.any(Function))
+      expect(spyElement2).toHaveBeenNthCalledWith(2, 'blur', expect.any(Function))
     })
   })
 })
