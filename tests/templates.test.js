@@ -1,11 +1,7 @@
 import Templates from '../src/templates'
 import * as ExampleTemplates from './fixtures/templates'
 
-let templates
-
-beforeAll(() => {
-  templates = new Templates(ExampleTemplates)
-})
+const templates = new Templates(ExampleTemplates)
 
 describe('render', () => {
   test('with correct template', () => {
