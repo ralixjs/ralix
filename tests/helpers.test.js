@@ -1,6 +1,4 @@
-/**
- * @jest-environment jsdom
- */
+/* @jest-environment jsdom */
 
 import Helpers from '../src/helpers'
 import { jest } from '@jest/globals'
@@ -331,27 +329,26 @@ describe('Forms', () => {
   })
 
   describe('submit', () => {
-    beforeAll(() => {
-      delete window.App
+    beforeEach(() => {
+      // Mock requestSubmit
+      HTMLFormElement.prototype.requestSubmit = () => {}
     })
 
-    afterAll(() => {
-      delete window.App
-    })
+    describe('without rails_ujs', () => {
+      test('defaults to requestSubmit if supported', () => {
+        // Mock App
+        window.App = {
+          rails_ujs: false
+        }
+        const form = document.body.querySelector('form')
+        // Mock submit function to prevent errors
+        form.submit = jest.fn()
+        const spy = jest.spyOn(form, 'requestSubmit')
 
-    test('without rails_ujs', () => {
-      // Mock App
-      window.App = {
-        rails_ujs: false
-      }
-      const form = document.body.querySelector('form')
-      // Mock submit function to prevent errors
-      form.submit = jest.fn()
-      const spy = jest.spyOn(form, 'submit')
+        submit('#form')
 
-      submit('#form')
-
-      expect(spy).toHaveBeenCalledTimes(1)
+        expect(spy).toHaveBeenCalledTimes(1)
+      })
     })
 
     test('with rails_ujs & data-remote', () => {
@@ -361,12 +358,11 @@ describe('Forms', () => {
           fire: jest.fn()
         }
       }
-      document.body.innerHTML =
-        '<form id="form" data-remote="true"><input type="number" name="first" value="1"><input type="text" name="second" value="2"></form>'
+      document.body.innerHTML = '<form id="form" data-remote="true"><input type="number" name="first" value="1"><input type="text" name="second" value="2"></form>'
       const form = document.body.querySelector('form')
       // Mock submit function to prevent errors
       form.submit = jest.fn()
-      const spy = jest.spyOn(form, 'submit')
+      const spy = jest.spyOn(form, 'requestSubmit')
 
       submit('#form')
 

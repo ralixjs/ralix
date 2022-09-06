@@ -73,6 +73,8 @@ export default class Helpers {
 
     if (App.rails_ujs && data(form, 'remote') === 'true')
       App.rails_ujs.fire(form, 'submit')
+    else if (form.requestSubmit)
+      form.requestSubmit()
     else
       form.submit()
   }
