@@ -331,7 +331,7 @@ describe('Forms', () => {
   describe('submit', () => {
     beforeEach(() => {
       // Mock requestSubmit
-      HTMLFormElement.prototype.requestSubmit = () => {}
+      HTMLFormElement.prototype.requestSubmit = jest.fn()
     })
 
     describe('without rails_ujs', () => {
@@ -358,7 +358,7 @@ describe('Forms', () => {
           fire: jest.fn()
         }
       }
-      document.body.innerHTML = '<form id="form" data-remote="true"><input type="number" name="first" value="1"><input type="text" name="second" value="2"></form>'
+      document.body.innerHTML = '<form data-remote="true"><input type="number" name="first" value="1"></form>'
       const form = document.body.querySelector('form')
       // Mock submit function to prevent errors
       form.submit = jest.fn()
