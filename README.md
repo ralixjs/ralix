@@ -181,6 +181,7 @@ const App = new RalixApp({
   templates: Templates
 })
 
+// Define your template
 export const itemCard = ({ title, description }) => `
   <div class="item-card">
     <h1>${title}</h1>

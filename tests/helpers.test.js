@@ -1,16 +1,12 @@
-/**
- * @jest-environment jsdom
- */
+/* @jest-environment jsdom */
 
 import Helpers from '../src/helpers'
 import { jest } from '@jest/globals'
 
 const helpers = new Helpers()
-let element, element2
+helpers.inject()
 
-beforeAll(() => {
-  helpers.inject()
-})
+let element, element2
 
 beforeEach(() => {
   element = document.createElement('div')
@@ -331,12 +327,9 @@ describe('Forms', () => {
   })
 
   describe('submit', () => {
-    beforeAll(() => {
-      delete window.App
-    })
-
-    afterAll(() => {
-      delete window.App
+    beforeEach(() => {
+      // Mock requestSubmit
+      HTMLFormElement.prototype.requestSubmit = jest.fn()
     })
 
     test('without rails_ujs', () => {
@@ -345,9 +338,7 @@ describe('Forms', () => {
         rails_ujs: false
       }
       const form = document.body.querySelector('form')
-      // Mock submit function to prevent errors
-      form.submit = jest.fn()
-      const spy = jest.spyOn(form, 'submit')
+      const spy = jest.spyOn(form, 'requestSubmit')
 
       submit('#form')
 
@@ -361,12 +352,9 @@ describe('Forms', () => {
           fire: jest.fn()
         }
       }
-      document.body.innerHTML =
-        '<form id="form" data-remote="true"><input type="number" name="first" value="1"><input type="text" name="second" value="2"></form>'
+      document.body.innerHTML = '<form data-remote="true"><input type="number" name="first" value="1"></form>'
       const form = document.body.querySelector('form')
-      // Mock submit function to prevent errors
-      form.submit = jest.fn()
-      const spy = jest.spyOn(form, 'submit')
+      const spy = jest.spyOn(form, 'requestSubmit')
 
       submit('#form')
 
