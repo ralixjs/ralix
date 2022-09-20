@@ -129,12 +129,12 @@ export default class Helpers {
     return App.currentEvent
   }
 
-  _addListener(element, event, callback) {
-    element.addEventListener(event, (e) => {
-      if (event == 'click')
+  _addListener(elem, event, callback) {
+    elem.addEventListener(event, (e) => {
+      if (event == 'click' && ['A', 'BUTTON', 'INPUT'].includes(elem.tagName))
         e.preventDefault()
 
-      App.currentElement = element
+      App.currentElement = elem
       App.currentEvent   = e
 
       callback.call(this, e)
