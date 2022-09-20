@@ -212,13 +212,15 @@ on('.input-submit', 'change keyup', (e) => {
 })
 ```
 
+**NOTE** `on` performs `preventDefault()` on `click` events for links, buttons and inputs.
+
 ### `currentElement()`
 
-Returns the element which received the last fired event.
+Returns the element which received the current fired event.
 
 ### `currentEvent()`
 
-Returns the last fired event.
+Returns the current event.
 
 ## Ajax
 
