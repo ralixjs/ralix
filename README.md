@@ -168,6 +168,7 @@ In your regular HTML code, now you can call directly Ralix Helpers or the method
 <a href="#" onclick="toggleMenu()">Toggle Menu</a>
 <input type="text" name="query" onkeyup="search()">
 <div onclick="visit('/sign-up')">...</div>
+<button class="fire-modal" data-url="/sign-in">Sign in</button>
 ```
 
 ### Templates

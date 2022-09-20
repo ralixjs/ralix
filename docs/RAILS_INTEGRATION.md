@@ -1,6 +1,6 @@
 # Ralix + Rails
 
-Ralix pairs really well with Turbo-based (_Turbo_ or _Turbolinks_) Rails applications.
+Ralix pairs really well with Turbo-based (_Turbo_ or _Turbolinks_) Rails applications. In fact, the controllers hierarchy was inspired by Rails controllers and originally, Ralix was built and extracted from a Rails app.
 
 It also integrates with the _RailsUJS_ adapter. In that case, you need to pass the instance via the `rails_ujs` option in the constructor.
 
@@ -19,6 +19,7 @@ import ProductsCtrl from './controllers/products'
 
 // Components
 import Modal        from './components/modal'
+import Table        from './components/table'
 import Tooltip      from './components/tooltip'
 
 const App = new RalixApp({
@@ -28,7 +29,11 @@ const App = new RalixApp({
     '/products': ProductsCtrl,
     '/.*':       AppCtrl
   },
-  components: [Modal, Tooltip]
+  components: [
+    Modal,
+    Table,
+    Tooltip
+  ]
 })
 
 Rails.start()

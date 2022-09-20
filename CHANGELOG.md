@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.1]
+
+- `on` performs `preventDefault()` on click events only for interactive elements (#65)
+
 ## [1.0.0]
 
 - Allow `ajax` functions to receive params as `formData`
@@ -31,6 +35,7 @@ All notable changes to this project will be documented in this file.
 - `serialize` works with objects too
 - Use `findAll` in `show`, `hide` and `on`
 
+[1.0.1]: https://github.com/ralixjs/ralix/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/ralixjs/ralix/compare/v0.10.0...v1.0.0
 [0.10.0]: https://github.com/ralixjs/ralix/compare/v0.9.0...v0.10.0
 [0.9.0]: https://github.com/ralixjs/ralix/compare/v0.8.1...v0.9.0
