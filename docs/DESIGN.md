@@ -38,6 +38,8 @@ routes: {
 }
 ```
 
+**NOTE** Order matters! The first matched path will be selected as the _current_ controller, so be careful in the order you define your routes.
+
 ### Components
 
 Components are designed to encapsulate code for widgets you will have in several pages/parts of your app: modals, tooltips, forms, etc.

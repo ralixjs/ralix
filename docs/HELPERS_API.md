@@ -137,6 +137,8 @@ render('itemCard', {
 })
 ```
 
+**NOTE** The templates should be defined as JavaScript Functions and injected into the `App` object.
+
 ## Forms
 
 ### `serialize(query)`
@@ -174,7 +176,7 @@ Reloads current page.
 
 ### `visit(url)`
 
-Visits given `url`, uses `Turbo.visit` (or `Turbolinks.visit`) if possible.
+Navigates to the given `url`, uses `Turbo.visit` (or `Turbolinks.visit`) if possible.
 
 ### `currentUrl()`
 
@@ -242,8 +244,20 @@ ajax('/path/resource', { options: { format: 'json' }})
 
 ### `get(path, { params, options })`
 
-Alias for `ajax` method with `options.method` as *GET*.
+Alias for `ajax` method with `options.method` as *GET*. Example:
+
+```js
+get('/list').then((result) => {
+  insertHTML('#list', result)
+})
+```
 
 ### `post(path, { params, options })`
 
-Alias for `ajax` method with `options.method` as *POST*.
+Alias for `ajax` method with `options.method` as *POST*. Example:
+
+```js
+post('/comment', { params: { message: 'hello!' }}).then((content) => {
+  insertHTML('#comments', `<p>${content}</p>`, 'end')
+})
+```

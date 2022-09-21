@@ -161,14 +161,13 @@ export default class Modal {
 
 ### Views
 
-In your regular HTML code, now you can call directly Ralix Helpers or the methods provided by the _current_ Ralix controller.
+In your regular HTML code, now you can call directly Ralix Helpers or the methods provided by the _current_ Ralix controller, using regular HTML Events.
 
 ```html
 <a href="#" onclick="goBack()">Back</a>
 <a href="#" onclick="toggleMenu()">Toggle Menu</a>
 <input type="text" name="query" onkeyup="search()">
 <div onclick="visit('/sign-up')">...</div>
-<button class="fire-modal" data-url="/sign-in">Sign in</button>
 ```
 
 ### Templates
@@ -176,13 +175,14 @@ In your regular HTML code, now you can call directly Ralix Helpers or the method
 Ralix provides also a minimalistic template engine, useful to DRY small snippets you need to render from your front-end. Under the hood, it uses JavaScript Functions with Template literals.
 
 ```js
-import * as Templates from 'templates'
+// In your App object, inject your templates
+import * as Templates from './templates'
 
 const App = new RalixApp({
   templates: Templates
 })
 
-// Define your template
+// Define your templates as functions
 export const itemCard = ({ title, description }) => `
   <div class="item-card">
     <h1>${title}</h1>
