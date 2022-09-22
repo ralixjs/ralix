@@ -22,7 +22,7 @@ Finds multiple elements, via `querySelectorAll`.
 
 ### `parents(queryElem, queryParent)`
 
-Finds the element that first matches queryParent in the parent elements.
+Finds the element that first matches _queryParent_ among the parent elements.
 
 ## Classes
 
