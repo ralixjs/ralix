@@ -26,6 +26,15 @@ export default class Helpers {
       return [elements]
   }
 
+  parents(queryElem, queryParent) {
+    let elem = find(queryElem)
+
+    while(elem !== document) {
+      if (elem.matches(queryParent)) return elem
+      elem = elem.parentNode
+    }
+  }
+
   addClass(query, classList) {
     _classModifier('add', query, classList)
   }

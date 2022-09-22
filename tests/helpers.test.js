@@ -36,6 +36,13 @@ describe('Selectors', () => {
     expect(Array.from(findAll('.test-class'))).toEqual([element, element2])
     expect(Array.from(findAll('.test'))).toEqual([])
   })
+
+  test('parents', () => {
+    element.innerHTML = '<div><div><div id="target"></div></div></div>'
+
+    expect(parents('#target', '.test-class')).toEqual(element)
+    expect(parents('#target', '.test')).toBeUndefined()
+  })
 })
 
 describe('Classes', () => {

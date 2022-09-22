@@ -20,6 +20,10 @@ Finds one element, via `querySelector`.
 
 Finds multiple elements, via `querySelectorAll`.
 
+### `parents(queryElem, queryParent)`
+
+Finds the element that first matches queryParent in the parent elements.
+
 ## Classes
 
 ### `addClass(query, classList)`
