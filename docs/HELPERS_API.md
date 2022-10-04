@@ -20,6 +20,14 @@ Finds one element, via `querySelector`.
 
 Finds multiple elements, via `querySelectorAll`.
 
+### `findParent(queryElem, queryParent)`
+
+Finds the element that first matches _queryParent_ among the parent elements. If no _queryParent_ is passed it will return the first parent of the element.
+
+### `findParents(queryElem, queryParent)`
+
+Finds multiple elements that matches _queryParent_ among the parent elements.
+
 ## Classes
 
 ### `addClass(query, classList)`
