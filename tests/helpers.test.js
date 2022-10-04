@@ -37,11 +37,22 @@ describe('Selectors', () => {
     expect(Array.from(findAll('.test'))).toEqual([])
   })
 
-  test('parents', () => {
-    element.innerHTML = '<div><div><div id="target"></div></div></div>'
+  test('findParent', () => {
+    element.innerHTML = '<div><div id="parent"><div id="target"></div></div></div>'
 
-    expect(parents('#target', '.test-class')).toEqual(element)
-    expect(parents('#target', '.test')).toBeUndefined()
+    expect(findParent('#target', '.test-class')).toEqual(element)
+    expect(findParent('#target', '.test')).toBeUndefined()
+    expect(findParent('#target').id).toBe("parent")
+  })
+
+  test('findParents', () => {
+    const element3 = document.createElement('div')
+    element.appendChild(element3)
+    element3.classList.add('test-class')
+    element3.innerHTML = '<div><div id="target"></div></div>'
+
+    expect(findParents('#target', '.test-class')).toEqual([element3, element])
+    expect(findParents('#target', '.test')).toEqual([])
   })
 })
 

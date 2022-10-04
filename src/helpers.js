@@ -26,13 +26,27 @@ export default class Helpers {
       return [elements]
   }
 
-  parents(queryElem, queryParent) {
+  findParent(queryElem, queryParent) {
     let elem = find(queryElem)
+    if (queryParent === null || queryParent === undefined) return elem.parentNode
 
     while(elem !== document) {
       if (elem.matches(queryParent)) return elem
       elem = elem.parentNode
     }
+  }
+
+  findParents(queryElem, queryParent) {
+    let elem = find(queryElem)
+    const elements = []
+    if (queryParent === null || queryParent === undefined) return elements
+
+    while(elem !== document) {
+      if (elem.matches(queryParent)) elements.push(elem)
+      elem = elem.parentNode
+    }
+
+    return elements
   }
 
   addClass(query, classList) {
