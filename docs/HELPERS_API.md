@@ -103,7 +103,7 @@ data('#form', { remote: true, url: '/signup/free_trial' })
 Similar to `removeAttr()`, but for `dataset`. If no attribute or attributes are passed all dataset attributes will be deleted. Examples:
 
 ```js
-removeData('form', "remote")
+removeData('form', 'remote')
 
 // all dataset attributes
 removeData('form')

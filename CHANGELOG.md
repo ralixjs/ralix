@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.1.0]
+
+- Add `findParent` and `findParents` helpers (#66)
+- Perform automatic `preventDefault()` for inputs of type submit (#67)
+
 ## [1.0.1]
 
 - `on` performs `preventDefault()` on click events only for interactive elements (#65)
@@ -35,6 +40,7 @@ All notable changes to this project will be documented in this file.
 - `serialize` works with objects too
 - Use `findAll` in `show`, `hide` and `on`
 
+[1.1.0]: https://github.com/ralixjs/ralix/compare/v1.0.1...v1.1.0
 [1.0.1]: https://github.com/ralixjs/ralix/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/ralixjs/ralix/compare/v0.10.0...v1.0.0
 [0.10.0]: https://github.com/ralixjs/ralix/compare/v0.9.0...v0.10.0
