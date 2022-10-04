@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 ## [1.1.0]
 
 - Add `findParent` and `findParents` helpers (#66)
-- Perform automatic `preventDefault()` only for submit inputs (#67)
+- Perform automatic `preventDefault()` for inputs of type submit (#67)
 
 ## [1.0.1]
 
