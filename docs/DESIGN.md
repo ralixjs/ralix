@@ -6,7 +6,7 @@ Following the spirit of frameworks like [Stimulus](https://github.com/stimulusjs
 
 The learning curve is really flat, you can understand the whole framework in few minutes.
 
-Ralix has no runtime dependencies and all codebase is really small, around 350 LOC.
+Ralix has no runtime dependencies and all codebase is really small, around 400 LOC.
 
 ## Structure
 
