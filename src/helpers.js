@@ -6,6 +6,7 @@ export default class Helpers {
       if (typeof this[method] === 'function' && method != 'inject')
         window[method] = this[method].bind(this)
     })
+    _manageSessionUrls()
   }
 
   find(query) {
@@ -73,6 +74,17 @@ export default class Helpers {
       Turbolinks.visit(url)
     else
       window.location.href = url
+  }
+
+  back(fallbackUrl = null) {
+    const previousPageAndCurrentPage = 2
+
+    if (sessionStorage.backCounter == '0') {
+      this.visit(fallbackUrl)
+    } else {
+      sessionStorage.backCounter = parseInt(sessionStorage.backCounter) - previousPageAndCurrentPage
+      history.back()
+    }
   }
 
   reload() {
@@ -326,5 +338,15 @@ export default class Helpers {
       const [key, value] = entry
       elem.dataset[key] = value
     })
+  }
+
+  _manageSessionUrls() {
+    const newPageVisited = 1
+    const isNotTheSamePage = sessionStorage.currentURL != location.href
+
+    if (!sessionStorage.backCounter) sessionStorage.backCounter = 0
+    if (sessionStorage.currentURL && isNotTheSamePage)
+      sessionStorage.backCounter = parseInt(sessionStorage.backCounter) + newPageVisited
+    sessionStorage.currentURL = location.href
   }
 }
