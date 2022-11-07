@@ -205,9 +205,10 @@ render('itemCard', {
 - Middleman with Ralix and Tailwind: https://github.com/ralixjs/middleman-ralix-tailwind
 - Ralix and Tailwind, with Parcel: https://github.com/ralixjs/ralix-tailwind
 
-**Demo apps:**
+**Apps:**
 
 - TodoMVC built with Ralix, bundled with Parcel: https://github.com/ralixjs/ralix-todomvc
+- Tonic framework: https://github.com/Subgin/tonic
 
 ## Development
 

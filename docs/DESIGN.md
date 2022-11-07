@@ -66,7 +66,7 @@ export default class Tooltip {
 
 ### Helpers
 
-Utilities, aka _Helpers_, are a set of functions to write most common operations with a nicer and shorter API: finders, manage classes, manage elements attributes and data-attributes, submit forms, change browser history, listeners and more. You can find the complete documentation [here](HELPERS_API.md).
+Utilities, aka _Helpers_, are a set of functions to write most common operations with a nicer and shorter API: finders, manage classes, manage elements attributes and data-attributes, submit forms, change browser history, listeners and more. You can find the complete documentation [here](HELPERS_API.md). They are inspired by jQuery.
 
 These provided helpers can be called in all the layers of your application: in the controllers, the components or directly in your views.
 
