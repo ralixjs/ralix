@@ -76,7 +76,12 @@ export default class Helpers {
   }
 
   back(fallbackUrl = null) {
-    history.length <= 1 && fallbackUrl ? this.visit(fallbackUrl) : history.back()
+    const isOtherHost = document.referrer != '' && !document.referrer.includes(location.hostname)
+
+    if ((history.length <= 1 || isOtherHost) && fallbackUrl != null)
+      this.visit(fallbackUrl)
+    else
+      history.back()
   }
 
   reload() {
