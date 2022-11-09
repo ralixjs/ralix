@@ -186,6 +186,10 @@ Reloads current page.
 
 Navigates to the given `url`, uses `Turbo.visit` (or `Turbolinks.visit`) if possible.
 
+### `back(fallbackUrl)`
+
+It returns the user to the previous page. If there is no previous page or the referrer has a different hostname than the current one it will use `visit(fallbackUrl)`.
+
 ### `currentUrl()`
 
 Returns the current location.
