@@ -495,6 +495,38 @@ describe('Navigation', () => {
       expect(spyPush).toHaveBeenCalledTimes(0)
     })
   })
+
+  describe('back', () => {
+    beforeEach(() => {
+      window.location.href = 'http://test.com/'
+      window.location.hostname = 'test.com'
+    })
+
+    test('without history length', () => {
+      back('/back_fallback')
+
+      expect(window.location.href).toBe('/back_fallback')
+    })
+
+    test('with history length', () => {
+      jest.spyOn(history, 'length', 'get').mockReturnValue(3)
+      jest.spyOn(document, 'referrer', 'get').mockReturnValue('http://test.com/test')
+      const spyBack = jest.spyOn(history, 'back')
+
+      back('/back_fallback')
+
+      expect(spyBack).toHaveBeenCalledTimes(1)
+    })
+
+    test('with a different hostname', () => {
+      jest.spyOn(history, 'length', 'get').mockReturnValue(3)
+      jest.spyOn(document, 'referrer', 'get').mockReturnValue('http://other.com/')
+
+      back('/back_fallback')
+
+      expect(window.location.href).toBe('/back_fallback')
+    })
+  })
 })
 
 describe('Events', () => {
