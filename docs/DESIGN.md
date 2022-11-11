@@ -10,7 +10,7 @@ Ralix has no runtime dependencies and all codebase is really small, around 400 L
 
 ## Structure
 
-Ralix aims to provide a basic structure to organize your JavaScript code. But gives you a lot of freedom, it just proposes a couple of directories, but you can create more to split your code, for example: `source/services/`, `source/validators/`, etc.
+Ralix aims to provide a basic structure to organize your JavaScript code. But gives you a lot of freedom, it just proposes a couple of directories, but you can create more to split your code, for example: `source/services/`, `source/utils/`, `source/validators/`, etc.
 
 There are two basic structural components in a Ralix app: Controllers (_The Router_) and Components.
 
@@ -62,13 +62,13 @@ export default class Tooltip {
 }
 ```
 
-**NOTE** Not all components need to be auto-mounted (and define the `onload` method), you can use the directory to place other components that you will initialize manually only in some specific controllers.
+**NOTE** Not all components need to be auto-mounted (and define the `onload` method), you can use the directory to place other components that you will import manually only in some specific controllers.
 
 ### Helpers
 
-Utilities, aka _Helpers_, are a set of functions to write most common operations with a nicer and shorter API: finders, manage classes, manage elements attributes and data-attributes, submit forms, change browser history, listeners and more. You can find the complete documentation [here](HELPERS_API.md). They are inspired by jQuery.
+Utilities, aka _Helpers_, are a set of functions to write most common operations with a nicer and shorter API: finders, manage classes, manage attributes and data-attributes, serialize and submit forms, change browser history, listeners and more. You can find the complete documentation [here](HELPERS_API.md). They are inspired by jQuery.
 
-These provided helpers can be called in all the layers of your application: in the controllers, the components or directly in your views.
+These provided helpers can be called in **all** the layers of your application: in the controllers, the components or directly in your views.
 
 ## Logo and Branding
 

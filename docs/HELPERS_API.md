@@ -188,7 +188,7 @@ Navigates to the given `url`, uses `Turbo.visit` (or `Turbolinks.visit`) if poss
 
 ### `back(fallbackUrl)`
 
-It returns the user to the previous page. If there is no previous page or the referrer has a different hostname than the current one it will use `visit(fallbackUrl)`.
+It returns the user to the previous page (via `history.back()`). If there is no previous page or the referrer has a different hostname than the current one, it will navigate to the fallback url `visit(fallbackUrl)`.
 
 ### `currentUrl()`
 

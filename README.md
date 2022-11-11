@@ -85,7 +85,7 @@ App.start()
 
 export default class AppCtrl {
   goBack() {
-    window.history.back()
+    back()
   }
 
   toggleMenu() {
@@ -197,7 +197,7 @@ render('itemCard', {
 })
 ```
 
-## Starter Kits and example apps
+## Starter Kits and Applications
 
 **Templates:**
 
@@ -205,7 +205,7 @@ render('itemCard', {
 - Middleman with Ralix and Tailwind: https://github.com/ralixjs/middleman-ralix-tailwind
 - Ralix and Tailwind, with Parcel: https://github.com/ralixjs/ralix-tailwind
 
-**Apps:**
+**Applications:**
 
 - TodoMVC built with Ralix, bundled with Parcel: https://github.com/ralixjs/ralix-todomvc
 - Tonic framework: https://github.com/Subgin/tonic
