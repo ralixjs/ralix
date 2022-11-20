@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## [Next]
+
+- Add `back` helper (#72, #73)
+
 ## [1.1.1]
 
 - Fix automatic `preventDefault()` conditions (#68)
@@ -9,7 +13,7 @@ All notable changes to this project will be documented in this file.
 ## [1.1.0]
 
 - Add `findParent` and `findParents` helpers (#66)
-- Perform automatic `preventDefault()` for inputs of type submit (#67)
+- Automatic `preventDefault()` only for submit inputs (#67)
 
 ## [1.0.1]
 
@@ -44,6 +48,7 @@ All notable changes to this project will be documented in this file.
 - `serialize` works with objects too
 - Use `findAll` in `show`, `hide` and `on`
 
+[Next]: https://github.com/ralixjs/ralix/compare/v1.1.1...master
 [1.1.1]: https://github.com/ralixjs/ralix/compare/v1.1.0...v1.1.1
 [1.1.0]: https://github.com/ralixjs/ralix/compare/v1.0.1...v1.1.0
 [1.0.1]: https://github.com/ralixjs/ralix/compare/v1.0.0...v1.0.1
