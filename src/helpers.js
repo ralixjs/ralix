@@ -8,6 +8,7 @@ export default class Helpers {
     })
   }
 
+  // Selectors
   find(query) {
     if (typeof query === 'string')
       return document.querySelector(query)
@@ -49,6 +50,7 @@ export default class Helpers {
     return elements
   }
 
+  // Classes
   addClass(query, classList) {
     _classModifier('add', query, classList)
   }
@@ -66,29 +68,132 @@ export default class Helpers {
     if (el) return el.classList.contains(className)
   }
 
-  visit(url) {
-    if (typeof Turbo !== 'undefined')
-      Turbo.visit(url)
-    else if (typeof Turbolinks !== 'undefined')
-      Turbolinks.visit(url)
-    else
-      window.location.href = url
+  _classModifier(operation, query, classList) {
+    const queries = Array.isArray(query) ? query : [query]
+
+    queries.forEach(query => {
+      const elements = findAll(query)
+      if (elements.length == 0) return
+
+      elements.forEach(el => {
+        if (Array.isArray(classList))
+          el.classList[operation](...classList)
+        else
+          el.classList[operation](classList)
+      })
+    })
   }
 
-  back(fallbackUrl = null) {
-    const referrer = document.referrer
-    const isOtherHost = !referrer.includes(location.hostname)
+  // Attributes
+  attr(query, attribute, value = null) {
+    const el = find(query)
+    if (!el) return
 
-    if (fallbackUrl && (!referrer || isOtherHost || history.length < 2))
-      visit(fallbackUrl)
-    else
-      history.back()
+    if (typeof attribute === 'string')
+      if (value === null)
+        return el.getAttribute(attribute)
+      else
+        return el.setAttribute(attribute, value)
+    else if (typeof attribute  === 'object')
+      _setAttributes(el, attribute)
   }
 
-  reload() {
-    window.location.reload()
+  _setAttributes(elem, attributes) {
+    Object.entries(attributes).forEach(entry => {
+      const [key, value] = entry
+      elem.setAttribute(key, value)
+    })
   }
 
+  data(query, attribute = null, value = null) {
+    const el = find(query)
+    if (!el) return
+
+    if (!attribute && !value) return el.dataset
+
+    if (typeof attribute === 'string')
+      if (value === null)
+        return el.dataset[attribute]
+      else
+        return el.dataset[attribute] = value
+    else if (typeof attribute  === 'object')
+      _setDataset(el, attribute)
+  }
+
+  _setDataset(elem, attributes) {
+    Object.entries(attributes).forEach(entry => {
+      const [key, value] = entry
+      elem.dataset[key] = value
+    })
+  }
+
+  removeAttr(query, attribute) {
+    const el = find(query)
+    if (!el) return
+
+    if (Array.isArray(attribute)) {
+      attribute.forEach((attr) => {
+        el.removeAttribute(attr)
+      })
+    } else if (typeof attribute === "string") {
+      el.removeAttribute(attribute)
+    }
+  }
+
+  removeData(query, attribute = null) {
+    const el = find(query)
+    if (!el) return
+
+    if (Array.isArray(attribute)) {
+      attribute.forEach((attr) => {
+        delete el.dataset[attr]
+      })
+    } else if (typeof attribute === "string") {
+      delete el.dataset[attribute]
+    } else if (attribute === null) {
+      for( attr in el.dataset ) {
+        delete el.dataset[attr]
+      }
+    }
+  }
+
+  // DOM
+  insertHTML(query, html, position = 'inner') {
+    const el = find(query)
+    if (!el) return
+
+    switch (position) {
+      case 'inner':
+        el.innerHTML = html
+        break
+      case 'prepend':
+        el.insertAdjacentHTML('beforebegin', html)
+        break
+      case 'begin':
+        el.insertAdjacentHTML('afterbegin', html)
+        break
+      case 'end':
+        el.insertAdjacentHTML('beforeend', html)
+        break
+      case 'append':
+        el.insertAdjacentHTML('afterend', html)
+        break
+    }
+  }
+
+  elem(type, attributes) {
+    const el = document.createElement(type)
+    _setAttributes(el, attributes)
+
+    return el
+  }
+
+  // Templates
+  render(template, data) {
+    return App.templates.render(template, data)
+  }
+
+  // Forms
   serialize(query) {
     if (query instanceof Element || typeof query == 'string') {
       const form = find(query)
@@ -110,6 +215,30 @@ export default class Helpers {
       form.requestSubmit()
     else
       form.submit()
+  }
+
+  // Navigation
+  visit(url) {
+    if (typeof Turbo !== 'undefined')
+      Turbo.visit(url)
+    else if (typeof Turbolinks !== 'undefined')
+      Turbolinks.visit(url)
+    else
+      window.location.href = url
+  }
+
+  back(fallbackUrl = null) {
+    const referrer = document.referrer
+    const isOtherHost = !referrer.includes(location.hostname)
+
+    if (fallbackUrl && (!referrer || isOtherHost || history.length < 2))
+      visit(fallbackUrl)
+    else
+      history.back()
+  }
+
+  reload() {
+    window.location.reload()
   }
 
   currentUrl() {
@@ -145,6 +274,7 @@ export default class Helpers {
     }
   }
 
+  // Events
   on(query, events, callback) {
     let elements = findAll(query)
     if (elements.length == 0) return
@@ -177,98 +307,7 @@ export default class Helpers {
     })
   }
 
-  insertHTML(query, html, position = 'inner') {
-    const el = find(query)
-    if (!el) return
-
-    switch (position) {
-      case 'inner':
-        el.innerHTML = html
-        break
-      case 'prepend':
-        el.insertAdjacentHTML('beforebegin', html)
-        break
-      case 'begin':
-        el.insertAdjacentHTML('afterbegin', html)
-        break
-      case 'end':
-        el.insertAdjacentHTML('beforeend', html)
-        break
-      case 'append':
-        el.insertAdjacentHTML('afterend', html)
-        break
-    }
-  }
-
-  elem(type, attributes) {
-    const el = document.createElement(type)
-    _setAttributes(el, attributes)
-
-    return el
-  }
-
-  render(template, data) {
-    return App.templates.render(template, data)
-  }
-
-  attr(query, attribute, value = null) {
-    const el = find(query)
-    if (!el) return
-
-    if (typeof attribute === 'string')
-      if (value === null)
-        return el.getAttribute(attribute)
-      else
-        return el.setAttribute(attribute, value)
-    else if (typeof attribute  === 'object')
-      _setAttributes(el, attribute)
-  }
-
-  data(query, attribute = null, value = null) {
-    const el = find(query)
-    if (!el) return
-
-    if (!attribute && !value) return el.dataset
-
-    if (typeof attribute === 'string')
-      if (value === null)
-        return el.dataset[attribute]
-      else
-        return el.dataset[attribute] = value
-    else if (typeof attribute  === 'object')
-      _setDataset(el, attribute)
-  }
-
-  removeAttr(query, attribute) {
-    const el = find(query)
-    if (!el) return
-
-    if (Array.isArray(attribute)) {
-      attribute.forEach((attr) => {
-        el.removeAttribute(attr)
-      })
-    } else if (typeof attribute === "string") {
-      el.removeAttribute(attribute)
-    }
-  }
-
-  removeData(query, attribute = null) {
-    const el = find(query)
-    if (!el) return
-
-    if (Array.isArray(attribute)) {
-      attribute.forEach((attr) => {
-        delete el.dataset[attr]
-      })
-    } else if (typeof attribute === "string") {
-      delete el.dataset[attribute]
-    } else if (attribute === null) {
-      for( attr in el.dataset ) {
-        delete el.dataset[attr]
-      }
-    }
-  }
-
+  // Ajax
   async ajax(path, { params = {}, options = {} } = {}) {
     let format = 'text'
     if ("format" in options) {
@@ -306,35 +345,5 @@ export default class Helpers {
     options.method = 'POST'
 
     return ajax(path, { params: params, options: options })
-  }
-
-  _classModifier(operation, query, classList) {
-    const queries = Array.isArray(query) ? query : [query]
-
-    queries.forEach(query => {
-      const elements = findAll(query)
-      if (elements.length == 0) return
-
-      elements.forEach(el => {
-        if (Array.isArray(classList))
-          el.classList[operation](...classList)
-        else
-          el.classList[operation](classList)
-      })
-    })
-  }
-
-  _setAttributes(elem, attributes) {
-    Object.entries(attributes).forEach(entry => {
-      const [key, value] = entry
-      elem.setAttribute(key, value)
-    })
-  }
-
-  _setDataset(elem, attributes) {
-    Object.entries(attributes).forEach(entry => {
-      const [key, value] = entry
-      elem.dataset[key] = value
-    })
   }
 }
