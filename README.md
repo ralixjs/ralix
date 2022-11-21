@@ -78,6 +78,8 @@ const App = new RalixApp({
 App.start()
 ```
 
+The `App` object is exposed globally via the `window` object. You can access the _current_ controller via `App.ctrl`.
+
 ### Controllers
 
 ```js
