@@ -1,6 +1,6 @@
 {
   "name": "ralix",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "description": "Microframework for building and organizing your front-end",
   "repository": "ralixjs/ralix",
   "type": "module",
