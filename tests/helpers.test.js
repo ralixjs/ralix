@@ -318,12 +318,20 @@ describe('DOM', () => {
     })
   })
 
-  test('elem', () => {
-    element = elem('span', { id: 'new_span', class: 'test' })
+  describe('elem', () => {
+    test('with attributes', () => {
+      element = elem('span', { id: 'new_span', class: 'test' })
 
-    expect(element.tagName).toBe('SPAN')
-    expect(element.getAttribute('id')).toBe('new_span')
-    expect(element.getAttribute('class')).toBe('test')
+      expect(element.tagName).toBe('SPAN')
+      expect(element.getAttribute('id')).toBe('new_span')
+      expect(element.getAttribute('class')).toBe('test')
+    })
+
+    test('without attributes', () => {
+      element = elem('div')
+
+      expect(element.tagName).toBe('DIV')
+    })
   })
 })
 

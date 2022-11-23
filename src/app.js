@@ -5,11 +5,10 @@ import Templates from './templates'
 
 export default class App {
   constructor(config) {
-    this.helpers   = new Helpers()
-    this.router    = new Router(config.routes)
-    this.events    = new Events()
-    this.templates = new Templates(config.templates)
-
+    this.helpers    = new Helpers()
+    this.router     = new Router(config.routes)
+    this.events     = new Events()
+    this.templates  = new Templates(config.templates)
     this.rails_ujs  = config.rails_ujs || null
     this.components = config.components || []
 

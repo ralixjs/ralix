@@ -181,9 +181,9 @@ export default class Helpers {
     }
   }
 
-  elem(type, attributes) {
+  elem(type, attributes = null) {
     const el = document.createElement(type)
-    _setAttributes(el, attributes)
+    if (attributes) _setAttributes(el, attributes)
 
     return el
   }

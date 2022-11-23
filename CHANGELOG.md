@@ -2,9 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
-## [Next]
+## [1.2.0]
 
-- Add `back` helper (#72, #73)
+- New `back` helper (#72, #73)
+- Allow to create elements without attributes: `elem('p')`
 
 ## [1.1.1]
 
@@ -48,7 +49,7 @@ All notable changes to this project will be documented in this file.
 - `serialize` works with objects too
 - Use `findAll` in `show`, `hide` and `on`
 
-[Next]: https://github.com/ralixjs/ralix/compare/v1.1.1...master
+[1.2.0]: https://github.com/ralixjs/ralix/compare/v1.1.1...v1.2.0
 [1.1.1]: https://github.com/ralixjs/ralix/compare/v1.1.0...v1.1.1
 [1.1.0]: https://github.com/ralixjs/ralix/compare/v1.0.1...v1.1.0
 [1.0.1]: https://github.com/ralixjs/ralix/compare/v1.0.0...v1.0.1
