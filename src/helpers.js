@@ -254,24 +254,17 @@ export default class Helpers {
       return urlParams.get(param)
   }
 
-  setParam(param, value, { url = currentUrl(), update = false } = {}) {
-    const urlParams = new URL(url)
-    urlParams.searchParams.set(param, value)
+  setParam(param, value, updateHistory = false) {
+    const urlObject = new URL(currentUrl())
 
-    if (update) setUrl(urlParams.href)
+    if (value == null)
+      urlObject.searchParams.delete(param)
+    else
+      urlObject.searchParams.set(param, value)
 
-    return urlParams.href
-  }
+    if (updateHistory) history.pushState({}, '', urlObject.href)
 
-  setUrl(state, method = 'push', data = {}) {
-    switch (method) {
-      case "push":
-        history.pushState(data, undefined, state)
-        break
-      case "replace":
-        history.replaceState(data, undefined, state)
-        break
-    }
+    return urlObject.href
   }
 
   // Events

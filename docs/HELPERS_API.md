@@ -196,15 +196,23 @@ Returns the current location.
 
 ### `getParam(param)`
 
-Gets `param` value for the current location.
+Gets `param` value. Example (assuming `?a=1&b=2`):
 
-### `setParam(param, value, { url, update })`
+```js
+getParam('a')
+// '1'
+````
 
-Sets `param` value to the given location (current location by default). If `update` is *true*, browser history is updated too.
+### `setParam(param, value, updateHistory)`
 
-### `setUrl(state, method, data)`
+Sets `value` to `param`. If `value` is `null`, param is deleted. If `updateHistory` is *true*, browser history is updated too. Examples:
 
-Allows to update current location via browser history object. The argument `method` accepts: *push* (pushState, default) and *replace* (replaceState).
+```js
+setParam('a', 2)
+// 'http://localhost:1234/?a=2'
+setParam('a')
+// 'http://localhost:1234/'
+````
 
 ## Events
 

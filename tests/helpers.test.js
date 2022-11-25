@@ -449,58 +449,21 @@ describe('Navigation', () => {
       history.pushState = historyPush
     })
 
-    test('default url', () => {
-      expect(setParam('foo', 'test')).toBe('http://test.com/?foo=test')
+    test('set value', () => {
+      expect(setParam('a', '1')).toBe('http://test.com/?a=1')
       expect(window.location.href).toBe('http://test.com/')
     })
 
-    test('with url', () => {
-      expect(setParam('foo', 'test', { url: 'http://url.com/?foo=test' })).toBe('http://url.com/?foo=test')
+    test('remove value', () => {
+      expect(setParam('a')).toBe('http://test.com/')
       expect(window.location.href).toBe('http://test.com/')
     })
 
-    test('with update', () => {
+    test('update history', () => {
       const spy = jest.spyOn(history, 'pushState')
 
-      expect(setParam('foo', 'test', { update: true })).toBe('http://test.com/?foo=test')
-      expect(spy).toHaveBeenCalledWith({}, undefined, 'http://test.com/?foo=test')
-    })
-  })
-
-  describe('setUrl', () => {
-    let historyPush, historyReplace
-
-    beforeEach(() => {
-      historyPush = history.pushState
-      historyReplace = history.replaceState
-      history.pushState = jest.fn()
-      history.replaceState = jest.fn()
-      window.location.href = 'http://test.com/'
-    })
-
-    afterEach(() => {
-      history.pushState = historyPush
-      history.replaceState = historyReplace
-    })
-
-    test('default', () => {
-      const spyPush = jest.spyOn(history, 'pushState')
-      const spyReplace = jest.spyOn(history, 'replaceState')
-
-      setUrl('http://url.com/')
-
-      expect(spyPush).toHaveBeenCalledWith({}, undefined, 'http://url.com/')
-      expect(spyReplace).toHaveBeenCalledTimes(0)
-    })
-
-    test('with replace', () => {
-      const spyPush = jest.spyOn(history, 'pushState')
-      const spyReplace = jest.spyOn(history, 'replaceState')
-
-      setUrl('http://url.com/', 'replace')
-
-      expect(spyReplace).toHaveBeenCalledWith({}, undefined, 'http://url.com/')
-      expect(spyPush).toHaveBeenCalledTimes(0)
+      expect(setParam('a', '2', true)).toBe('http://test.com/?a=2')
+      expect(spy).toHaveBeenCalledWith({}, '', 'http://test.com/?a=2')
     })
   })
 
