@@ -205,11 +205,11 @@ getParam('a')
 
 ### `setParam(param, value, updateHistory)`
 
-Sets `value` to `param`. If `value` is `null`, param is deleted. If `updateHistory` is *true*, browser history is updated too. Examples:
+Sets `value` to `param`. If `value` is `null`, parameter is deleted. If `updateHistory` is *true*, browser history is updated too (via `pushState`). Examples:
 
 ```js
-setParam('a', 2)
-// 'http://localhost:1234/?a=2'
+setParam('a', 1)
+// 'http://localhost:1234/?a=1'
 setParam('a')
 // 'http://localhost:1234/'
 ````
