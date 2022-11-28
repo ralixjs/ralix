@@ -201,18 +201,32 @@ Gets `param` value. Example (assuming `?a=1&b=2`):
 ```js
 getParam('a')
 // '1'
-````
+```
 
-### `setParam(param, value, updateHistory)`
+If you don't pass any param, it will return all current parameters:
 
-Sets `value` to `param`. If `value` is `null`, parameter is deleted. If `updateHistory` is *true*, browser history is updated too (via `pushState`). Examples:
+```js
+getParam()
+// { a: '1', b: '2' }
+```
+
+### `setParam(param, value)`
+
+Sets `value` to `param` and updates browser history (via `pushState`). If `value` is `null`, parameter is deleted. Examples:
 
 ```js
 setParam('a', 1)
 // 'http://localhost:1234/?a=1'
 setParam('a')
 // 'http://localhost:1234/'
-````
+```
+
+You can also set multiple values at once by passing an object:
+
+```js
+setParam({ a: 1, b: 2 })
+// 'http://localhost:1234/?a=1&b=2'
+```
 
 ## Events
 

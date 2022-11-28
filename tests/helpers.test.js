@@ -424,25 +424,32 @@ describe('Navigation', () => {
 
   describe('getParam', () => {
     test('single param', () => {
-      window.location.href = 'http://example.com/url?test=1'
+      window.location.href = 'http://example.com/?test=1'
 
       expect(getParam('test')).toBe('1')
     })
 
     test('array of params', () => {
-      window.location.href = 'http://example.com/url?test[]=1&test[]=2'
+      window.location.href = 'http://example.com/?test[]=1&test[]=2'
 
       expect(getParam('test')).toEqual(['1', '2'])
+    })
+
+    test('no param, returns all parameters', () => {
+      window.location.href = 'http://example.com/?a=1&b=2'
+
+      expect(getParam()).toEqual({ a: '1', b: '2' })
     })
   })
 
   describe('setParam', () => {
-    let historyPush
+    let historyPush, spy
 
     beforeEach(() => {
       historyPush = history.pushState
       history.pushState = jest.fn()
       window.location.href = 'http://example.com/'
+      spy = jest.spyOn(history, 'pushState')
     })
 
     afterEach(() => {
@@ -451,19 +458,17 @@ describe('Navigation', () => {
 
     test('set value', () => {
       expect(setParam('a', '1')).toBe('http://example.com/?a=1')
-      expect(window.location.href).toBe('http://example.com/')
+      expect(spy).toHaveBeenCalledWith({}, '', 'http://example.com/?a=1')
+    })
+
+    test('set multiple values', () => {
+      expect(setParam({ a: 1, b: 2 })).toBe('http://example.com/?a=1&b=2')
+      expect(spy).toHaveBeenCalledWith({}, '', 'http://example.com/?a=1&b=2')
     })
 
     test('remove value', () => {
       expect(setParam('a')).toBe('http://example.com/')
-      expect(window.location.href).toBe('http://example.com/')
-    })
-
-    test('update history', () => {
-      const spy = jest.spyOn(history, 'pushState')
-
-      expect(setParam('a', '2', true)).toBe('http://example.com/?a=2')
-      expect(spy).toHaveBeenCalledWith({}, '', 'http://example.com/?a=2')
+      expect(spy).toHaveBeenCalledWith({}, '', 'http://example.com/')
     })
   })
 
