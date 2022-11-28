@@ -82,6 +82,8 @@ The `App` object is exposed globally via the `window` object. You can access the
 
 ### Controllers
 
+Define you _main_ controller (AppCtrl, MainCtrl, IndexCtrl, ...):
+
 ```js
 // source/controllers/app.js
 
@@ -95,6 +97,8 @@ export default class AppCtrl {
   }
 }
 ```
+
+Inherit from your _main_ controller ([read more](docs/DESIGN.md#controllers)):
 
 ```js
 // source/controllers/users.js
@@ -122,6 +126,8 @@ export default class UsersCtrl extends AppCtrl {
 ```
 
 ### Components
+
+Example of a component with auto-mount:
 
 ```js
 // source/components/modal.js
@@ -161,9 +167,15 @@ export default class Modal {
 }
 ```
 
+Then, in your HTML, you just need to define a link or button like with the following attributes:
+
+```html
+<button class="fire-modal" data-url="/example-modal">Open Remote Modal</button>
+```
+
 ### Views
 
-In your regular HTML code, now you can call directly Ralix Helpers or the methods provided by the _current_ Ralix controller, using regular HTML Events.
+In your regular HTML code, now you can call directly [Ralix Helpers](docs/HELPERS_API.md) or the methods provided by the _current_ Ralix controller, using regular HTML Events.
 
 ```html
 <a href="#" onclick="goBack()">Back</a>

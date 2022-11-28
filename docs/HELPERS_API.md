@@ -196,14 +196,14 @@ Returns the current location.
 
 ### `getParam(param)`
 
-Gets `param` value. Example (assuming `?a=1&b=2`):
+Gets `param` value from current location. Example (assuming `?a=1&b=2`):
 
 ```js
 getParam('a')
 // '1'
 ```
 
-If you don't pass any param, it will return all current parameters:
+If you don't pass any argument, it will return all current parameters:
 
 ```js
 getParam()
@@ -248,7 +248,7 @@ on('.input-submit', 'change keyup', (e) => {
 })
 ```
 
-**NOTE** `on` performs `preventDefault()` on `click` events for links, buttons and inputs.
+**NOTE** `on` performs `preventDefault()` on `click` events for interactive elements (links, buttons and inputs).
 
 ### `currentElement()`
 
