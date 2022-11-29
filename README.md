@@ -82,7 +82,7 @@ The `App` object is exposed globally via the `window` object. You can access the
 
 ### Controllers
 
-Define you _main_ controller (AppCtrl, MainCtrl, IndexCtrl, ...):
+Define your _main_ controller (AppCtrl, MainCtrl, IndexCtrl, ...):
 
 ```js
 // source/controllers/app.js
