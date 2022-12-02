@@ -316,6 +316,12 @@ describe('DOM', () => {
 
       expect(document.body.innerHTML).toBe('<div>Some content for testing<span>After content</span></div><div></div>')
     })
+
+    test('render Element', () => {
+      insertHTML(element, elem('p'), 'end')
+
+      expect(document.body.innerHTML).toBe('<div>Some content for testing<p></p></div><div></div>')
+    })
   })
 
   describe('elem', () => {

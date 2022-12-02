@@ -162,6 +162,8 @@ export default class Helpers {
     const el = find(query)
     if (!el) return
 
+    if (html instanceof Element) html = html.outerHTML
+
     switch (position) {
       case 'inner':
         el.innerHTML = html

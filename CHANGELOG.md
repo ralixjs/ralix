@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file.
 
 - Refactor `getParams` and `setParams` helpers (#75)
 - Remove `setUrl` helper (#75)
+- `insertHTML` supports to render *Element* instances
 
 ## [1.2.0]
 

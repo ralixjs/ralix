@@ -123,6 +123,12 @@ insertHTML('.total', `Total: <b>${totalItems}</b>`)
 insertHTML('ul.items', '<li>new item</li>', 'end')
 ```
 
+You can also insert *Element* instances:
+
+```js
+insertHTML('body', elem('footer'), 'end')
+```
+
 ### `elem(type, attributes)`
 
 Creates and returns an HTML element and assigns given `attributes`. Example:
