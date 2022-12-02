@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## Next
+
+- Refactor `getParams` and `setParams` helpers (#75)
+- Remove `setUrl` helper (#75)
+
 ## [1.2.0]
 
 - New `back` helper (#72, #73)
