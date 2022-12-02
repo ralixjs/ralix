@@ -26,7 +26,7 @@ export default class AppCtrl { }
 export default class UsersCtrl extends AppCtrl { }
 ```
 
-Following this approach, if you define a method in the main controller, you will have access to this method in all pages and eventually override its behavior on per page basis.
+Following this approach, if you define a method in the _main_ controller, you will have access to this method in all pages and eventually override its behavior on per page basis.
 
 The Router uses regular expressions to match the current location (_url_) with the defined controller. So you can have one controller to match different urls/pages too. Example:
 

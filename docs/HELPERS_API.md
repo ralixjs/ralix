@@ -196,15 +196,37 @@ Returns the current location.
 
 ### `getParam(param)`
 
-Gets `param` value for the current location.
+Gets `param` value from current location. Example (assuming `?a=1&b=2`):
 
-### `setParam(param, value, { url, update })`
+```js
+getParam('a')
+// '1'
+```
 
-Sets `param` value to the given location (current location by default). If `update` is *true*, browser history is updated too.
+If you don't pass any argument, it will return all current parameters:
 
-### `setUrl(state, method, data)`
+```js
+getParam()
+// { a: '1', b: '2' }
+```
 
-Allows to update current location via browser history object. The argument `method` accepts: *push* (pushState, default) and *replace* (replaceState).
+### `setParam(param, value)`
+
+Sets `value` to `param` and updates browser history (via `pushState`). If `value` is `null`, parameter is deleted. Examples:
+
+```js
+setParam('a', 1)
+// 'http://localhost:1234/?a=1'
+setParam('a')
+// 'http://localhost:1234/'
+```
+
+You can also set multiple values at once by passing an object:
+
+```js
+setParam({ a: 1, b: 2 })
+// 'http://localhost:1234/?a=1&b=2'
+```
 
 ## Events
 
@@ -226,7 +248,7 @@ on('.input-submit', 'change keyup', (e) => {
 })
 ```
 
-**NOTE** `on` performs `preventDefault()` on `click` events for links, buttons and inputs.
+**NOTE** `on` performs `preventDefault()` on `click` events for interactive elements (links, buttons and inputs).
 
 ### `currentElement()`
 

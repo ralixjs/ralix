@@ -424,90 +424,58 @@ describe('Navigation', () => {
 
   describe('getParam', () => {
     test('single param', () => {
-      window.location.href = 'http://test.com/url?test=1'
+      window.location.href = 'http://example.com/?test=1'
 
       expect(getParam('test')).toBe('1')
     })
 
     test('array of params', () => {
-      window.location.href = 'http://test.com/url?test[]=1&test[]=2'
+      window.location.href = 'http://example.com/?test[]=1&test[]=2'
 
       expect(getParam('test')).toEqual(['1', '2'])
+    })
+
+    test('no param, returns all parameters', () => {
+      window.location.href = 'http://example.com/?a=1&b=2'
+
+      expect(getParam()).toEqual({ a: '1', b: '2' })
     })
   })
 
   describe('setParam', () => {
-    let historyPush
+    let historyPush, spy
 
     beforeEach(() => {
       historyPush = history.pushState
       history.pushState = jest.fn()
-      window.location.href = 'http://test.com/'
+      window.location.href = 'http://example.com/'
+      spy = jest.spyOn(history, 'pushState')
     })
 
     afterEach(() => {
       history.pushState = historyPush
     })
 
-    test('default url', () => {
-      expect(setParam('foo', 'test')).toBe('http://test.com/?foo=test')
-      expect(window.location.href).toBe('http://test.com/')
+    test('set value', () => {
+      expect(setParam('a', '1')).toBe('http://example.com/?a=1')
+      expect(spy).toHaveBeenCalledWith({}, '', 'http://example.com/?a=1')
     })
 
-    test('with url', () => {
-      expect(setParam('foo', 'test', { url: 'http://url.com/?foo=test' })).toBe('http://url.com/?foo=test')
-      expect(window.location.href).toBe('http://test.com/')
+    test('set multiple values', () => {
+      expect(setParam({ a: 1, b: 2 })).toBe('http://example.com/?a=1&b=2')
+      expect(spy).toHaveBeenCalledWith({}, '', 'http://example.com/?a=1&b=2')
     })
 
-    test('with update', () => {
-      const spy = jest.spyOn(history, 'pushState')
-
-      expect(setParam('foo', 'test', { update: true })).toBe('http://test.com/?foo=test')
-      expect(spy).toHaveBeenCalledWith({}, undefined, 'http://test.com/?foo=test')
-    })
-  })
-
-  describe('setUrl', () => {
-    let historyPush, historyReplace
-
-    beforeEach(() => {
-      historyPush = history.pushState
-      historyReplace = history.replaceState
-      history.pushState = jest.fn()
-      history.replaceState = jest.fn()
-      window.location.href = 'http://test.com/'
-    })
-
-    afterEach(() => {
-      history.pushState = historyPush
-      history.replaceState = historyReplace
-    })
-
-    test('default', () => {
-      const spyPush = jest.spyOn(history, 'pushState')
-      const spyReplace = jest.spyOn(history, 'replaceState')
-
-      setUrl('http://url.com/')
-
-      expect(spyPush).toHaveBeenCalledWith({}, undefined, 'http://url.com/')
-      expect(spyReplace).toHaveBeenCalledTimes(0)
-    })
-
-    test('with replace', () => {
-      const spyPush = jest.spyOn(history, 'pushState')
-      const spyReplace = jest.spyOn(history, 'replaceState')
-
-      setUrl('http://url.com/', 'replace')
-
-      expect(spyReplace).toHaveBeenCalledWith({}, undefined, 'http://url.com/')
-      expect(spyPush).toHaveBeenCalledTimes(0)
+    test('remove value', () => {
+      expect(setParam('a')).toBe('http://example.com/')
+      expect(spy).toHaveBeenCalledWith({}, '', 'http://example.com/')
     })
   })
 
   describe('back', () => {
     beforeEach(() => {
-      window.location.href = 'http://test.com/'
-      window.location.hostname = 'test.com'
+      window.location.href = 'http://example.com/'
+      window.location.hostname = 'example.com'
     })
 
     test('without history length', () => {
@@ -518,7 +486,7 @@ describe('Navigation', () => {
 
     test('with history length', () => {
       jest.spyOn(history, 'length', 'get').mockReturnValue(3)
-      jest.spyOn(document, 'referrer', 'get').mockReturnValue('http://test.com/test')
+      jest.spyOn(document, 'referrer', 'get').mockReturnValue('http://example.com/test')
       const spyBack = jest.spyOn(history, 'back')
 
       back('/back_fallback')
@@ -572,18 +540,18 @@ describe('Ajax', () => {
   test('get', () => {
     const spy = jest.spyOn(global, 'fetch')
 
-    ajax('http://test.com/', { params: { foo: 'test' } })
+    ajax('http://example.com/', { params: { foo: 'test' } })
 
-    expect(spy).toHaveBeenCalledWith('http://test.com/?foo=test', { method: 'GET', credentials: 'include' })
+    expect(spy).toHaveBeenCalledWith('http://example.com/?foo=test', { method: 'GET', credentials: 'include' })
   })
 
   describe('post', () => {
     test('with JSON', () => {
       const spy = jest.spyOn(global, 'fetch')
 
-      ajax('http://test.com/', { params: { foo: 'test' }, options: { method: 'POST' } })
+      ajax('http://example.com/', { params: { foo: 'test' }, options: { method: 'POST' } })
 
-      expect(spy).toHaveBeenCalledWith('http://test.com/', { method: 'POST', credentials: 'include', body: JSON.stringify({ foo: 'test' }) })
+      expect(spy).toHaveBeenCalledWith('http://example.com/', { method: 'POST', credentials: 'include', body: JSON.stringify({ foo: 'test' }) })
     })
 
     test('with FormData', () => {
@@ -591,9 +559,9 @@ describe('Ajax', () => {
       const form = new FormData()
       form.append('foo', 'test')
 
-      ajax('http://test.com/', { params: form, options: { method: 'POST' } })
+      ajax('http://example.com/', { params: form, options: { method: 'POST' } })
 
-      expect(spy).toHaveBeenCalledWith('http://test.com/', { method: 'POST', credentials: 'include', body: form })
+      expect(spy).toHaveBeenCalledWith('http://example.com/', { method: 'POST', credentials: 'include', body: form })
     })
 
     test('with FormData deletes Content-Type header', () => {
@@ -601,9 +569,9 @@ describe('Ajax', () => {
       const form = new FormData()
       form.append('foo', 'test')
 
-      ajax('http://test.com/', { params: form, options: { method: 'POST', headers: { 'Content-Type': 'text/plain' } } })
+      ajax('http://example.com/', { params: form, options: { method: 'POST', headers: { 'Content-Type': 'text/plain' } } })
 
-      expect(spy).toHaveBeenCalledWith('http://test.com/', { method: 'POST', credentials: 'include', body: form, headers: {} })
+      expect(spy).toHaveBeenCalledWith('http://example.com/', { method: 'POST', credentials: 'include', body: form, headers: {} })
     })
   })
 })
