@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## Next
+## [1.3.0]
 
 - Refactor `getParams` and `setParams` helpers (#75)
 - Remove `setUrl` helper (#75)
@@ -55,6 +55,7 @@ All notable changes to this project will be documented in this file.
 - `serialize` works with objects too
 - Use `findAll` in `show`, `hide` and `on`
 
+[1.3.0]: https://github.com/ralixjs/ralix/compare/v1.2.0...v1.3.0
 [1.2.0]: https://github.com/ralixjs/ralix/compare/v1.1.1...v1.2.0
 [1.1.1]: https://github.com/ralixjs/ralix/compare/v1.1.0...v1.1.1
 [1.1.0]: https://github.com/ralixjs/ralix/compare/v1.0.1...v1.1.0
