@@ -59,8 +59,11 @@ export default class Helpers {
     _classModifier('remove', query, classList)
   }
 
-  toggleClass(query, classList) {
-    _classModifier('toggle', query, classList)
+  toggleClass(query, classList, classValue = null) {
+    if (classValue !== null)
+      _classModifier(classValue ? 'add' : 'remove', query, classList)
+    else
+      _classModifier('toggle', query, classList)
   }
 
   hasClass(query, className) {
