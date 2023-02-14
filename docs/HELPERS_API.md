@@ -48,9 +48,9 @@ removeClass('#target', 'class')
 removeClass('#target', ['class_one', 'class_two'])
 ```
 
-### `toggleClass(query, classList)`
+### `toggleClass(query, classList, classValue)`
 
-Wraps `classList.toggle`. The parameter _query_ could be also an array of elements.
+Wraps `classList.toggle`. The parameter _query_ could be also an array of elements. If the parameter _classValue_ is given, adds or deletes the class depending on this boolean.
 
 ### `hasClass(query, className)`
 
