@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.4.0]
+
+- `toggleClass` accepts a boolean to force add/remove given class (#79)
+
 ## [1.3.0]
 
 - Refactor `getParams` and `setParams` helpers (#75)
@@ -55,6 +59,7 @@ All notable changes to this project will be documented in this file.
 - `serialize` works with objects too
 - Use `findAll` in `show`, `hide` and `on`
 
+[1.4.0]: https://github.com/ralixjs/ralix/compare/v1.3.0...v1.4.0
 [1.3.0]: https://github.com/ralixjs/ralix/compare/v1.2.0...v1.3.0
 [1.2.0]: https://github.com/ralixjs/ralix/compare/v1.1.1...v1.2.0
 [1.1.1]: https://github.com/ralixjs/ralix/compare/v1.1.0...v1.1.1
