@@ -159,6 +159,30 @@ describe('Classes', () => {
       expect(element.classList.contains('test')).toBeFalsy()
       expect(element2.classList.contains('test')).toBeFalsy()
     })
+
+    test('using a boolean to set a class', () => {
+      toggleClass(element, 'test', true)
+
+      expect(element.classList.contains('test')).toBeTruthy()
+
+      toggleClass(element, 'test', true)
+
+      expect(element.classList.contains('test')).toBeTruthy()
+    })
+
+    test('using a boolean to remove a class', () => {
+      toggleClass(element, 'test', true)
+
+      expect(element.classList.contains('test')).toBeTruthy()
+
+      toggleClass(element, 'test', false)
+
+      expect(element.classList.contains('test')).toBeFalsy()
+
+      toggleClass(element, 'test', false)
+
+      expect(element.classList.contains('test')).toBeFalsy()
+    })
   })
 
   describe('hasClass', () => {
