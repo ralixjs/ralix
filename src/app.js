@@ -4,7 +4,7 @@ import Events    from './events'
 import Templates from './templates'
 
 export default class App {
-  constructor(config) {
+  constructor(config = {}) {
     this.helpers    = new Helpers()
     this.router     = new Router(config.routes)
     this.events     = new Events()

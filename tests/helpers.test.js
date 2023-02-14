@@ -128,11 +128,9 @@ describe('Classes', () => {
   describe('toggleClass', () => {
     test('with element', () => {
       toggleClass(element, 'test')
-
       expect(element.classList.contains('test')).toBeTruthy()
 
       toggleClass(element, 'test')
-
       expect(element.classList.contains('test')).toBeFalsy()
     })
 
@@ -162,27 +160,22 @@ describe('Classes', () => {
 
     test('using a boolean to set a class', () => {
       toggleClass(element, 'test', true)
-
       expect(element.classList.contains('test')).toBeTruthy()
 
       // We repeat the test to confirm that the class is still added if classValue is true
       toggleClass(element, 'test', true)
-
       expect(element.classList.contains('test')).toBeTruthy()
     })
 
     test('using a boolean to remove a class', () => {
       toggleClass(element, 'test', true)
-
       expect(element.classList.contains('test')).toBeTruthy()
 
       toggleClass(element, 'test', false)
-
       expect(element.classList.contains('test')).toBeFalsy()
 
       // We repeat the test to confirm that the class is still removed if classValue is false
       toggleClass(element, 'test', false)
-
       expect(element.classList.contains('test')).toBeFalsy()
     })
   })

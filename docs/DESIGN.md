@@ -2,7 +2,7 @@
 
 Ralix is a modest and lightweight framework with the goal to provide barebones and utilities to help enhance your current server-side rendered HTML, using ES6. It pairs really well with [Rails and Turbo](RAILS_INTEGRATION.md) applications.
 
-Following the spirit of frameworks like [Stimulus](https://github.com/stimulusjs/stimulus) or [Alpine.js](https://github.com/alpinejs/alpine), Ralix doesn't seek to take over your entire front-end logic and rendering. Instead, it's designed to enhance your HTML with just enough behavior to make it shine.
+Following the spirit of frameworks like [Stimulus](https://github.com/stimulusjs/stimulus) or [Alpine.js](https://github.com/alpinejs/alpine), Ralix doesn't seek to take over your entire front-end logic and rendering. Instead, it's designed to enhance your HTML with just enough behavior to make it shine. You can even easily mix Ralix with those or any framework without any fear!
 
 The learning curve is really flat, you can understand the whole framework in few minutes.
 
@@ -70,8 +70,17 @@ Utilities, aka _Helpers_, are a set of functions to write most common operations
 
 These provided helpers can be called in **all** the layers of your application: in the controllers, the components or directly in your views.
 
+If you have a very simple app and you only want to use the helpers, you can do it by creating the _minimal_ Ralix app:
+
+```js
+import { RalixApp } from 'ralix'
+
+const App = new RalixApp()
+App.start()
+```
+
 ## Logo and Branding
 
-Created by [Alexander Lloyd](https://www.alexanderlloyd.info).
+Created by [Alexander Lloyd](https://alexlloyd.info).
 
 Check out all logo versions [here](../logos/).
