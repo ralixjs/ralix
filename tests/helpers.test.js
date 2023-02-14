@@ -165,6 +165,7 @@ describe('Classes', () => {
 
       expect(element.classList.contains('test')).toBeTruthy()
 
+      // We repeat the test to confirm that the class is still added if classValue is true
       toggleClass(element, 'test', true)
 
       expect(element.classList.contains('test')).toBeTruthy()
@@ -179,6 +180,7 @@ describe('Classes', () => {
 
       expect(element.classList.contains('test')).toBeFalsy()
 
+      // We repeat the test to confirm that the class is still removed if classValue is false
       toggleClass(element, 'test', false)
 
       expect(element.classList.contains('test')).toBeFalsy()
