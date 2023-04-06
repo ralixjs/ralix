@@ -14,4 +14,8 @@ jobs:
     - name: Install dependencies
       run: yarn install
     - name: Run Tests
-      run: yarn test
+      run: yarn test --collectCoverage
+    - name: Publish code coverage
+      uses: paambaati/codeclimate-action@v3.2.0
+      env:
+        CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
