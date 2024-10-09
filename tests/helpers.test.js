@@ -541,10 +541,24 @@ describe('Events', () => {
 
       on('div', 'click blur', callback)
 
-      expect(spyElement).toHaveBeenNthCalledWith(1, 'click', expect.any(Function))
-      expect(spyElement).toHaveBeenNthCalledWith(2, 'blur', expect.any(Function))
-      expect(spyElement2).toHaveBeenNthCalledWith(1, 'click', expect.any(Function))
-      expect(spyElement2).toHaveBeenNthCalledWith(2, 'blur', expect.any(Function))
+      expect(spyElement).toHaveBeenNthCalledWith(1, 'click', expect.any(Function), {})
+      expect(spyElement).toHaveBeenNthCalledWith(2, 'blur', expect.any(Function), {})
+      expect(spyElement2).toHaveBeenNthCalledWith(1, 'click', expect.any(Function), {})
+      expect(spyElement2).toHaveBeenNthCalledWith(2, 'blur', expect.any(Function), {})
+    })
+
+    test('with "once" option', () => {
+      const callback = jest.fn()
+      const spyElement = jest.spyOn(element, 'addEventListener')
+
+      on(element, 'click', callback, { once: true })
+
+      element.dispatchEvent(new Event('click'))
+      element.dispatchEvent(new Event('click'))
+
+      expect(spyElement).toHaveBeenCalledTimes(1)
+      expect(spyElement).toHaveBeenCalledWith('click', expect.any(Function), { once: true })
+      expect(callback).toHaveBeenCalledTimes(1)
     })
   })
 })

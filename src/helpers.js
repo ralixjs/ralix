@@ -285,12 +285,12 @@ export default class Helpers {
   }
 
   // Events
-  on(query, events, callback) {
+  on(query, events, callback, options = {}) {
     let elements = findAll(query)
     if (elements.length == 0) return
 
     elements.forEach(el => {
-      events.split(' ').forEach(event => _addListener(el, event, callback))
+      events.split(' ').forEach(event => _addListener(el, event, callback, options))
     })
   }
 
@@ -302,7 +302,7 @@ export default class Helpers {
     return App.currentEvent
   }
 
-  _addListener(elem, event, callback) {
+  _addListener(elem, event, callback, options) {
     elem.addEventListener(event, (e) => {
       if (event == 'click' && (['A', 'BUTTON'].includes(elem.tagName) || (elem.tagName == 'INPUT' && elem.type == 'submit')))
         e.preventDefault()
@@ -314,7 +314,7 @@ export default class Helpers {
 
       App.currentElement = null
       App.currentEvent   = null
-    })
+    }, options)
   }
 
   // Ajax
