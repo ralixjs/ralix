@@ -213,18 +213,22 @@ render('itemCard', {
 })
 ```
 
-## Starter Kits and Applications
+## Ecosystem
 
-**Templates:**
+### Starter kits
 
-- Rails with Ralix and Tailwind, via esbuild: https://github.com/ralixjs/rails-ralix-tailwind
-- Middleman with Ralix and Tailwind: https://github.com/ralixjs/middleman-ralix-tailwind
-- Ralix and Tailwind, with Parcel: https://github.com/ralixjs/ralix-tailwind
+- **Full Stack Web App:** Rails with Ralix and Tailwind, via esbuild: https://github.com/ralixjs/rails-ralix-tailwind
+- **Multi-page Static Site:** Middleman with Ralix and Tailwind: https://github.com/ralixjs/middleman-ralix-tailwind
+- **Single Page App:** Ralix and Tailwind, with Parcel: https://github.com/ralixjs/ralix-tailwind
 
-**Applications:**
+### Applications
 
-- TodoMVC built with Ralix, bundled with Parcel: https://github.com/ralixjs/ralix-todomvc
-- Tonic framework: https://github.com/Subgin/tonic
+- TodoMVC built with Ralix: https://github.com/ralixjs/ralix-todomvc
+- Tonic Framework: https://github.com/Subgin/tonic
+
+### Others
+
+- Visual Studio Code plugin: https://github.com/franpb14/RalixBoost
 
 ## Development
 
