@@ -241,8 +241,8 @@ setParam({ a: 1, b: 2 })
 Wraps `addEventListener`. Example:
 
 ```js
-on(document, 'scroll', (e) => {
-  addClass('body', 'scrolling')
+on(document, 'click', (e) => {
+  addClass('.welcome-message', 'hide')
 }, { once: true })
 ```
 
