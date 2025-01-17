@@ -236,14 +236,14 @@ setParam({ a: 1, b: 2 })
 
 ## Events
 
-### `on(query, events, callback)`
+### `on(query, events, callback, options = {})`
 
 Wraps `addEventListener`. Example:
 
 ```js
 on(document, 'scroll', (e) => {
   addClass('body', 'scrolling')
-})
+}, { once: true })
 ```
 
 Accepts multiple events:
