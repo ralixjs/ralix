@@ -110,7 +110,7 @@ export default class Helpers {
     else if (typeof styles === 'string')
       return el.style.cssText = styles
     else if (typeof styles === 'object')
-      return el.style.cssText = this._objectToCSS(styles)
+      return el.style.cssText = _objectToCSS(styles)
   }
 
   _setAttributes(elem, attributes) {
@@ -207,7 +207,7 @@ export default class Helpers {
 
   elem(type, attributes = null) {
     const el = document.createElement(type)
-    if (attributes) this._setAttributes(el, attributes)
+    if (attributes) _setAttributes(el, attributes)
 
     return el
   }
@@ -285,10 +285,10 @@ export default class Helpers {
 
     if (param instanceof Object) {
       Object.entries(param).forEach(entry => {
-        this._setParam(urlObject, entry[0], entry[1])
+        _setParam(urlObject, entry[0], entry[1])
       })
     } else {
-      this._setParam(urlObject, param, value)
+      _setParam(urlObject, param, value)
     }
 
     history.pushState({}, '', urlObject.href)
@@ -309,7 +309,7 @@ export default class Helpers {
     if (elements.length == 0) return
 
     elements.forEach(el => {
-      events.split(' ').forEach(event => this._addListener(el, event, callback, options))
+      events.split(' ').forEach(event => _addListener(el, event, callback, options))
     })
   }
 
