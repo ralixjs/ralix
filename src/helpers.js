@@ -1,4 +1,4 @@
-import * as Utils from './internal_utils'
+import * as Utils from './internal_utils.js'
 
 export default class Helpers {
   inject() {
@@ -52,18 +52,18 @@ export default class Helpers {
 
   // Classes
   addClass(query, classList) {
-    _classModifier('add', query, classList)
+    this._classModifier('add', query, classList)
   }
 
   removeClass(query, classList) {
-    _classModifier('remove', query, classList)
+    this._classModifier('remove', query, classList)
   }
 
   toggleClass(query, classList, classValue = null) {
     if (classValue !== null)
-      _classModifier(classValue ? 'add' : 'remove', query, classList)
+      this._classModifier(classValue ? 'add' : 'remove', query, classList)
     else
-      _classModifier('toggle', query, classList)
+      this._classModifier('toggle', query, classList)
   }
 
   hasClass(query, className) {
@@ -98,7 +98,19 @@ export default class Helpers {
       else
         return el.setAttribute(attribute, value)
     else if (typeof attribute  === 'object')
-      _setAttributes(el, attribute)
+      this._setAttributes(el, attribute)
+  }
+
+  style(query, styles = null) {
+    const el = find(query)
+    if (!el) return
+
+    if (styles === null)
+      return window.getComputedStyle(el)
+    else if (typeof styles === 'string')
+      return el.style.cssText = styles
+    else if (typeof styles === 'object')
+      return el.style.cssText = this._objectToCSS(styles)
   }
 
   _setAttributes(elem, attributes) {
@@ -106,6 +118,13 @@ export default class Helpers {
       const [key, value] = entry
       elem.setAttribute(key, value)
     })
+  }
+
+  _objectToCSS(styles) {
+    return Object.entries(styles).map(([key, value]) => {
+      const cssKey = key.replace(/([A-Z])/g, '-$1').toLowerCase()
+      return `${cssKey}: ${value}`
+    }).join('; ') + ';'
   }
 
   data(query, attribute = null, value = null) {
@@ -120,7 +139,7 @@ export default class Helpers {
       else
         return el.dataset[attribute] = value
     else if (typeof attribute  === 'object')
-      _setDataset(el, attribute)
+      this._setDataset(el, attribute)
   }
 
   _setDataset(elem, attributes) {
@@ -188,7 +207,7 @@ export default class Helpers {
 
   elem(type, attributes = null) {
     const el = document.createElement(type)
-    if (attributes) _setAttributes(el, attributes)
+    if (attributes) this._setAttributes(el, attributes)
 
     return el
   }
@@ -266,10 +285,10 @@ export default class Helpers {
 
     if (param instanceof Object) {
       Object.entries(param).forEach(entry => {
-        _setParam(urlObject, entry[0], entry[1])
+        this._setParam(urlObject, entry[0], entry[1])
       })
     } else {
-      _setParam(urlObject, param, value)
+      this._setParam(urlObject, param, value)
     }
 
     history.pushState({}, '', urlObject.href)
@@ -290,7 +309,7 @@ export default class Helpers {
     if (elements.length == 0) return
 
     elements.forEach(el => {
-      events.split(' ').forEach(event => _addListener(el, event, callback, options))
+      events.split(' ').forEach(event => this._addListener(el, event, callback, options))
     })
   }
 

@@ -112,6 +112,21 @@ removeData('form')
 removeData('form', ['remote', 'url'])
 ```
 
+### `style(query, styles)`
+
+Gets/sets the `style` attribute of an element. It accepts a string or object for assignment. If no styles are passed, it returns the computed styles. Examples:
+
+```js
+// getter - returns computed styles
+style('#main-content')
+
+// setter with CSS string
+style('#main-content', 'margin-top: 10px; margin-bottom: 5px')
+
+// setter with object (camelCase properties are converted to kebab-case)
+style('#main-content', { marginTop: '10px', marginBottom: '5px' })
+```
+
 ## DOM
 
 ### `insertHTML(query, html, position)`
