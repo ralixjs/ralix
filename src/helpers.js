@@ -52,18 +52,18 @@ export default class Helpers {
 
   // Classes
   addClass(query, classList) {
-    this._classModifier('add', query, classList)
+    _classModifier('add', query, classList)
   }
 
   removeClass(query, classList) {
-    this._classModifier('remove', query, classList)
+    _classModifier('remove', query, classList)
   }
 
   toggleClass(query, classList, classValue = null) {
     if (classValue !== null)
-      this._classModifier(classValue ? 'add' : 'remove', query, classList)
+      _classModifier(classValue ? 'add' : 'remove', query, classList)
     else
-      this._classModifier('toggle', query, classList)
+      _classModifier('toggle', query, classList)
   }
 
   hasClass(query, className) {
@@ -98,7 +98,7 @@ export default class Helpers {
       else
         return el.setAttribute(attribute, value)
     else if (typeof attribute  === 'object')
-      this._setAttributes(el, attribute)
+      _setAttributes(el, attribute)
   }
 
   style(query, styles = null) {
@@ -139,7 +139,7 @@ export default class Helpers {
       else
         return el.dataset[attribute] = value
     else if (typeof attribute  === 'object')
-      this._setDataset(el, attribute)
+      _setDataset(el, attribute)
   }
 
   _setDataset(elem, attributes) {
