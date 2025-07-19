@@ -16,6 +16,7 @@ jobs:
     - name: Run Tests
       run: yarn test --collectCoverage
     - name: Publish code coverage
-      uses: paambaati/codeclimate-action@v5.0.0
-      env:
-        CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+      uses: qltysh/qlty-action/coverage@v1
+      with:
+        token: ${{ secrets.QLTY_COVERAGE_TOKEN }}
+        files: coverage/lcov.info
