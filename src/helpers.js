@@ -101,10 +101,14 @@ export default class Helpers {
       _setAttributes(el, attribute)
   }
 
-  _setAttributes(elem, attributes) {
+  _setAttributes(elem, attributes, options = {}) {
     Object.entries(attributes).forEach(entry => {
       const [key, value] = entry
-      elem.setAttribute(key, value)
+
+      if (options.dataset)
+        elem.dataset[key] = value
+      else
+        elem.setAttribute(key, value)
     })
   }
 
@@ -139,14 +143,7 @@ export default class Helpers {
       else
         return el.dataset[attribute] = value
     else if (typeof attribute  === 'object')
-      _setDataset(el, attribute)
-  }
-
-  _setDataset(elem, attributes) {
-    Object.entries(attributes).forEach(entry => {
-      const [key, value] = entry
-      elem.dataset[key] = value
-    })
+      _setAttributes(el, attribute, { dataset: true })
   }
 
   removeAttr(query, attribute) {
