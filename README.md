@@ -243,7 +243,7 @@ To contribute, just fork the repo, hack on it and send a pull request. Don't for
 If you also want to see the code coverage:
 
 ```
-> yarn test --collectCoverage
+> yarn test --coverage
 ```
 
 ## License
