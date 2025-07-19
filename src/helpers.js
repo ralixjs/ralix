@@ -108,6 +108,25 @@ export default class Helpers {
     })
   }
 
+  style(query, styles = null) {
+    const el = find(query)
+    if (!el) return
+
+    if (styles === null)
+      return window.getComputedStyle(el)
+    else if (typeof styles === 'string')
+      return el.style.cssText = styles
+    else if (typeof styles === 'object')
+      return el.style.cssText = _objectToCSS(styles)
+  }
+
+  _objectToCSS(styles) {
+    return Object.entries(styles).map(([key, value]) => {
+      const cssKey = key.replace(/([A-Z])/g, '-$1').toLowerCase()
+      return `${cssKey}: ${value}`
+    }).join('; ') + ';'
+  }
+
   data(query, attribute = null, value = null) {
     const el = find(query)
     if (!el) return

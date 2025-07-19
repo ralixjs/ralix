@@ -294,6 +294,66 @@ describe('Attributes', () => {
       expect(element.dataset.attr3).toBeUndefined()
     })
   })
+
+  describe('style', () => {
+    beforeEach(() => {
+      element.style.cssText = 'color: red; background: blue;'
+    })
+
+    test('getter - returns computed styles', () => {
+      const computedStyles = style(element)
+      expect(computedStyles).toBeInstanceOf(CSSStyleDeclaration)
+      expect(computedStyles.color).toBe('red')
+      expect(computedStyles.backgroundColor).toBe('blue')
+    })
+
+    test('getter with query selector', () => {
+      element.id = 'test-element'
+      document.body.appendChild(element)
+      
+      const computedStyles = style('#test-element')
+      expect(computedStyles).toBeInstanceOf(CSSStyleDeclaration)
+      expect(computedStyles.color).toBe('red')
+      expect(computedStyles.backgroundColor).toBe('blue')
+    })
+
+    test('setter with string', () => {
+      style(element, 'margin: 10px; padding: 5px;')
+      expect(element.style.cssText).toBe('margin: 10px; padding: 5px;')
+    })
+
+    test('setter with object - camelCase properties', () => {
+      style(element, { marginTop: '10px', marginBottom: '5px' })
+      expect(element.style.cssText).toBe('margin-top: 10px; margin-bottom: 5px;')
+    })
+
+    test('setter with object - kebab-case properties', () => {
+      style(element, { 'margin-left': '15px', 'padding-right': '20px' })
+      expect(element.style.cssText).toBe('margin-left: 15px; padding-right: 20px;')
+    })
+
+    test('setter with object - mixed properties', () => {
+      style(element, { 
+        marginTop: '10px', 
+        'margin-bottom': '5px',
+        backgroundColor: 'yellow',
+        'border-color': 'green'
+      })
+      expect(element.style.cssText).toBe('margin-top: 10px; margin-bottom: 5px; background-color: yellow; border-color: green;')
+    })
+
+    test('setter with query selector', () => {
+      element.id = 'test-style'
+      document.body.appendChild(element)
+      
+      style('#test-style', 'width: 100px; height: 200px;')
+      expect(element.style.cssText).toBe('width: 100px; height: 200px;')
+    })
+
+    test('returns undefined for non-existent element', () => {
+      expect(style('.non-existent')).toBeUndefined()
+    })
+  })
 })
 
 describe('DOM', () => {
