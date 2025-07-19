@@ -2,8 +2,8 @@
 
 [![](https://github.com/ralixjs/ralix/actions/workflows/ci.yml/badge.svg)](https://github.com/ralixjs/ralix/actions/workflows/ci.yml)
 [![](https://img.shields.io/npm/v/ralix.svg)](https://www.npmjs.com/package/ralix)
-[![](https://api.codeclimate.com/v1/badges/8e91bd9dc7263d19291c/maintainability)](https://codeclimate.com/github/ralixjs/ralix/maintainability)
-[![](https://api.codeclimate.com/v1/badges/8e91bd9dc7263d19291c/test_coverage)](https://codeclimate.com/github/ralixjs/ralix/test_coverage)
+[![Maintainability](https://qlty.sh/gh/ralixjs/projects/ralix/maintainability.svg)](https://qlty.sh/gh/ralixjs/projects/ralix)
+[![Code Coverage](https://qlty.sh/gh/ralixjs/projects/ralix/coverage.svg)](https://qlty.sh/gh/ralixjs/projects/ralix)
 [![](https://img.shields.io/npm/l/ralix)](https://github.com/ralixjs/ralix/blob/master/LICENSE)
 
 > Microframework for building and organizing your front-end :sparkles:
