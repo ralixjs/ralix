@@ -1,4 +1,4 @@
-import * as Utils from './internal_utils.js'
+import * as Utils from './internal_utils'
 
 export default class Helpers {
   inject() {
@@ -101,6 +101,13 @@ export default class Helpers {
       _setAttributes(el, attribute)
   }
 
+  _setAttributes(elem, attributes) {
+    Object.entries(attributes).forEach(entry => {
+      const [key, value] = entry
+      elem.setAttribute(key, value)
+    })
+  }
+
   style(query, styles = null) {
     const el = find(query)
     if (!el) return
@@ -111,13 +118,6 @@ export default class Helpers {
       return el.style.cssText = styles
     else if (typeof styles === 'object')
       return el.style.cssText = _objectToCSS(styles)
-  }
-
-  _setAttributes(elem, attributes) {
-    Object.entries(attributes).forEach(entry => {
-      const [key, value] = entry
-      elem.setAttribute(key, value)
-    })
   }
 
   _objectToCSS(styles) {
