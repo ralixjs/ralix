@@ -17,7 +17,7 @@ global.App = {
 const helpers = new Helpers()
 helpers.inject()
 
-describe('Security - XSS Prevention', () => {
+describe('Security - XSS Prevention with DOMPurify', () => {
   beforeEach(() => {
     document.body.innerHTML = '<div id="test-container"></div>'
   })
@@ -26,8 +26,8 @@ describe('Security - XSS Prevention', () => {
     document.body.innerHTML = ''
   })
 
-  describe('Vulnerability demonstration (existing behavior)', () => {
-    test('insertHTML should still work with legitimate HTML for backward compatibility', () => {
+  describe('insertHTML with DOMPurify sanitization', () => {
+    test('insertHTML should work with legitimate HTML', () => {
       const legitimateHTML = '<div class="content"><span>Hello World</span></div>'
       
       insertHTML('#test-container', legitimateHTML)
@@ -37,104 +37,79 @@ describe('Security - XSS Prevention', () => {
       expect(container.querySelector('.content')).toBeTruthy()
     })
 
-    test('insertHTML is vulnerable to XSS (demonstrates need for security fix)', () => {
-      const maliciousHTML = '<img src="x" onerror="window.xssExecuted = true">'
+    test('insertHTML should sanitize malicious script tags', () => {
+      const maliciousHTML = '<script>alert("XSS")</script>'
       
       insertHTML('#test-container', maliciousHTML)
       
       const container = document.getElementById('test-container')
-      expect(container.innerHTML).toContain('onerror="window.xssExecuted = true"')
-      // This demonstrates the vulnerability exists in the original API
-    })
-
-    test('insertHTMLUnsafe should be explicitly vulnerable', () => {
-      const maliciousHTML = '<script>window.xssExecuted = true;</script><div>content</div>'
-      
-      insertHTMLUnsafe('#test-container', maliciousHTML)
-      
-      const container = document.getElementById('test-container')
-      expect(container.innerHTML).toContain('<script>')
-      expect(container.innerHTML).toContain('window.xssExecuted = true')
-    })
-  })
-
-  describe('Security fix with new safe API', () => {
-    test('insertHTMLSafe should escape malicious script tags', () => {
-      const maliciousHTML = '<script>alert("XSS")</script>'
-      
-      insertHTMLSafe('#test-container', maliciousHTML)
-      
-      const container = document.getElementById('test-container')
-      expect(container.innerHTML).toBe('&lt;script&gt;alert("XSS")&lt;/script&gt;')
+      expect(container.innerHTML).toBe('')
       expect(container.innerHTML).not.toContain('<script>')
     })
 
-    test('insertHTMLSafe should escape malicious event handlers', () => {
+    test('insertHTML should sanitize malicious event handlers', () => {
       const maliciousHTML = '<img src="x" onerror="alert(1)">'
       
-      insertHTMLSafe('#test-container', maliciousHTML)
+      insertHTML('#test-container', maliciousHTML)
       
       const container = document.getElementById('test-container')
-      expect(container.innerHTML).toBe('&lt;img src="x" onerror="alert(1)"&gt;')
-      expect(container.innerHTML).not.toContain('<img')
-      expect(container.querySelector('img')).toBeNull() // No actual img element created
+      expect(container.innerHTML).toBe('<img src="x">')
+      expect(container.innerHTML).not.toContain('onerror')
     })
 
-    test('insertHTMLSafe should work with all positions safely', () => {
+    test('insertHTML should work with all positions safely', () => {
       document.body.innerHTML = '<div id="target">existing</div>'
       const maliciousHTML = '<script>alert(1)</script>'
       
-      insertHTMLSafe('#target', maliciousHTML, 'end')
-      expect(document.getElementById('target').innerHTML).toContain('&lt;script&gt;')
+      insertHTML('#target', maliciousHTML, 'end')
+      expect(document.getElementById('target').innerHTML).toBe('existing')
       expect(document.getElementById('target').innerHTML).not.toContain('<script>')
     })
 
-    test('escapeHTML helper should properly escape dangerous characters', () => {
-      const dangerous = '<script>alert("xss")</script><img src="x" onerror="alert(1)">'
-      const escaped = escapeHTML(dangerous)
+    test('insertHTML should sanitize complex XSS attacks', () => {
+      const maliciousHTML = '<div onclick="alert(1)">Click me</div><script>alert(2)</script>'
       
-      expect(escaped).toBe('&lt;script&gt;alert("xss")&lt;/script&gt;&lt;img src="x" onerror="alert(1)"&gt;')
-      expect(escaped).not.toContain('<script>')
-      expect(escaped).not.toContain('<img>')
-    })
-  })
-
-  describe('Template security', () => {
-    test('Templates should provide escapeHTML utility', () => {
-      global.App.templates = {
-        render: function(template, data) {
-          if (template === 'safeProfile') {
-            return `<div class="profile"><h1>${this.escape(data.name)}</h1><p>${this.escape(data.bio)}</p></div>`
-          }
-          return '<div>test</div>'
-        },
-        escape: function(str) {
-          return escapeHTML(str)
-        }
-      }
-
-      const maliciousData = {
-        name: '<script>alert("XSS")</script>',
-        bio: '<img src="x" onerror="alert(1)">'
-      }
+      insertHTML('#test-container', maliciousHTML)
       
-      const result = render('safeProfile', maliciousData)
-      
-      expect(result).toContain('&lt;script&gt;alert("XSS")&lt;/script&gt;')
-      expect(result).toContain('&lt;img src="x" onerror="alert(1)"&gt;')
-      expect(result).not.toContain('<script>')
-      expect(result).not.toContain('<img>')
+      const container = document.getElementById('test-container')
+      expect(container.innerHTML).toBe('<div>Click me</div>')
+      expect(container.innerHTML).not.toContain('onclick')
+      expect(container.innerHTML).not.toContain('<script>')
     })
 
-    test('Templates can use escapeHTML for individual values', () => {
-      // Example of how developers should escape user content in templates
-      const userInput = '<script>alert("hack")</script>'
-      const safeUserInput = escapeHTML(userInput)
+    test('insertHTML should preserve safe elements while removing dangerous attributes', () => {
+      const mixedHTML = '<p>Safe text</p><a href="javascript:alert(1)">Link</a><img src="valid.jpg" onerror="alert(1)">'
       
-      expect(safeUserInput).toBe('&lt;script&gt;alert("hack")&lt;/script&gt;')
+      insertHTML('#test-container', mixedHTML)
       
-      const template = `<div class="user-content">${safeUserInput}</div>`
-      expect(template).not.toContain('<script>')
+      const container = document.getElementById('test-container')
+      expect(container.innerHTML).toContain('<p>Safe text</p>')
+      expect(container.innerHTML).toContain('<a>Link</a>')
+      expect(container.innerHTML).toContain('<img src="valid.jpg">')
+      expect(container.innerHTML).not.toContain('javascript:')
+      expect(container.innerHTML).not.toContain('onerror')
+    })
+
+    test('insertHTML should handle different position parameters', () => {
+      document.body.innerHTML = '<div id="target"><span>middle</span></div>'
+      
+      insertHTML('#target', '<script>alert(1)</script>', 'begin')
+      insertHTML('#target', '<script>alert(2)</script>', 'end')
+      
+      const target = document.getElementById('target')
+      expect(target.innerHTML).toBe('<span>middle</span>')
+      expect(target.innerHTML).not.toContain('<script>')
+    })
+
+    test('insertHTML should work with Element objects', () => {
+      const element = document.createElement('div')
+      element.className = 'safe-element'
+      element.textContent = 'Safe content'
+      
+      insertHTML('#test-container', element)
+      
+      const container = document.getElementById('test-container')
+      expect(container.innerHTML).toBe('<div class="safe-element">Safe content</div>')
     })
   })
 })

@@ -1,4 +1,5 @@
 import * as Utils from './internal_utils'
+import DOMPurify from 'dompurify'
 
 export default class Helpers {
   inject() {
@@ -183,6 +184,11 @@ export default class Helpers {
 
     if (html instanceof Element) html = html.outerHTML
 
+    // Sanitize HTML using DOMPurify for XSS protection
+    if (typeof html === 'string') {
+      html = DOMPurify.sanitize(html)
+    }
+
     switch (position) {
       case 'inner':
         el.innerHTML = html
@@ -200,26 +206,6 @@ export default class Helpers {
         el.insertAdjacentHTML('afterend', html)
         break
     }
-  }
-
-  insertHTMLSafe(query, html, position = 'inner') {
-    if (typeof html === 'string') {
-      html = this.escapeHTML(html)
-    }
-    return this.insertHTML(query, html, position)
-  }
-
-  insertHTMLUnsafe(query, html, position = 'inner') {
-    // Alias for insertHTML for clarity when dealing with potentially unsafe content
-    return this.insertHTML(query, html, position)
-  }
-
-  escapeHTML(str) {
-    if (typeof str !== 'string') return str
-    
-    const div = document.createElement('div')
-    div.textContent = str
-    return div.innerHTML
   }
 
   elem(type, attributes = null) {

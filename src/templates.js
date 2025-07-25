@@ -11,17 +11,4 @@ export default class Templates {
     else
       throw new Error(`[Ralix] Template '${template}' not found`)
   }
-
-  escapeHTML(str) {
-    if (typeof str !== 'string') return str
-    
-    const div = document.createElement('div')
-    div.textContent = str
-    return div.innerHTML
-  }
-
-  // Utility function for templates to safely escape user content
-  escape(str) {
-    return this.escapeHTML(str)
-  }
 }
