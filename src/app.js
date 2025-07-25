@@ -5,7 +5,8 @@ import Templates from './templates'
 
 export default class App {
   constructor(config = {}) {
-    this.helpers    = new Helpers()
+    this.helpersConfig = config.helpers || {}
+    this.helpers    = new Helpers(this.helpersConfig)
     this.router     = new Router(config.routes)
     this.events     = new Events()
     this.templates  = new Templates(config.templates)

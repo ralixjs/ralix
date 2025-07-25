@@ -2,10 +2,43 @@ import * as Utils from './internal_utils'
 import DOMPurify from 'dompurify'
 
 export default class Helpers {
+  constructor(config = {}) {
+    this.config = {
+      global: config.global !== false, // Default to true for backwards compatibility
+      whitelist: config.whitelist || null, // Array of method names to allow
+      blacklist: config.blacklist || [], // Array of method names to exclude
+      prefix: config.prefix || '' // Prefix for global method names
+    }
+  }
+
   inject() {
-    Utils.getMethods(this).forEach(method => {
-      if (typeof this[method] === 'function' && method != 'inject')
-        window[method] = this[method].bind(this)
+    // Skip injection if globally disabled
+    if (!this.config.global) {
+      return
+    }
+
+    const methods = Utils.getMethods(this)
+    
+    methods.forEach(method => {
+      if (typeof this[method] === 'function' && method !== 'inject') {
+        // Check whitelist if provided
+        if (this.config.whitelist && !this.config.whitelist.includes(method)) {
+          return
+        }
+        
+        // Check blacklist
+        if (this.config.blacklist.includes(method)) {
+          return
+        }
+        
+        // Apply prefix if provided
+        const globalName = this.config.prefix + method
+        
+        // Only inject if not already exists or if we're explicitly overriding
+        if (!window[globalName] || this.config.override) {
+          window[globalName] = this[method].bind(this)
+        }
+      }
     })
   }
 
