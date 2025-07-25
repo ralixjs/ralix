@@ -401,6 +401,46 @@ describe('DOM', () => {
 
       expect(document.body.innerHTML).toBe('<div>Some content for testing<p></p></div><div></div>')
     })
+
+    test('should sanitize malicious script tags', () => {
+      const maliciousHTML = '<script>alert("XSS")</script>'
+      
+      insertHTML(element, maliciousHTML)
+      
+      expect(element.innerHTML).toBe('')
+      expect(element.innerHTML).not.toContain('<script>')
+    })
+
+    test('should sanitize malicious event handlers', () => {
+      const maliciousHTML = '<img src="x" onerror="alert(1)">'
+      
+      insertHTML(element, maliciousHTML)
+      
+      expect(element.innerHTML).toBe('<img src="x">')
+      expect(element.innerHTML).not.toContain('onerror')
+    })
+
+    test('should sanitize complex XSS attacks', () => {
+      const maliciousHTML = '<div onclick="alert(1)">Click me</div><script>alert(2)</script>'
+      
+      insertHTML(element, maliciousHTML)
+      
+      expect(element.innerHTML).toBe('<div>Click me</div>')
+      expect(element.innerHTML).not.toContain('onclick')
+      expect(element.innerHTML).not.toContain('<script>')
+    })
+
+    test('should preserve safe elements while removing dangerous attributes', () => {
+      const mixedHTML = '<p>Safe text</p><a href="javascript:alert(1)">Link</a><img src="valid.jpg" onerror="alert(1)">'
+      
+      insertHTML(element, mixedHTML)
+      
+      expect(element.innerHTML).toContain('<p>Safe text</p>')
+      expect(element.innerHTML).toContain('<a>Link</a>')
+      expect(element.innerHTML).toContain('<img src="valid.jpg">')
+      expect(element.innerHTML).not.toContain('javascript:')
+      expect(element.innerHTML).not.toContain('onerror')
+    })
   })
 
   describe('elem', () => {

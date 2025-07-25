@@ -1,4 +1,5 @@
 import * as Utils from './internal_utils'
+import DOMPurify from 'dompurify'
 
 export default class Helpers {
   inject() {
@@ -182,6 +183,11 @@ export default class Helpers {
     if (!el) return
 
     if (html instanceof Element) html = html.outerHTML
+
+    // Sanitize HTML for XSS protection
+    if (typeof html === 'string') {
+      html = DOMPurify.sanitize(html)
+    }
 
     switch (position) {
       case 'inner':
