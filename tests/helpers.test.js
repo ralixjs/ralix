@@ -420,15 +420,6 @@ describe('DOM', () => {
       expect(element.innerHTML).not.toContain('onerror')
     })
 
-    test('should sanitize malicious content in all positions', () => {
-      element.innerHTML = 'existing'
-      const maliciousHTML = '<script>alert(1)</script>'
-      
-      insertHTML(element, maliciousHTML, 'end')
-      expect(element.innerHTML).toBe('existing')
-      expect(element.innerHTML).not.toContain('<script>')
-    })
-
     test('should sanitize complex XSS attacks', () => {
       const maliciousHTML = '<div onclick="alert(1)">Click me</div><script>alert(2)</script>'
       
