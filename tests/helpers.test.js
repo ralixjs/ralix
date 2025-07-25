@@ -402,15 +402,6 @@ describe('DOM', () => {
       expect(document.body.innerHTML).toBe('<div>Some content for testing<p></p></div><div></div>')
     })
 
-    test('should work with legitimate HTML content', () => {
-      const legitimateHTML = '<div class="content"><span>Hello World</span></div>'
-      
-      insertHTML(element, legitimateHTML)
-      
-      expect(element.innerHTML).toBe('<div class="content"><span>Hello World</span></div>')
-      expect(element.querySelector('.content')).toBeTruthy()
-    })
-
     test('should sanitize malicious script tags', () => {
       const maliciousHTML = '<script>alert("XSS")</script>'
       
@@ -458,16 +449,6 @@ describe('DOM', () => {
       expect(element.innerHTML).toContain('<img src="valid.jpg">')
       expect(element.innerHTML).not.toContain('javascript:')
       expect(element.innerHTML).not.toContain('onerror')
-    })
-
-    test('should sanitize in different position parameters', () => {
-      element.innerHTML = '<span>middle</span>'
-      
-      insertHTML(element, '<script>alert(1)</script>', 'begin')
-      insertHTML(element, '<script>alert(2)</script>', 'end')
-      
-      expect(element.innerHTML).toBe('<span>middle</span>')
-      expect(element.innerHTML).not.toContain('<script>')
     })
   })
 

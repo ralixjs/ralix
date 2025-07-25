@@ -1,7 +1,3 @@
-/**
- * @jest-environment jsdom
- */
-
 import Templates from '../src/templates'
 import * as ExampleTemplates from './fixtures/templates'
 

@@ -17,11 +17,11 @@
     "microframework",
     "lightweight"
   ],
+  "dependencies": {
+    "dompurify": "^3.2.6"
+  },
   "devDependencies": {
     "jest": "^29.4.2",
     "jest-environment-jsdom": "^29.4.2"
-  },
-  "dependencies": {
-    "dompurify": "^3.2.6"
   }
 }

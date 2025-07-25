@@ -184,7 +184,7 @@ export default class Helpers {
 
     if (html instanceof Element) html = html.outerHTML
 
-    // Sanitize HTML using DOMPurify for XSS protection
+    // Sanitize HTML for XSS protection
     if (typeof html === 'string') {
       html = DOMPurify.sanitize(html)
     }
