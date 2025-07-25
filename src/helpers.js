@@ -202,6 +202,26 @@ export default class Helpers {
     }
   }
 
+  insertHTMLSafe(query, html, position = 'inner') {
+    if (typeof html === 'string') {
+      html = this.escapeHTML(html)
+    }
+    return this.insertHTML(query, html, position)
+  }
+
+  insertHTMLUnsafe(query, html, position = 'inner') {
+    // Alias for insertHTML for clarity when dealing with potentially unsafe content
+    return this.insertHTML(query, html, position)
+  }
+
+  escapeHTML(str) {
+    if (typeof str !== 'string') return str
+    
+    const div = document.createElement('div')
+    div.textContent = str
+    return div.innerHTML
+  }
+
   elem(type, attributes = null) {
     const el = document.createElement(type)
     if (attributes) _setAttributes(el, attributes)

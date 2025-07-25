@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import Templates from '../src/templates'
 import * as ExampleTemplates from './fixtures/templates'
 
@@ -19,5 +23,27 @@ describe('render', () => {
     expect(() => {
       templates.render('foo')
     }).toThrow("[Ralix] Template 'foo' not found")
+  })
+})
+
+describe('escapeHTML', () => {
+  test('with malicious content', () => {
+    const result = templates.escapeHTML('<script>alert("xss")</script>')
+    expect(result).toBe('&lt;script&gt;alert("xss")&lt;/script&gt;')
+  })
+
+  test('with safe content', () => {
+    const result = templates.escapeHTML('Hello World')
+    expect(result).toBe('Hello World')
+  })
+
+  test('with mixed content', () => {
+    const result = templates.escapeHTML('Hello <script>alert("xss")</script> World')
+    expect(result).toBe('Hello &lt;script&gt;alert("xss")&lt;/script&gt; World')
+  })
+
+  test('escape alias function', () => {
+    const result = templates.escape('<img src="x" onerror="alert(1)">')
+    expect(result).toBe('&lt;img src="x" onerror="alert(1)"&gt;')
   })
 })
