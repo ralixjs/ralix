@@ -24,31 +24,12 @@ describe('render', () => {
   })
 
   describe('XSS Protection', () => {
-    let testTemplates
-    
-    beforeEach(() => {
-      // Mock templates with potential XSS vulnerabilities
-      const xssTestTemplates = {
-        userContent: (data) => `<div>User says: ${data.message}</div>`,
-        scriptInjection: (data) => `<p>${data.content}</p>`,
-        attributeInjection: (data) => `<img src="${data.src}" alt="${data.alt}">`,
-        complexTemplate: (data) => `
-          <div class="card">
-            <h1>${data.title}</h1>
-            <p>${data.description}</p>
-            <a href="${data.link}">Click here</a>
-          </div>
-        `
-      }
-      testTemplates = new Templates(xssTestTemplates)
-    })
-
     test('should sanitize script tags in template output', () => {
       const maliciousData = {
         message: '<script>alert("XSS")</script>Hello'
       }
       
-      const result = testTemplates.render('userContent', maliciousData)
+      const result = templates.render('userContent', maliciousData)
       
       expect(result).not.toContain('<script>')
       expect(result).not.toContain('alert("XSS")')
@@ -60,7 +41,7 @@ describe('render', () => {
         content: '<img src="x" onerror="alert(1)" onload="alert(2)">'
       }
       
-      const result = testTemplates.render('scriptInjection', maliciousData)
+      const result = templates.render('scriptInjection', maliciousData)
       
       expect(result).not.toContain('onerror')
       expect(result).not.toContain('onload')
@@ -75,7 +56,7 @@ describe('render', () => {
         alt: 'Test image'
       }
       
-      const result = testTemplates.render('attributeInjection', maliciousData)
+      const result = templates.render('attributeInjection', maliciousData)
       
       expect(result).not.toContain('javascript:')
       expect(result).not.toContain('alert("XSS")')
@@ -89,7 +70,7 @@ describe('render', () => {
         link: 'javascript:alert("link")'
       }
       
-      const result = testTemplates.render('complexTemplate', maliciousData)
+      const result = templates.render('complexTemplate', maliciousData)
       
       expect(result).not.toContain('<script>')
       expect(result).not.toContain('onerror')
@@ -104,7 +85,7 @@ describe('render', () => {
         message: '<strong>Bold text</strong> and <em>italic text</em>'
       }
       
-      const result = testTemplates.render('userContent', safeData)
+      const result = templates.render('userContent', safeData)
       
       expect(result).toContain('<strong>Bold text</strong>')
       expect(result).toContain('<em>italic text</em>')
@@ -116,7 +97,7 @@ describe('render', () => {
         content: '<p>Safe paragraph</p><script>alert("XSS")</script><strong>Bold text</strong>'
       }
       
-      const result = testTemplates.render('scriptInjection', mixedData)
+      const result = templates.render('scriptInjection', mixedData)
       
       expect(result).toContain('<p>Safe paragraph</p>')
       expect(result).toContain('<strong>Bold text</strong>')
@@ -128,8 +109,8 @@ describe('render', () => {
       const nullData = { message: null }
       const undefinedData = { message: undefined }
       
-      const result1 = testTemplates.render('userContent', nullData)
-      const result2 = testTemplates.render('userContent', undefinedData)
+      const result1 = templates.render('userContent', nullData)
+      const result2 = templates.render('userContent', undefinedData)
       
       expect(result1).toContain('<div>User says: ')
       expect(result2).toContain('<div>User says: ')
@@ -143,7 +124,7 @@ describe('render', () => {
         alt: 'Test'
       }
       
-      const result = testTemplates.render('attributeInjection', maliciousData)
+      const result = templates.render('attributeInjection', maliciousData)
       
       // DOMPurify should sanitize malicious data URLs and script content
       expect(result).not.toContain('alert("XSS")')
