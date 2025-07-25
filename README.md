@@ -74,14 +74,7 @@ const App = new RalixApp({
     '/users':     UsersCtrl,
     '/.*':        AppCtrl
   },
-  components: [Modal, Tooltip],
-  // Optional: Security configuration for helper injection
-  helpers: {
-    global: true,     // Default: inject helpers globally
-    whitelist: null,  // Optional: only inject specific methods
-    blacklist: [],    // Optional: exclude specific methods
-    prefix: ''        // Optional: prefix for global method names
-  }
+  components: [Modal, Tooltip]
 })
 
 App.start()
@@ -217,31 +210,6 @@ export const itemCard = ({ title, description }) => `
 render('itemCard', {
   title: item.title,
   description: item.description
-})
-```
-
-**🛡️ Security Note**: The `render` helper automatically sanitizes template output to prevent XSS attacks. Script tags, event handlers, and malicious URLs are automatically removed while preserving safe HTML elements.
-
-## Security
-
-Ralix includes built-in XSS protection and security features:
-
-- **Template Rendering**: Automatic XSS sanitization of template output
-- **HTML Insertion**: The `insertHTML` helper sanitizes content using DOMPurify
-- **Configurable Helper Injection**: Control which helpers are exposed globally
-
-For detailed security information, see [SECURITY.md](SECURITY.md).
-
-### Security Configuration
-
-```js
-const App = new RalixApp({
-  helpers: {
-    global: true,                    // Enable/disable global helper injection
-    whitelist: ['find', 'addClass'], // Only inject specific helpers
-    blacklist: ['eval'],             // Exclude specific helpers
-    prefix: 'ralix_'                 // Prefix global helper names
-  }
 })
 ```
 
