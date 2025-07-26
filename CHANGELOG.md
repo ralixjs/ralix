@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.7.0]
+
+- XSS prevention in `insertHTML` and the Templates system (#99, #100)
+
 ## [1.6.0]
 
 - Introduce new `style` helper (#95)
@@ -67,6 +71,7 @@ All notable changes to this project will be documented in this file.
 - `serialize` works with objects too
 - Use `findAll` in `show`, `hide` and `on`
 
+[1.7.0]: https://github.com/ralixjs/ralix/compare/v1.6.0...v1.7.0
 [1.6.0]: https://github.com/ralixjs/ralix/compare/v1.5.0...v1.6.0
 [1.5.0]: https://github.com/ralixjs/ralix/compare/v1.4.0...v1.5.0
 [1.4.0]: https://github.com/ralixjs/ralix/compare/v1.3.0...v1.4.0
