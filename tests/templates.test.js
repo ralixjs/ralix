@@ -126,7 +126,6 @@ describe('render', () => {
       
       const result = templates.render('attributeInjection', maliciousData)
       
-      // DOMPurify should sanitize malicious data URLs and script content
       expect(result).not.toContain('alert("XSS")')
       expect(result).not.toContain('<script>alert("XSS")</script>')
     })
