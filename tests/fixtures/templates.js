@@ -12,3 +12,12 @@ export const complexTemplate = (data) => `
     <a href="${data.link}">Click here</a>
   </div>
 `
+
+// Template for testing that template structure is preserved
+export const templateStructureTest = (data) => `
+  <script type="application/json">${JSON.stringify(data)}</script>
+  <div onclick="handleClick()">
+    <p>User content: ${data.userContent}</p>
+    <img src="${data.userImage}" onerror="fallback()">
+  </div>
+`

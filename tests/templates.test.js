@@ -130,4 +130,95 @@ describe('render', () => {
       expect(result).not.toContain('<script>alert("XSS")</script>')
     })
   })
+
+  describe('Variable-only Sanitization', () => {
+    test('should preserve template structure while sanitizing only variables', () => {
+      const data = {
+        userContent: '<script>alert("XSS")</script>Safe content',
+        userImage: 'javascript:alert("XSS")'
+      }
+      
+      const result = templates.render('templateStructureTest', data)
+      
+      // Template structure should be preserved
+      expect(result).toContain('<script type="application/json">')
+      expect(result).toContain('onclick="handleClick()"')
+      expect(result).toContain('onerror="fallback()"')
+      
+      // But user variables should be sanitized
+      expect(result).not.toContain('alert("XSS")')
+      expect(result).toContain('Safe content')
+      expect(result).toContain('<img src="" onerror="fallback()">')
+    })
+
+    test('should sanitize nested object variables', () => {
+      const data = {
+        user: {
+          name: '<script>alert("name")</script>John',
+          profile: {
+            bio: '<img onerror="alert(1)" src="x">Developer'
+          }
+        },
+        items: [
+          '<script>alert("item1")</script>Item 1',
+          'javascript:alert("item2")',
+          'Safe item'
+        ]
+      }
+      
+      const nestedTemplate = (data) => `
+        <div>
+          <h1>${data.user.name}</h1>
+          <p>${data.user.profile.bio}</p>
+          <ul>
+            ${data.items.map(item => `<li>${item}</li>`).join('')}
+          </ul>
+        </div>
+      `
+      
+      const templates = new Templates({ nestedTemplate })
+      const result = templates.render('nestedTemplate', data)
+      
+      // Scripts should be removed from variables
+      expect(result).not.toContain('<script>')
+      expect(result).not.toContain('alert(')
+      expect(result).not.toContain('javascript:')
+      
+      // Safe content should be preserved
+      expect(result).toContain('John')
+      expect(result).toContain('Developer')
+      expect(result).toContain('Safe item')
+      expect(result).toContain('<img src="x">')
+    })
+
+    test('should handle primitive values in data', () => {
+      const data = {
+        message: '<script>alert("XSS")</script>Hello',
+        count: 42,
+        isActive: true,
+        nullValue: null,
+        undefinedValue: undefined
+      }
+      
+      const primitiveTemplate = (data) => `
+        <div>
+          <p>${data.message}</p>
+          <span>Count: ${data.count}</span>
+          <span>Active: ${data.isActive}</span>
+          <span>Null: ${data.nullValue}</span>
+          <span>Undefined: ${data.undefinedValue}</span>
+        </div>
+      `
+      
+      const templates = new Templates({ primitiveTemplate })
+      const result = templates.render('primitiveTemplate', data)
+      
+      expect(result).not.toContain('<script>')
+      expect(result).toContain('Hello')
+      expect(result).toContain('Count: 42')
+      expect(result).toContain('Active: true')
+      expect(result).toContain('Null: ')
+      expect(result).toContain('Undefined: ')
+    })
+  })
 })
