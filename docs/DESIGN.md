@@ -81,6 +81,6 @@ App.start()
 
 ## Logo and Branding
 
-Created by [Alexander Lloyd](https://alexlloyd.info).
+Created by [Alexander Lloyd](https://www.linkedin.com/in/alexlloyd).
 
 Check out all logo versions [here](../logos/).

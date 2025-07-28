@@ -172,7 +172,7 @@ sanitize('<img src=x onerror=alert(1)>')
 
 ### `render(template, data)`
 
-Renders the `template`, passing the given `data`. Example:
+Renders the `template` HTML, passing the given `data`. Example:
 
 ```js
 render('itemCard', {
@@ -185,14 +185,15 @@ render('itemCard', {
 
 ### `insertTemplate(query, template, data, position)`
 
-Renders the template and inserts the generated html in the given _query_. Example:
+Renders the template and inserts the generated HTML in the given _query_. Example:
 
 ```js
 insertTemplate(
   '.cards-container',
   'itemCard',
   { title: item.title, description: item.description },
-  'end')
+  'end'
+)
 ```
 
 ## Forms

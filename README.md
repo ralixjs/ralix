@@ -211,6 +211,14 @@ render('itemCard', {
   title: item.title,
   description: item.description
 })
+
+// Or directly insert the generated HTML in your DOM
+insertTemplate(
+  '.cards-container',
+  'itemCard',
+  { title: item.title, description: item.description },
+  'end'
+)
 ```
 
 ## Ecosystem
