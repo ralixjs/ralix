@@ -183,6 +183,18 @@ render('itemCard', {
 
 **NOTE** The templates should be defined as JavaScript Functions and injected into the `App` object.
 
+### `insertTemplate(query, template, data, position)`
+
+Renders the template and inserts the generated html in the given _query_. Example:
+
+```js
+insertTemplate(
+  '.cards-container',
+  'itemCard',
+  { title: item.title, description: item.description },
+  'end')
+```
+
 ## Forms
 
 ### `serialize(query)`
