@@ -21,3 +21,25 @@ export const templateStructureTest = (data) => `
     <img src="${data.userImage}" onerror="fallback()">
   </div>
 `
+
+// Template for testing nested object sanitization
+export const nestedTemplate = (data) => `
+  <div>
+    <h1>${data.user.name}</h1>
+    <p>${data.user.profile.bio}</p>
+    <ul>
+      ${data.items.map(item => `<li>${item}</li>`).join('')}
+    </ul>
+  </div>
+`
+
+// Template for testing primitive values
+export const primitiveTemplate = (data) => `
+  <div>
+    <p>${data.message}</p>
+    <span>Count: ${data.count}</span>
+    <span>Active: ${data.isActive}</span>
+    <span>Null: ${data.nullValue}</span>
+    <span>Undefined: ${data.undefinedValue}</span>
+  </div>
+`

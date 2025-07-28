@@ -166,17 +166,6 @@ describe('render', () => {
         ]
       }
       
-      const nestedTemplate = (data) => `
-        <div>
-          <h1>${data.user.name}</h1>
-          <p>${data.user.profile.bio}</p>
-          <ul>
-            ${data.items.map(item => `<li>${item}</li>`).join('')}
-          </ul>
-        </div>
-      `
-      
-      const templates = new Templates({ nestedTemplate })
       const result = templates.render('nestedTemplate', data)
       
       // Scripts should be removed from variables
@@ -200,17 +189,6 @@ describe('render', () => {
         undefinedValue: undefined
       }
       
-      const primitiveTemplate = (data) => `
-        <div>
-          <p>${data.message}</p>
-          <span>Count: ${data.count}</span>
-          <span>Active: ${data.isActive}</span>
-          <span>Null: ${data.nullValue}</span>
-          <span>Undefined: ${data.undefinedValue}</span>
-        </div>
-      `
-      
-      const templates = new Templates({ primitiveTemplate })
       const result = templates.render('primitiveTemplate', data)
       
       expect(result).not.toContain('<script>')
