@@ -494,7 +494,6 @@ describe('Templates', () => {
     test('inserts template with different positions', () => {
       container.innerHTML = '<p>original</p>'
 
-      // Test 'end' position (beforeend)
       insertTemplate('.test-container', 'template1', 'end content', 'end')
       expect(container.innerHTML).toBe('<p>original</p><div>end content</div>')
     })
@@ -777,5 +776,3 @@ describe('Ajax', () => {
     })
   })
 })
-
-
