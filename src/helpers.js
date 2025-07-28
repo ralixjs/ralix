@@ -182,6 +182,8 @@ export default class Helpers {
     const el = find(query)
     if (!el) return
 
+    if (typeof options === 'string') options = { position: options }
+
     const defaults = { position: 'inner', sanitize: true }
     options = Object.assign({}, defaults, options)
 
