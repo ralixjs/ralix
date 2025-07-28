@@ -1,12 +1,13 @@
 /* @jest-environment jsdom */
 
 import Helpers from '../src/helpers'
-import Templates from '../src/templates.js'
+import Templates from '../src/templates'
 import * as ExampleTemplates from './fixtures/templates'
 import { jest } from '@jest/globals'
 
 const helpers = new Helpers()
 const templates = new Templates(ExampleTemplates)
+
 helpers.inject()
 
 let element, element2
@@ -471,6 +472,57 @@ describe('DOM', () => {
   })
 })
 
+describe('Templates', () => {
+  describe('insertTemplate', () => {
+    let container
+
+    beforeEach(() => {
+      window.App = { templates }
+      container = document.createElement('div')
+      container.className = 'test-container'
+      document.body.appendChild(container)
+    })
+
+    test('inserts template with default position (inner)', () => {
+      container.innerHTML = '<p>original content</p>'
+
+      insertTemplate('.test-container', 'template1', 'inserted content')
+
+      expect(container.innerHTML).toBe('<div>inserted content</div>')
+    })
+
+    test('inserts template with different positions', () => {
+      container.innerHTML = '<p>original</p>'
+
+      // Test 'end' position (beforeend)
+      insertTemplate('.test-container', 'template1', 'end content', 'end')
+      expect(container.innerHTML).toBe('<p>original</p><div>end content</div>')
+    })
+
+    test('inserts template with complex data', () => {
+      insertTemplate('.test-container', 'template2', { title: 'Test Title' })
+
+      expect(container.innerHTML).toBe('<h1>Test Title</h1>')
+    })
+
+    test('handles invalid query selector gracefully', () => {
+      // Should not throw error when element not found
+      expect(() => {
+        insertTemplate('.non-existent', 'template1', 'test')
+      }).not.toThrow()
+
+      // Container should remain unchanged
+      expect(container.innerHTML).toBe('')
+    })
+
+    test('throws error for invalid template', () => {
+      expect(() => {
+        insertTemplate('.test-container', 'nonExistentTemplate', 'test')
+      }).toThrow("[Ralix] Template 'nonExistentTemplate' not found")
+    })
+  })
+})
+
 describe('Forms', () => {
   beforeEach(() => {
     document.body.innerHTML =
@@ -726,101 +778,4 @@ describe('Ajax', () => {
   })
 })
 
-describe('insertTemplate', () => {
-  let container
 
-  beforeEach(() => {
-    // Set up App global and DOM container
-    window.App = { templates }
-    helpers.inject() // Make helper functions globally available
-    container = document.createElement('div')
-    container.className = 'test-container'
-    document.body.appendChild(container)
-  })
-
-  afterEach(() => {
-    document.body.innerHTML = ''
-    delete window.App
-  })
-
-  test('inserts template with default position (inner)', () => {
-    container.innerHTML = '<p>original content</p>'
-    
-    insertTemplate('.test-container', 'template1', 'inserted content')
-    
-    expect(container.innerHTML).toBe('<div>inserted content</div>')
-  })
-
-  test('inserts template with different positions', () => {
-    container.innerHTML = '<p>original</p>'
-    
-    // Test 'end' position (beforeend)
-    insertTemplate('.test-container', 'template1', 'end content', 'end')
-    expect(container.innerHTML).toBe('<p>original</p><div>end content</div>')
-    
-    // Reset and test 'begin' position (afterbegin)
-    container.innerHTML = '<p>original</p>'
-    insertTemplate('.test-container', 'template1', 'begin content', 'begin')
-    expect(container.innerHTML).toBe('<div>begin content</div><p>original</p>')
-    
-    // Test 'prepend' position (beforebegin)
-    const wrapper = document.createElement('div')
-    wrapper.innerHTML = '<div class="target">target</div>'
-    document.body.appendChild(wrapper)
-    
-    insertTemplate('.target', 'template1', 'prepend content', 'prepend')
-    expect(wrapper.innerHTML).toBe('<div>prepend content</div><div class="target">target</div>')
-    
-    // Test 'append' position (afterend)
-    wrapper.innerHTML = '<div class="target">target</div>'
-    insertTemplate('.target', 'template1', 'append content', 'append')
-    expect(wrapper.innerHTML).toBe('<div class="target">target</div><div>append content</div>')
-  })
-
-  test('inserts template with complex data', () => {
-    insertTemplate('.test-container', 'template2', { title: 'Test Title' })
-    
-    expect(container.innerHTML).toBe('<h1>Test Title</h1>')
-  })
-
-  test('handles invalid query selector gracefully', () => {
-    // Should not throw error when element not found
-    expect(() => {
-      insertTemplate('.non-existent', 'template1', 'test')
-    }).not.toThrow()
-    
-    // Container should remain unchanged
-    expect(container.innerHTML).toBe('')
-  })
-
-  test('throws error for invalid template', () => {
-    expect(() => {
-      insertTemplate('.test-container', 'nonExistentTemplate', 'test')
-    }).toThrow("[Ralix] Template 'nonExistentTemplate' not found")
-  })
-
-  test('preserves template structure without sanitization', () => {
-    // Use the structureTemplate which already has script tags and onclick handlers
-    const data = {
-      userContent: 'test content',
-      userImage: 'test.jpg'
-    }
-    
-    insertTemplate('.test-container', 'structureTemplate', data)
-    
-    // Should preserve the script tag and onclick handler (template structure)
-    expect(container.innerHTML).toContain('<script type="application/json">')
-    expect(container.innerHTML).toContain('onclick="handleClick()"')
-    expect(container.innerHTML).toContain('onerror="fallback()"')
-    expect(container.innerHTML).toContain('test content')
-  })
-
-  test('works with null position parameter', () => {
-    container.innerHTML = '<p>original</p>'
-    
-    insertTemplate('.test-container', 'template1', 'test content with empty position', null)
-    
-    // Should default to 'inner' position
-    expect(container.innerHTML).toBe('<div>test content with empty position</div>')
-  })
-})

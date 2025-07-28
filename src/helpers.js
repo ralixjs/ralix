@@ -228,12 +228,14 @@ export default class Helpers {
   }
 
   insertTemplate(query, template, data, position = null) {
-    const html = this.render(template, data)
+    const html = render(template, data)
+
     const options = { sanitize: false }
     if (position !== null) {
       options.position = position
     }
-    this.insertHTML(query, html, options)
+
+    insertHTML(query, html, options)
   }
 
   // Forms
