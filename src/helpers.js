@@ -178,18 +178,21 @@ export default class Helpers {
   }
 
   // DOM
-  insertHTML(query, html, position = 'inner') {
+  insertHTML(query, html, options = {}) {
     const el = find(query)
     if (!el) return
+
+    const defaults = { position: 'inner', sanitize: true }
+    options = Object.assign({}, defaults, options)
 
     if (html instanceof Element) html = html.outerHTML
 
     // Sanitize HTML for XSS protection
-    if (typeof html === 'string') {
+    if (options.sanitize && typeof html === 'string') {
       html = DOMPurify.sanitize(html)
     }
 
-    switch (position) {
+    switch (options.position) {
       case 'inner':
         el.innerHTML = html
         break
@@ -353,12 +356,13 @@ export default class Helpers {
     if (['POST', 'PATCH', 'PUT'].includes(options.method)) {
       if (params instanceof FormData) {
         if ("headers" in options) delete options.headers["Content-Type"]
+
         options = Object.assign({}, { body: params }, options)
       } else
         options = Object.assign({}, { body: JSON.stringify(params) }, options)
-    }
-    else if (Object.keys(params).length > 0)
+    } else if (Object.keys(params).length > 0) {
       path = `${path}?${serialize(params)}`
+    }
 
     const response = await fetch(path, options)
     if (format.toLowerCase() === 'json')
