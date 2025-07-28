@@ -131,7 +131,7 @@ describe('render', () => {
     })
   })
 
-  describe('Variable-only Sanitization', () => {
+  describe('Variable-only sanitization', () => {
     test('should preserve template structure while sanitizing only variables', () => {
       const data = {
         userContent: '<script>alert("XSS")</script>Safe content',
