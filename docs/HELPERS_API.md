@@ -147,7 +147,7 @@ insertHTML('body', elem('footer'), { position: 'end' })
 By default, the `html` is sanitized, if you want to avoid this behavior you need to use the `options.sanitize`:
 
 ```js
-insertHTML('body', '<div onclick="alert(\'Click\')">Click me</div>', { sanitize: false })
+insertHTML('body', '<div onclick="alert(\'Hello\')">Click me</div>', { sanitize: false })
 ```
 
 ### `elem(type, attributes)`
