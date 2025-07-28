@@ -19,7 +19,6 @@ import ProductsCtrl from './controllers/products'
 
 // Components
 import Modal        from './components/modal'
-import Table        from './components/table'
 import Tooltip      from './components/tooltip'
 
 const App = new RalixApp({
@@ -31,7 +30,6 @@ const App = new RalixApp({
   },
   components: [
     Modal,
-    Table,
     Tooltip
   ]
 })

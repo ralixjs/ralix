@@ -2,6 +2,7 @@ export const template1 = (text = "default") => `<div>${text}</div>`
 export const template2 = ({ title }) => `<h1>${title}</h1>`
 
 // XSS testing templates
+export const attributeInjection = (data) => `<img src="${data.src}" alt="${data.alt}">`
 export const structureTemplate = (data) => `
   <script type="application/json">${JSON.stringify(data)}</script>
   <div onclick="handleClick()">

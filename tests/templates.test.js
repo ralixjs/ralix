@@ -24,6 +24,19 @@ describe('render', () => {
   })
 
   describe('XSS Protection', () => {
+    test('should sanitize javascript: URLs in attributes', () => {
+      const maliciousData = {
+        src: 'javascript:alert("XSS")',
+        alt: 'Test image'
+      }
+
+      const result = templates.render('attributeInjection', maliciousData)
+
+      expect(result).not.toContain('javascript:')
+      expect(result).not.toContain('alert("XSS")')
+      expect(result).toContain('alt="Test image"')
+    })
+
     test('should preserve template structure while sanitizing only variables', () => {
       const data = {
         userContent: '<script>alert("XSS")</script>Safe content',
