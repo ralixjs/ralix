@@ -189,7 +189,7 @@ export default class Helpers {
 
     // Sanitize HTML for XSS protection
     if (options.sanitize && typeof html === 'string') {
-      html = DOMPurify.sanitize(html)
+      html = sanitize(html)
     }
 
     switch (options.position) {
@@ -216,6 +216,10 @@ export default class Helpers {
     if (attributes) _setAttributes(el, attributes)
 
     return el
+  }
+
+  sanitize(html) {
+    return DOMPurify.sanitize(html)
   }
 
   // Templates

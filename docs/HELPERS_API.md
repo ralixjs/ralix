@@ -159,6 +159,15 @@ elem('input', { type: 'numeric', class: 'input-number' })
 // <input type="numeric" class="input-number">
 ```
 
+### `sanitize(html)`
+
+XSS sanitizer for the given HTML string. Example:
+
+```js
+sanitize('<img src=x onerror=alert(1)>')
+// <img src="x">
+```
+
 ## Templates
 
 ### `render(template, data)`
