@@ -367,37 +367,37 @@ describe('DOM', () => {
 
       expect(element.innerHTML).toBe('Diferent content')
 
-      insertHTML(element, 'More diferent content', 'inner')
+      insertHTML(element, 'More diferent content', { position: 'inner' })
 
       expect(element.innerHTML).toBe('More diferent content')
     })
 
     test('prepend position', () => {
-      insertHTML(element, 'Before div', 'prepend')
+      insertHTML(element, 'Before div', { position: 'prepend' })
 
       expect(document.body.innerHTML).toBe('Before div<div>Some content for testing</div><div></div>')
     })
 
     test('append position', () => {
-      insertHTML(element, 'After div', 'append')
+      insertHTML(element, 'After div', { position: 'append' })
 
       expect(document.body.innerHTML).toBe('<div>Some content for testing</div>After div<div></div>')
     })
 
     test('begin position', () => {
-      insertHTML(element, '<span>Before content</span>', 'begin')
+      insertHTML(element, '<span>Before content</span>', { position: 'begin' })
 
       expect(document.body.innerHTML).toBe('<div><span>Before content</span>Some content for testing</div><div></div>')
     })
 
     test('end position', () => {
-      insertHTML(element, '<span>After content</span>', 'end')
+      insertHTML(element, '<span>After content</span>', { position: 'end' })
 
       expect(document.body.innerHTML).toBe('<div>Some content for testing<span>After content</span></div><div></div>')
     })
 
     test('render Element', () => {
-      insertHTML(element, elem('p'), 'end')
+      insertHTML(element, elem('p'), { position: 'end' })
 
       expect(document.body.innerHTML).toBe('<div>Some content for testing<p></p></div><div></div>')
     })
