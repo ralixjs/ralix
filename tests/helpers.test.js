@@ -411,6 +411,14 @@ describe('DOM', () => {
       expect(element.innerHTML).not.toContain('<script>')
     })
 
+    test('should not sanitize malicious script tags if sanitize is false', () => {
+      const maliciousHTML = '<script>alert("XSS")</script>'
+
+      insertHTML(element, maliciousHTML, { sanitize: false })
+
+      expect(element.innerHTML).toBe(maliciousHTML)
+    })
+
     test('should sanitize malicious event handlers', () => {
       const maliciousHTML = '<img src="x" onerror="alert(1)">'
       
