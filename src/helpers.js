@@ -178,18 +178,18 @@ export default class Helpers {
   }
 
   // DOM
-  insertHTML(query, html, position = 'inner') {
+  insertHTML(query, html, options = { position: 'inner', sanitize: true }) {
     const el = find(query)
     if (!el) return
 
     if (html instanceof Element) html = html.outerHTML
 
     // Sanitize HTML for XSS protection
-    if (typeof html === 'string') {
+    if (options.sanitize) {
       html = DOMPurify.sanitize(html)
     }
 
-    switch (position) {
+    switch (options.position) {
       case 'inner':
         el.innerHTML = html
         break
