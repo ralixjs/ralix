@@ -129,19 +129,25 @@ style('#main-content', { marginTop: '10px', marginBottom: '5px' })
 
 ## DOM
 
-### `insertHTML(query, html, position)`
+### `insertHTML(query, html, options = {})`
 
-Inserts passed `html` to the `query` element, based on `position`. The argument `position` accepts the following options: *inner* (default), *prepend*, *append*, *begin*, *end*. Examples:
+Inserts passed `html` to the `query` element, based on `options.position`. The option `position` accepts the following options: *inner* (default), *prepend*, *append*, *begin*, *end*. Examples:
 
 ```js
 insertHTML('.total', `Total: <b>${totalItems}</b>`)
-insertHTML('ul.items', '<li>new item</li>', 'end')
+insertHTML('ul.items', '<li>new item</li>', { position: 'end' })
 ```
 
 You can also insert *Element* instances:
 
 ```js
-insertHTML('body', elem('footer'), 'end')
+insertHTML('body', elem('footer'), { position: 'end' })
+```
+
+By default, the `html` is sanitized, if you want to avoid this behavior you need to use the `options.sanitize`:
+
+```js
+insertHTML('body', '<div onclick="alert(\'Click\')">Click me</div>', { sanitize: false })
 ```
 
 ### `elem(type, attributes)`
@@ -313,6 +319,6 @@ Alias for `ajax` method with `options.method` as *POST*. Example:
 
 ```js
 post('/comment', { params: { message: 'hello!' }}).then((content) => {
-  insertHTML('#comments', `<p>${content}</p>`, 'end')
+  insertHTML('#comments', `<p>${content}</p>`, { position: 'end' })
 })
 ```
