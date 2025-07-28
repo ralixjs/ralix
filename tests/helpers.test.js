@@ -1,9 +1,13 @@
 /* @jest-environment jsdom */
 
 import Helpers from '../src/helpers'
+import Templates from '../src/templates'
+import * as ExampleTemplates from './fixtures/templates'
 import { jest } from '@jest/globals'
 
 const helpers = new Helpers()
+const templates = new Templates(ExampleTemplates)
+
 helpers.inject()
 
 let element, element2
@@ -464,6 +468,56 @@ describe('DOM', () => {
       element = elem('div')
 
       expect(element.tagName).toBe('DIV')
+    })
+  })
+})
+
+describe('Templates', () => {
+  describe('insertTemplate', () => {
+    let container
+
+    beforeEach(() => {
+      window.App = { templates }
+      container = document.createElement('div')
+      container.className = 'test-container'
+      document.body.appendChild(container)
+    })
+
+    test('inserts template with default position (inner)', () => {
+      container.innerHTML = '<p>original content</p>'
+
+      insertTemplate('.test-container', 'template1', 'inserted content')
+
+      expect(container.innerHTML).toBe('<div>inserted content</div>')
+    })
+
+    test('inserts template with different positions', () => {
+      container.innerHTML = '<p>original</p>'
+
+      insertTemplate('.test-container', 'template1', 'end content', 'end')
+      expect(container.innerHTML).toBe('<p>original</p><div>end content</div>')
+    })
+
+    test('inserts template with complex data', () => {
+      insertTemplate('.test-container', 'template2', { title: 'Test Title' })
+
+      expect(container.innerHTML).toBe('<h1>Test Title</h1>')
+    })
+
+    test('handles invalid query selector gracefully', () => {
+      // Should not throw error when element not found
+      expect(() => {
+        insertTemplate('.non-existent', 'template1', 'test')
+      }).not.toThrow()
+
+      // Container should remain unchanged
+      expect(container.innerHTML).toBe('')
+    })
+
+    test('throws error for invalid template', () => {
+      expect(() => {
+        insertTemplate('.test-container', 'nonExistentTemplate', 'test')
+      }).toThrow("[Ralix] Template 'nonExistentTemplate' not found")
     })
   })
 })

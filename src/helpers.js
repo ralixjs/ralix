@@ -227,6 +227,17 @@ export default class Helpers {
     return App.templates.render(template, data)
   }
 
+  insertTemplate(query, template, data, position = null) {
+    const html = render(template, data)
+
+    const options = { sanitize: false }
+    if (position !== null) {
+      options.position = position
+    }
+
+    insertHTML(query, html, options)
+  }
+
   // Forms
   serialize(query) {
     if (query instanceof Element || typeof query == 'string') {
