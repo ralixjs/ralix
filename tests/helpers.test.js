@@ -809,7 +809,7 @@ describe('Ajax', () => {
         json: async () => { throw new Error('Not JSON') }
       })
 
-      await expect(ajax('http://example.com/')).rejects.toThrow(/HTTP error! Status: 404.*Internal Server Error/)
+      await expect(ajax('http://example.com/')).rejects.toThrow(/HTTP error! Status: 500.*Internal Server Error/)
     })
 
     test('error is catchable via .catch()', async () => {
