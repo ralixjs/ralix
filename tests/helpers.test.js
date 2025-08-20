@@ -730,7 +730,7 @@ describe('Ajax', () => {
 
   beforeEach(() => {
     global.fetch = () => {
-      return { text: jest.fn(), json: jest.fn() }
+      return { text: jest.fn(), json: jest.fn(), status: 200, ok: true, statusText: 'OK' }
     }
   })
 
