@@ -816,7 +816,6 @@ describe('Ajax', () => {
       const error = new Error('Network error')
       global.fetch = jest.fn().mockRejectedValue(error)
 
-      // Verifica que se puede capturar el error con catch
       let caught = false
       await ajax('http://example.com/').catch(e => {
         caught = true
