@@ -409,6 +409,8 @@ export default class Helpers {
         return response.json()
       else
         return response.text()
+    } catch (err) {
+      throw err
     }
   }
 
