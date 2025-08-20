@@ -794,10 +794,22 @@ describe('Ajax', () => {
         status: 404,
         statusText: 'Not Found',
         text: jest.fn().mockResolvedValue('Not Found'),
-        json: jest.fn().mockResolvedValue({})
+        json: jest.fn().mockResolvedValue({ message: 'Not Found' })
       })
 
-      await expect(ajax('http://example.com/')).rejects.toThrow('HTTP error! Status: 404')
+      await expect(ajax('http://example.com/')).rejects.toThrow(/HTTP error! Status: 404.*Not Found/)
+    })
+
+    test('rejects with error when response is not ok (status 500)', async () => {
+      global.fetch = jest.fn().mockResolvedValue({
+        ok: false,
+        status: 500,
+        statusText: 'Internal Server Error',
+        text: jest.fn().mockResolvedValue('Internal Server Error'),
+        json: async () => { throw new Error('Not JSON') }
+      })
+
+      await expect(ajax('http://example.com/')).rejects.toThrow(/HTTP error! Status: 404.*Internal Server Error/)
     })
 
     test('error is catchable via .catch()', async () => {
