@@ -388,7 +388,7 @@ export default class Helpers {
         try {
           const errorData = await response.json()
           errorMessage = errorData.message || JSON.stringify(errorData)
-        }.catch (_) {}
+        } catch (_) {}
 
         const error = new Error(errorMessage)
         error.status = response.status
