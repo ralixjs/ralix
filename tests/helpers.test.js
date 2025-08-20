@@ -730,7 +730,7 @@ describe('Ajax', () => {
 
   beforeEach(() => {
     global.fetch = () => {
-      return { text: jest.fn(), json: jest.fn() }
+      return { text: jest.fn(), json: jest.fn(), status: 200, ok: true, statusText: 'OK' }
     }
   })
 
@@ -773,6 +773,55 @@ describe('Ajax', () => {
       ajax('http://example.com/', { params: form, options: { method: 'POST', headers: { 'Content-Type': 'text/plain' } } })
 
       expect(spy).toHaveBeenCalledWith('http://example.com/', { method: 'POST', credentials: 'include', body: form, headers: {} })
+    })
+  })
+
+  describe('error handling', () => {
+    beforeEach(() => {
+      jest.resetAllMocks()
+    })
+
+    test('rejects with error when fetch throws', async () => {
+      const error = new Error('Network error')
+      global.fetch = jest.fn().mockRejectedValue(error)
+
+      await expect(ajax('http://example.com/')).rejects.toThrow('Network error')
+    })
+
+    test('rejects with error when response is not ok (status 404)', async () => {
+      global.fetch = jest.fn().mockResolvedValue({
+        ok: false,
+        status: 404,
+        statusText: 'Not Found',
+        text: jest.fn().mockResolvedValue('Not Found'),
+        json: jest.fn().mockResolvedValue({ message: 'Not Found' })
+      })
+
+      await expect(ajax('http://example.com/')).rejects.toThrow(/HTTP error! Status: 404.*Not Found/)
+    })
+
+    test('rejects with error when response is not ok (status 500)', async () => {
+      global.fetch = jest.fn().mockResolvedValue({
+        ok: false,
+        status: 500,
+        statusText: 'Internal Server Error',
+        text: jest.fn().mockResolvedValue('Internal Server Error'),
+        json: async () => { throw new Error('Not JSON') }
+      })
+
+      await expect(ajax('http://example.com/')).rejects.toThrow(/HTTP error! Status: 500.*Internal Server Error/)
+    })
+
+    test('error is catchable via .catch()', async () => {
+      const error = new Error('Network error')
+      global.fetch = jest.fn().mockRejectedValue(error)
+
+      let caught = false
+      await ajax('http://example.com/').catch(e => {
+        caught = true
+        expect(e).toBe(error)
+      })
+      expect(caught).toBe(true)
     })
   })
 })
