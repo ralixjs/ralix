@@ -379,11 +379,30 @@ export default class Helpers {
       path = `${path}?${serialize(params)}`
     }
 
-    const response = await fetch(path, options)
-    if (format.toLowerCase() === 'json')
-      return response.json()
-    else
-      return response.text()
+    try {
+      const response = await fetch(path, options)
+
+      if (!response.ok) {
+        let errorMessage = `HTTP error! Status: ${response.status}`
+
+        try {
+          const errorData = await response.json()
+          errorMessage = errorData.message || JSON.stringify(errorData)
+        }.catch (_) {}
+
+        const error = new Error(errorMessage)
+        error.status = response.status
+        error.response = response
+        throw error
+      }
+
+      if (format.toLowerCase() === 'json')
+        return response.json()
+      else
+        return response.text()
+    } catch (err) {
+      throw err
+    }
   }
 
   get(path, { params = {}, options = {} } = {}) {

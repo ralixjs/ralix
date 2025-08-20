@@ -775,4 +775,42 @@ describe('Ajax', () => {
       expect(spy).toHaveBeenCalledWith('http://example.com/', { method: 'POST', credentials: 'include', body: form, headers: {} })
     })
   })
+
+  describe('error handling', () => {
+    beforeEach(() => {
+      jest.resetAllMocks()
+    })
+
+    test('rejects with error when fetch throws', async () => {
+      const error = new Error('Network error')
+      global.fetch = jest.fn().mockRejectedValue(error)
+
+      await expect(ajax('http://example.com/')).rejects.toThrow('Network error')
+    })
+
+    test('rejects with error when response is not ok (status 404)', async () => {
+      global.fetch = jest.fn().mockResolvedValue({
+        ok: false,
+        status: 404,
+        statusText: 'Not Found',
+        text: jest.fn().mockResolvedValue('Not Found'),
+        json: jest.fn().mockResolvedValue({})
+      })
+
+      await expect(ajax('http://example.com/')).rejects.toThrow('HTTP error! Status: 404')
+    })
+
+    test('error is catchable via .catch()', async () => {
+      const error = new Error('Network error')
+      global.fetch = jest.fn().mockRejectedValue(error)
+
+      // Verifica que se puede capturar el error con catch
+      let caught = false
+      await ajax('http://example.com/').catch(e => {
+        caught = true
+        expect(e).toBe(error)
+      })
+      expect(caught).toBe(true)
+    })
+  })
 })
