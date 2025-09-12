@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.8.1]
+
+- Ajax error handling (#106)
+- Skip sanitize empty strings (#108)
+
 ## [1.8.0]
 
 - Sanitize only template variables instead of entire output (#101)
@@ -78,6 +83,7 @@ All notable changes to this project will be documented in this file.
 - `serialize` works with objects too
 - Use `findAll` in `show`, `hide` and `on`
 
+[1.8.1]: https://github.com/ralixjs/ralix/compare/v1.8.0...v1.8.1
 [1.8.0]: https://github.com/ralixjs/ralix/compare/v1.7.0...v1.8.0
 [1.7.0]: https://github.com/ralixjs/ralix/compare/v1.6.0...v1.7.0
 [1.6.0]: https://github.com/ralixjs/ralix/compare/v1.5.0...v1.6.0
