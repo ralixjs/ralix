@@ -219,7 +219,9 @@ export default class Helpers {
   }
 
   sanitize(html) {
-    return DOMPurify.sanitize(html)
+    if (typeof html === 'string' && html.trim() !== ''){
+      return DOMPurify.sanitize(html)
+    }
   }
 
   // Templates
