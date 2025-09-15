@@ -183,7 +183,11 @@ export default class Helpers {
     if (!el) return
 
     const defaults = { position: 'inner', sanitize: true }
-    options = Object.assign({}, defaults, options)
+
+    if (typeof options === 'string')
+      options = Object.assign({}, defaults, { position: options })
+    else
+      options = Object.assign({}, defaults, options)
 
     if (html instanceof Element) html = html.outerHTML
 

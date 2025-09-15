@@ -400,6 +400,12 @@ describe('DOM', () => {
       expect(document.body.innerHTML).toBe('<div>Some content for testing<span>After content</span></div><div></div>')
     })
 
+    test('old options approach should also work', () => {
+      insertHTML(element, '<span>After content</span>', 'end')
+
+      expect(document.body.innerHTML).toBe('<div>Some content for testing<span>After content</span></div><div></div>')
+    })
+
     test('render Element', () => {
       insertHTML(element, elem('p'), { position: 'end' })
 
