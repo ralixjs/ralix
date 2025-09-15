@@ -220,7 +220,7 @@ export default class Helpers {
 
   sanitize(html) {
     if (typeof html === 'string' && html.trim() !== ''){
-      return DOMPurify.sanitize(html)
+      return DOMPurify.sanitize(html, { ADD_TAGS: ['use'] })
     }
   }
 
