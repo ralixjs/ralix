@@ -223,9 +223,10 @@ export default class Helpers {
   }
 
   sanitize(html) {
-    if (typeof html === 'string' && html.trim() !== ''){
+    if (typeof html === 'string' && html.trim() === '')
+      return ''
+    else
       return DOMPurify.sanitize(html, { ADD_TAGS: ['use'] })
-    }
   }
 
   // Templates
