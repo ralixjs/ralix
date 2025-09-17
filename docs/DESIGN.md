@@ -4,9 +4,7 @@ Ralix is a modest and lightweight framework with the goal to provide barebones a
 
 Following the spirit of frameworks like [Stimulus](https://github.com/stimulusjs/stimulus) or [Alpine.js](https://github.com/alpinejs/alpine), Ralix doesn't seek to take over your entire front-end logic and rendering. Instead, it's designed to enhance your HTML with just enough behavior to make it shine. You can even easily mix Ralix with those or any framework without any fear!
 
-The learning curve is really flat, you can understand the whole framework in few minutes.
-
-Ralix has no runtime dependencies and all codebase is really small, around 400 LOC.
+The learning curve is really flat, you can understand the whole framework in few minutes. All codebase is really small, around 500 LOC.
 
 ## Structure
 
