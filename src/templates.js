@@ -1,4 +1,6 @@
-import DOMPurify from 'dompurify'
+import Helpers from './helpers'
+
+const helpers = new Helpers()
 
 export default class Templates {
   constructor(templates) {
@@ -31,8 +33,7 @@ export default class Templates {
     }
 
     if (typeof data === 'string') {
-      // First apply DOMPurify sanitization
-      let sanitized = DOMPurify.sanitize(data)
+      let sanitized = helpers.sanitize(data)
 
       // Additional sanitization for patterns that DOMPurify doesn't catch in standalone strings
       if (/^\s*(javascript|vbscript|data\s*:\s*text\/html)/i.test(sanitized)) {
