@@ -222,26 +222,58 @@ export default class Helpers {
     return el
   }
 
-  sanitize(html) {
-    if (typeof html === 'string' && html.trim() === '')
-      return ''
-    else
-      return DOMPurify.sanitize(html, { ADD_TAGS: ['use'] })
+  sanitize(data) {
+    if (data === null || data === undefined) {
+      return data
+    }
+
+    if (typeof data === 'string' && data.trim() !== '') {
+      let sanitized = DOMPurify.sanitize(data, { ADD_TAGS: ['use'] })
+
+      // Additional sanitization for patterns that DOMPurify doesn't catch in standalone strings
+      if (/^\s*(javascript|vbscript|data\s*:\s*text\/html)/i.test(sanitized)) {
+        return ''
+      }
+
+      return sanitized
+    }
+
+    if (Array.isArray(data)) {
+      return data.map(item => this.sanitize(item))
+    }
+
+    if (typeof data === 'object') {
+      const sanitized = {}
+      for (const [key, value] of Object.entries(data)) {
+        sanitized[key] = this.sanitize(value)
+      }
+      return sanitized
+    }
+
+    // For primitives (numbers, booleans, etc.), return as-is
+    return data
   }
 
   // Templates
-  render(template, data) {
+  render(template, data, options = {}) {
+    const defaults = { sanitize: true }
+    options = Object.assign({}, defaults, options)
+
+    // Sanitize HTML for XSS protection
+    if (options.sanitize) {
+      data = sanitize(data)
+    }
+
     return App.templates.render(template, data)
   }
 
-  insertTemplate(query, template, data, position = null) {
-    const html = render(template, data)
+  insertTemplate(query, template, data, options = {}) {
+    const defaults = { sanitize: true }
+    options = Object.assign({}, defaults, options)
 
-    const options = { sanitize: false }
-    if (position !== null) {
-      options.position = position
-    }
+    const html = render(template, data, options)
 
+    options.sanitize = false
     insertHTML(query, html, options)
   }
 

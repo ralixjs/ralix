@@ -478,6 +478,76 @@ describe('DOM', () => {
   })
 })
 
+describe('sanitize', () => {
+  describe('XSS Protection', () => {
+    test('should sanitize javascript: URLs in attributes', () => {
+      const maliciousData = {
+        src: 'javascript:alert("XSS")',
+        alt: 'Test image'
+      }
+      const maliciousHTML = ExampleTemplates.attributeInjection(maliciousData)
+
+      const result = sanitize(maliciousHTML)
+
+      expect(result).not.toContain('javascript:')
+      expect(result).not.toContain('alert("XSS")')
+      expect(result).toContain('alt="Test image"')
+    })
+
+    test('should sanitize nested object variables', () => {
+      const data = {
+        user: {
+          name: '<script>alert("name")</script>John',
+          profile: {
+            bio: '<img onerror="alert(1)" src="x">Developer'
+          }
+        },
+        items: [
+          '<script>alert("item1")</script>Item 1',
+          'javascript:alert("item2")',
+          'Safe item'
+        ]
+      }
+
+      const result = sanitize(data)
+
+      // Scripts should be removed from variables
+      expect(result.user.name).not.toContain('<script>')
+      expect(result.items[0]).not.toContain('<script>')
+      expect(result.user.name).not.toContain('alert(')
+      expect(result.user.profile.bio).not.toContain('alert(')
+      expect(result.items[0]).not.toContain('alert(')
+      expect(result.items[1]).not.toContain('alert(')
+      expect(result.items[1]).not.toContain('javascript:')
+
+      // Safe content should be preserved
+      expect(result.user.name).toContain('John')
+      expect(result.user.profile.bio).toContain('Developer')
+      expect(result.items[2]).toContain('Safe item')
+      expect(result.user.profile.bio).toContain('<img src="x">')
+    })
+
+    test('should handle primitive values in data', () => {
+      const data = {
+        message: '<script>alert("XSS")</script>Hello',
+        count: 42,
+        isActive: true,
+        nullValue: null,
+        undefinedValue: undefined
+      }
+
+      const result = sanitize(data)
+
+      expect(result.message).not.toContain('<script>')
+      expect(result.message).toContain('Hello')
+      expect(result.count).toBe(42)
+      expect(result.isActive).toBeTruthy()
+      expect(result.nullValue).toBeNull()
+      expect(result.undefinedValue).toBeUndefined()
+    })
+  })
+})
+
 describe('Templates', () => {
   describe('insertTemplate', () => {
     let container
@@ -500,7 +570,7 @@ describe('Templates', () => {
     test('inserts template with different positions', () => {
       container.innerHTML = '<p>original</p>'
 
-      insertTemplate('.test-container', 'template1', 'end content', 'end')
+      insertTemplate('.test-container', 'template1', 'end content', { position: 'end' })
       expect(container.innerHTML).toBe('<p>original</p><div>end content</div>')
     })
 
