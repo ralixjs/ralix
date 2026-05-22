@@ -7,14 +7,7 @@ export default class Templates {
     const tmpl = this.templates[template]
 
     if (tmpl) {
-      const output = tmpl.call(this, data)
-
-      // Handle null and undefined values in output by replacing them with empty string
-      if (typeof output === 'string') {
-        return output.replace(/\bnull\b/g, '').replace(/\bundefined\b/g, '')
-      }
-
-      return output
+      return tmpl.call(this, data)
     } else {
       throw new Error(`[Ralix] Template '${template}' not found`)
     }

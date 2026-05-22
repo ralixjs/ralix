@@ -250,6 +250,11 @@ export default class Helpers {
       return sanitized
     }
 
+    // Handle null and undefined values in output by replacing them with empty string
+    if (typeof data === 'string') {
+      return data.replace(/\bnull\b/g, '').replace(/\bundefined\b/g, '')
+    }
+
     // For primitives (numbers, booleans, etc.), return as-is
     return data
   }
