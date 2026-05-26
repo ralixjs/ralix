@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.8.4]
+
+- Parameterize `sanitize` option in `render` and `insertTemplate` (#113)
+- Deep sanitization in `sanitize` helper: accept arrays and objects recursively (#113)
+
 ## [1.8.3]
 
 - Use same `sanitize` config in Templates too (#112)
@@ -93,6 +98,7 @@ All notable changes to this project will be documented in this file.
 - `serialize` works with objects too
 - Use `findAll` in `show`, `hide` and `on`
 
+[1.8.4]: https://github.com/ralixjs/ralix/compare/v1.8.3...v1.8.4
 [1.8.3]: https://github.com/ralixjs/ralix/compare/v1.8.2...v1.8.3
 [1.8.2]: https://github.com/ralixjs/ralix/compare/v1.8.1...v1.8.2
 [1.8.1]: https://github.com/ralixjs/ralix/compare/v1.8.0...v1.8.1
