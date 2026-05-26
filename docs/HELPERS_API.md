@@ -144,7 +144,7 @@ You can also insert *Element* instances:
 insertHTML('body', elem('footer'), { position: 'end' })
 ```
 
-By default, the `html` is sanitized, if you want to avoid this behavior you need to use the `options.sanitize`:
+By default (`sanitize: true`), the `html` is sanitized. To skip sanitization, use `options.sanitize`:
 
 ```js
 insertHTML('body', '<div onclick="alert(\'Hello\')">Click me</div>', { sanitize: false })
@@ -159,13 +159,16 @@ elem('input', { type: 'numeric', class: 'input-number' })
 // <input type="numeric" class="input-number">
 ```
 
-### `sanitize(html)`
+### `sanitize(data)`
 
-XSS sanitizer for the given HTML string. Example:
+XSS sanitizer. Accepts strings, arrays and objects (sanitized recursively). Example:
 
 ```js
 sanitize('<img src=x onerror=alert(1)>')
 // <img src="x">
+
+sanitize({ title: '<b>ok</b>', body: '<img src=x onerror=alert(1)>' })
+// { title: '<b>ok</b>', body: '<img src="x">' }
 ```
 
 ## Templates
@@ -181,6 +184,12 @@ render('itemCard', {
 })
 ```
 
+By default (`sanitize: true`), the `data` passed to the template is sanitized. The template itself is not sanitized. To skip sanitization, use `options.sanitize`:
+
+```js
+render('itemCard', { title: item.title }, { sanitize: false })
+```
+
 **NOTE** The templates should be defined as JavaScript Functions and injected into the `App` object.
 
 ### `insertTemplate(query, template, data, position)`
@@ -194,6 +203,12 @@ insertTemplate(
   { title: item.title, description: item.description },
   'end'
 )
+```
+
+The `options` are forwarded to `render` to sanitize the `data`. The rendered template is inserted via `insertHTML` with `sanitize: false`, so any HTML inside the template (e.g. `onclick`, `<script>`) is preserved. Default is `sanitize: true` (sanitizes data only):
+
+```js
+insertTemplate('.cards', 'itemCard', { title: item.title }, { sanitize: false })
 ```
 
 ## Forms
