@@ -1,8 +1,9 @@
 import DOMPurify from 'dompurify'
+import * as Utils from './internal_utils'
 
 export default class Helpers {
   inject() {
-    this.getProperties(this, { onlyFunctions: true }).forEach(method => {
+    Utils.getProperties(this, { onlyFunctions: true }).forEach(method => {
       if (method != 'inject')
         window[method] = this[method].bind(this)
     })
@@ -534,18 +535,6 @@ export default class Helpers {
   }
 
   getProperties(obj, { onlyFunctions = false } = {}) {
-    const original = obj
-    let properties = new Set()
-
-    while (obj = Reflect.getPrototypeOf(obj)) {
-      let keys = Reflect.ownKeys(obj)
-      keys.forEach(k => properties.add(k))
-    }
-
-    if (onlyFunctions) {
-      return new Set([...properties].filter(k => typeof original[k] === 'function'))
-    }
-
-    return properties
+    return Utils.getProperties(obj, { onlyFunctions })
   }
 }

@@ -1,3 +1,5 @@
+import * as Utils from './internal_utils'
+
 export default class Router {
   constructor(routes) {
     this.routes = routes
@@ -20,13 +22,13 @@ export default class Router {
   }
 
   _exposeCtrl() {
-    window.getProperties(this.ctrl, { onlyFunctions: true }).forEach(method => {
+    Utils.getProperties(this.ctrl, { onlyFunctions: true }).forEach(method => {
       window[method] = this.ctrl[method].bind(this.ctrl)
     })
   }
 
   _supressCtrl() {
-    window.getProperties(this.ctrl, { onlyFunctions: true }).forEach(method => {
+    Utils.getProperties(this.ctrl, { onlyFunctions: true }).forEach(method => {
       delete window[method]
     })
   }
