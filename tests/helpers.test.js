@@ -901,3 +901,160 @@ describe('Ajax', () => {
     })
   })
 })
+
+describe('Functions', () => {
+  beforeEach(() => {
+    jest.useFakeTimers()
+  })
+
+  afterEach(() => {
+    jest.useRealTimers()
+  })
+
+  test('debounce delays function execution', () => {
+    const fn = jest.fn()
+    const debounced = debounce(fn, 200)
+
+    debounced()
+    debounced()
+    debounced()
+
+    expect(fn).not.toHaveBeenCalled()
+
+    jest.advanceTimersByTime(200)
+
+    expect(fn).toHaveBeenCalledTimes(1)
+  })
+
+  test('debounce passes arguments', () => {
+    const fn = jest.fn()
+    const debounced = debounce(fn, 100)
+
+    debounced('a', 'b')
+    jest.advanceTimersByTime(100)
+
+    expect(fn).toHaveBeenCalledWith('a', 'b')
+  })
+
+  test('debounce uses default delay', () => {
+    const fn = jest.fn()
+    const debounced = debounce(fn)
+
+    debounced()
+    jest.advanceTimersByTime(299)
+    expect(fn).not.toHaveBeenCalled()
+
+    jest.advanceTimersByTime(1)
+    expect(fn).toHaveBeenCalledTimes(1)
+  })
+
+  test('throttle executes immediately and suppresses subsequent calls', () => {
+    const fn = jest.fn()
+    const throttled = throttle(fn, 200)
+
+    throttled()
+    expect(fn).toHaveBeenCalledTimes(1)
+
+    throttled()
+    throttled()
+    expect(fn).toHaveBeenCalledTimes(1)
+
+    jest.advanceTimersByTime(200)
+
+    throttled()
+    expect(fn).toHaveBeenCalledTimes(2)
+  })
+
+  test('throttle passes arguments', () => {
+    const fn = jest.fn()
+    const throttled = throttle(fn, 100)
+
+    throttled('x', 'y')
+    expect(fn).toHaveBeenCalledWith('x', 'y')
+  })
+
+  test('throttle uses default delay', () => {
+    const fn = jest.fn()
+    const throttled = throttle(fn)
+
+    throttled()
+    expect(fn).toHaveBeenCalledTimes(1)
+
+    throttled()
+    expect(fn).toHaveBeenCalledTimes(1)
+
+    jest.advanceTimersByTime(300)
+
+    throttled()
+    expect(fn).toHaveBeenCalledTimes(2)
+  })
+})
+
+describe('Object', () => {
+  test('deepMerge merges nested objects', () => {
+    const a = { x: 1, nested: { a: 1, b: 2 } }
+    const b = { y: 2, nested: { b: 3, c: 4 } }
+
+    expect(deepMerge(a, b)).toEqual({ x: 1, y: 2, nested: { a: 1, b: 3, c: 4 } })
+  })
+
+  test('deepMerge does not mutate original objects', () => {
+    const a = { nested: { a: 1 } }
+    const b = { nested: { b: 2 } }
+
+    const result = deepMerge(a, b)
+    expect(a).toEqual({ nested: { a: 1 } })
+    expect(b).toEqual({ nested: { b: 2 } })
+    expect(result).toEqual({ nested: { a: 1, b: 2 } })
+  })
+
+  test('deepMerge handles arrays by replacing', () => {
+    const a = { items: [1, 2] }
+    const b = { items: [3, 4] }
+
+    expect(deepMerge(a, b)).toEqual({ items: [3, 4] })
+  })
+
+  test('deepMerge handles deeply nested objects', () => {
+    const a = { l1: { l2: { l3: { a: 1 } } } }
+    const b = { l1: { l2: { l3: { b: 2 } } } }
+
+    expect(deepMerge(a, b)).toEqual({ l1: { l2: { l3: { a: 1, b: 2 } } } })
+  })
+
+  test('pick selects specified keys', () => {
+    const obj = { a: 1, b: 2, c: 3, d: 4 }
+
+    expect(pick(obj, ['a', 'c'])).toEqual({ a: 1, c: 3 })
+  })
+
+  test('pick ignores missing keys', () => {
+    const obj = { a: 1, b: 2 }
+
+    expect(pick(obj, ['a', 'x'])).toEqual({ a: 1 })
+  })
+
+  test('pick returns empty object for empty keys', () => {
+    expect(pick({ a: 1 }, [])).toEqual({})
+  })
+
+  test('omit excludes specified keys', () => {
+    const obj = { a: 1, b: 2, c: 3, d: 4 }
+
+    expect(omit(obj, ['b', 'd'])).toEqual({ a: 1, c: 3 })
+  })
+
+  test('omit does not mutate original object', () => {
+    const obj = { a: 1, b: 2 }
+    const result = omit(obj, ['b'])
+
+    expect(obj).toEqual({ a: 1, b: 2 })
+    expect(result).toEqual({ a: 1 })
+  })
+
+  test('omit ignores missing keys', () => {
+    const obj = { a: 1, b: 2 }
+
+    expect(omit(obj, ['x', 'y'])).toEqual({ a: 1, b: 2 })
+  })
+})

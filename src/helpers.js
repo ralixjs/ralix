@@ -469,4 +469,68 @@ export default class Helpers {
 
     return ajax(path, { params: params, options: options })
   }
+
+  // Functions
+  debounce(fn, ms = 300) {
+    let timer
+
+    return (...args) => {
+      clearTimeout(timer)
+      timer = setTimeout(() => fn(...args), ms)
+    }
+  }
+
+  throttle(fn, ms = 300) {
+    let waiting = false
+
+    return (...args) => {
+      if (waiting) return
+
+      fn(...args)
+      waiting = true
+      setTimeout(() => { waiting = false }, ms)
+    }
+  }
+
+  // Object
+  deepMerge(target, source) {
+    const result = Object.assign({}, target)
+
+    for (const key of Object.keys(source)) {
+      if (
+        source[key] !== null &&
+        typeof source[key] === 'object' &&
+        !Array.isArray(source[key]) &&
+        target[key] !== null &&
+        typeof target[key] === 'object' &&
+        !Array.isArray(target[key])
+      ) {
+        result[key] = deepMerge(target[key], source[key])
+      } else {
+        result[key] = source[key]
+      }
+    }
+
+    return result
+  }
+
+  pick(obj, keys) {
+    const result = {}
+
+    for (const key of keys) {
+      if (key in obj) result[key] = obj[key]
+    }
+
+    return result
+  }
+
+  omit(obj, keys) {
+    const result = Object.assign({}, obj)
+
+    for (const key of keys) {
+      delete result[key]
+    }
+
+    return result
+  }
 }

@@ -9,6 +9,8 @@
 - [Navigation](#navigation)
 - [Events](#events)
 - [Ajax](#ajax)
+- [Functions](#functions)
+- [Object](#object)
 
 ## Selectors
 
@@ -358,4 +360,68 @@ Alias for `ajax` method with `options.method` as *POST*. Example:
 post('/comment', { params: { message: 'hello!' }}).then((content) => {
   insertHTML('#comments', `<p>${content}</p>`, { position: 'end' })
 })
+```
+
+## Functions
+
+### `debounce(fn, ms = 300)`
+
+Returns a debounced version of the given function. The function will only be called after `ms` milliseconds have elapsed since the last invocation. Useful for delaying execution until a burst of events has stopped (e.g. user input). Example:
+
+```js
+const search = debounce((query) => {
+  ajax(`/search?q=${query}`)
+}, 500)
+
+on('#search-input', 'keyup', (e) => {
+  search(e.target.value)
+})
+```
+
+### `throttle(fn, ms = 300)`
+
+Returns a throttled version of the given function. The function will be called immediately on the first invocation, then subsequent calls within `ms` milliseconds will be ignored. Useful for rate-limiting event handlers (e.g. scroll, resize). Example:
+
+```js
+const handleScroll = throttle(() => {
+  console.log('Scroll position:', window.scrollY)
+}, 200)
+
+on(window, 'scroll', handleScroll)
+```
+
+## Object
+
+### `deepMerge(target, source)`
+
+Deep merges two objects, returning a new object. Nested objects are merged recursively. Arrays and non-object values in `source` override those in `target`. The original objects are not mutated. Example:
+
+```js
+const defaults = { ui: { theme: 'light', sidebar: true }, debug: false }
+const userConfig = { ui: { theme: 'dark' }, debug: true }
+
+deepMerge(defaults, userConfig)
+// { ui: { theme: 'dark', sidebar: true }, debug: true }
+```
+
+### `pick(obj, keys)`
+
+Returns a new object containing only the specified `keys` from `obj`. Keys that don't exist in `obj` are ignored. Example:
+
+```js
+const user = { id: 1, name: 'Alice', email: 'alice@example.com', role: 'admin' }
+
+pick(user, ['name', 'email'])
+// { name: 'Alice', email: 'alice@example.com' }
+```
+
+### `omit(obj, keys)`
+
+Returns a new object with the specified `keys` excluded from `obj`. The original object is not mutated. Example:
+
+```js
+const user = { id: 1, name: 'Alice', email: 'alice@example.com', role: 'admin' }
+
+omit(user, ['id', 'role'])
+// { name: 'Alice', email: 'alice@example.com' }
 ```
