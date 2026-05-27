@@ -3,9 +3,9 @@ import DOMPurify from 'dompurify'
 
 export default class Helpers {
   inject() {
-    Utils.getProperties(this, { onlyFunctions: true }).forEach(method => {
-      if (method !== 'inject')
-        window[method] = this[method].bind(this)
+    Utils.getProperties(this, { onlyFunctions: true }).forEach(propName => {
+      if (propName !== 'inject')
+        window[propName] = this[propName].bind(this)
     })
   }
 

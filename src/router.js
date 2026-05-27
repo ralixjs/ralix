@@ -22,14 +22,14 @@ export default class Router {
   }
 
   _exposeCtrl() {
-    Utils.getProperties(this.ctrl, { onlyFunctions: true }).forEach(method => {
-      window[method] = this.ctrl[method].bind(this.ctrl)
+    Utils.getProperties(this.ctrl, { onlyFunctions: true }).forEach(methodName => {
+      window[methodName] = this.ctrl[methodName].bind(this.ctrl)
     })
   }
 
   _supressCtrl() {
-    Utils.getProperties(this.ctrl, { onlyFunctions: true }).forEach(method => {
-      delete window[method]
+    Utils.getProperties(this.ctrl, { onlyFunctions: true }).forEach(methodName => {
+      delete window[methodName]
     })
   }
 }
