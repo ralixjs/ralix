@@ -1,10 +1,10 @@
-import DOMPurify from 'dompurify'
 import * as Utils from './internal_utils'
+import DOMPurify from 'dompurify'
 
 export default class Helpers {
   inject() {
     Utils.getProperties(this, { onlyFunctions: true }).forEach(method => {
-      if (method != 'inject')
+      if (method !== 'inject')
         window[method] = this[method].bind(this)
     })
   }
