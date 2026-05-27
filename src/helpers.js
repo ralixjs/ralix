@@ -504,7 +504,7 @@ export default class Helpers {
         typeof target[key] === 'object' &&
         !Array.isArray(target[key])
       ) {
-        result[key] = deepMerge(target[key], source[key])
+        result[key] = this.deepMerge(target[key], source[key])
       } else {
         result[key] = source[key]
       }
