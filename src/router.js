@@ -20,13 +20,13 @@ export default class Router {
   }
 
   _exposeCtrl() {
-    getProperties(this.ctrl, { functions: true }).forEach(method => {
+    getProperties(this.ctrl, { onlyFunctions: true }).forEach(method => {
       window[method] = this.ctrl[method].bind(this.ctrl)
     })
   }
 
   _supressCtrl() {
-    getProperties(this.ctrl, { functions: true }).forEach(method => {
+    getProperties(this.ctrl, { onlyFunctions: true }).forEach(method => {
       delete window[method]
     })
   }

@@ -2,7 +2,7 @@ import DOMPurify from 'dompurify'
 
 export default class Helpers {
   inject() {
-    this.getProperties(this, { functions: true }).forEach(method => {
+    this.getProperties(this, { onlyFunctions: true }).forEach(method => {
       if (method != 'inject')
         window[method] = this[method].bind(this)
     })
@@ -533,7 +533,7 @@ export default class Helpers {
     return result
   }
 
-  getProperties(obj, { functions = false } = {}) {
+  getProperties(obj, { onlyFunctions = false } = {}) {
     const original = obj
     let properties = new Set()
 
@@ -542,7 +542,7 @@ export default class Helpers {
       keys.forEach(k => properties.add(k))
     }
 
-    if (functions) {
+    if (onlyFunctions) {
       return new Set([...properties].filter(k => typeof original[k] === 'function'))
     }
 

@@ -428,7 +428,7 @@ omit(user, ['id', 'role'])
 
 ### `getProperties(obj, options = {})`
 
-Returns a `Set` of property names from the object's prototype chain. If `options.functions` is `true`, only properties that are functions are returned. Example:
+Returns a `Set` of property names from the object's prototype chain. If `options.onlyFunctions` is `true`, only properties that are functions are returned. Example:
 
 ```js
 class MyController {
@@ -440,6 +440,6 @@ class MyController {
 getProperties(new MyController())
 // Set { 'index', 'show', 'name', 'constructor', ... }
 
-getProperties(new MyController(), { functions: true })
+getProperties(new MyController(), { onlyFunctions: true })
 // Set { 'index', 'show', 'constructor' }
 ```

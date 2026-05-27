@@ -1073,14 +1073,14 @@ describe('Object', () => {
     expect(props.has('constructor')).toBe(true)
   })
 
-  test('getProperties with functions flag returns only functions', () => {
+  test('getProperties with onlyFunctions flag returns only functions', () => {
     class MyClass {
       myMethod() {}
       get myGetter() { return 1 }
     }
     const obj = new MyClass()
 
-    const props = getProperties(obj, { functions: true })
+    const props = getProperties(obj, { onlyFunctions: true })
 
     expect(props.has('myMethod')).toBe(true)
     expect(props.has('constructor')).toBe(true)
@@ -1094,11 +1094,11 @@ describe('Object', () => {
     expect(props).toBeInstanceOf(Set)
   })
 
-  test('getProperties with functions flag returns a Set', () => {
+  test('getProperties with onlyFunctions flag returns a Set', () => {
     class MyClass {
       myMethod() {}
     }
-    const props = getProperties(new MyClass(), { functions: true })
+    const props = getProperties(new MyClass(), { onlyFunctions: true })
 
     expect(props).toBeInstanceOf(Set)
   })
