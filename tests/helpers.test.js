@@ -1057,4 +1057,49 @@ describe('Object', () => {
 
     expect(omit(obj, ['x', 'y'])).toEqual({ a: 1, b: 2 })
   })
+
+  test('getProperties returns all properties from prototype chain', () => {
+    class MyClass {
+      myMethod() {}
+      get myGetter() { return 1 }
+    }
+    const obj = new MyClass()
+    obj.instanceProp = 'test'
+
+    const props = getProperties(obj)
+
+    expect(props.has('myMethod')).toBe(true)
+    expect(props.has('myGetter')).toBe(true)
+    expect(props.has('constructor')).toBe(true)
+  })
+
+  test('getProperties with functions flag returns only functions', () => {
+    class MyClass {
+      myMethod() {}
+      get myGetter() { return 1 }
+    }
+    const obj = new MyClass()
+
+    const props = getProperties(obj, { functions: true })
+
+    expect(props.has('myMethod')).toBe(true)
+    expect(props.has('constructor')).toBe(true)
+    expect(props.has('myGetter')).toBe(false)
+  })
+
+  test('getProperties returns a Set', () => {
+    const obj = {}
+    const props = getProperties(obj)
+
+    expect(props).toBeInstanceOf(Set)
+  })
+
+  test('getProperties with functions flag returns a Set', () => {
+    class MyClass {
+      myMethod() {}
+    }
+    const props = getProperties(new MyClass(), { functions: true })
+
+    expect(props).toBeInstanceOf(Set)
+  })
 })

@@ -425,3 +425,21 @@ const user = { id: 1, name: 'Alice', email: 'alice@example.com', role: 'admin' }
 omit(user, ['id', 'role'])
 // { name: 'Alice', email: 'alice@example.com' }
 ```
+
+### `getProperties(obj, options = {})`
+
+Returns a `Set` of property names from the object's prototype chain. If `options.functions` is `true`, only properties that are functions are returned. Example:
+
+```js
+class MyController {
+  index() { /* ... */ }
+  show() { /* ... */ }
+  get name() { return 'ctrl' }
+}
+
+getProperties(new MyController())
+// Set { 'index', 'show', 'name', 'constructor', ... }
+
+getProperties(new MyController(), { functions: true })
+// Set { 'index', 'show', 'constructor' }
+```
