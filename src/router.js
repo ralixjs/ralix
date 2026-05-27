@@ -26,7 +26,7 @@ export default class Router {
   }
 
   _supressCtrl() {
-    getProperties(this.ctrl).forEach(method => {
+    getProperties(this.ctrl, { functions: true }).forEach(method => {
       delete window[method]
     })
   }
