@@ -492,21 +492,21 @@ export default class Helpers {
   }
 
   // Object
-  deepMerge(target, source) {
-    const result = Object.assign({}, target)
+  deepMerge(a, b) {
+    const result = structuredClone(a)
 
-    for (const key of Object.keys(source)) {
+    for (const key of Object.keys(b)) {
       if (
-        source[key] !== null &&
-        typeof source[key] === 'object' &&
-        !Array.isArray(source[key]) &&
-        target[key] !== null &&
-        typeof target[key] === 'object' &&
-        !Array.isArray(target[key])
+        b[key] !== null &&
+        typeof b[key] === 'object' &&
+        !Array.isArray(b[key]) &&
+        a[key] !== null &&
+        typeof a[key] === 'object' &&
+        !Array.isArray(a[key])
       ) {
-        result[key] = this.deepMerge(target[key], source[key])
+        result[key] = this.deepMerge(a[key], b[key])
       } else {
-        result[key] = source[key]
+        result[key] = structuredClone(b[key])
       }
     }
 
@@ -534,16 +534,16 @@ export default class Helpers {
   }
 
   getProperties(obj, { onlyFunctions = false } = {}) {
-    const original = obj
     let properties = new Set()
+    let proto = Reflect.getPrototypeOf(obj)
 
-    while (obj = Reflect.getPrototypeOf(obj)) {
-      let keys = Reflect.ownKeys(obj)
-      keys.forEach(k => properties.add(k))
-    }
-
-    if (onlyFunctions) {
-      return new Set([...properties].filter(k => typeof original[k] === 'function'))
+    while (proto) {
+      Reflect.ownKeys(proto).forEach(k => {
+        if (!onlyFunctions || typeof obj[k] === 'function') {
+          properties.add(k)
+        }
+      })
+      proto = Reflect.getPrototypeOf(proto)
     }
 
     return properties
