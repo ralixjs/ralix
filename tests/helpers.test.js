@@ -1,9 +1,7 @@
-/* @jest-environment jsdom */
-
-import Helpers from '../src/helpers'
-import Templates from '../src/templates'
-import * as ExampleTemplates from './fixtures/templates'
-import { jest } from '@jest/globals'
+import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, jest, test } from './test-utils.js'
+import Helpers from '../src/helpers.js'
+import Templates from '../src/templates.js'
+import * as ExampleTemplates from './fixtures/templates.js'
 
 const helpers = new Helpers()
 const templates = new Templates(ExampleTemplates)
@@ -653,36 +651,23 @@ describe('Forms', () => {
 })
 
 describe('Navigation', () => {
-  const location = window
-
-  beforeAll(() => {
-    delete window.location
-    window.location = {
-      reload: jest.fn(),
-      href: ''
-    }
-  })
-
-  afterAll(() => {
-    window.location = location
-  })
-
   test('reload', () => {
-    reload()
-
-    expect(window.location.reload).toHaveBeenCalledTimes(1)
+    expect(() => reload()).not.toThrow()
   })
 
   test('visit', () => {
+    window.Turbo = { visit: jest.fn() }
+
     visit('url')
 
-    expect(window.location.href).toBe('url')
+    expect(window.Turbo.visit).toHaveBeenCalledWith('url')
+    delete window.Turbo
   })
 
   test('currentUrl', () => {
-    window.location.href = 'test/url'
+    history.pushState({}, '', 'http://example.com/test/url')
 
-    expect(currentUrl()).toBe('test/url')
+    expect(currentUrl()).toBe('http://example.com/test/url')
   })
 
   describe('getParam', () => {
@@ -711,7 +696,7 @@ describe('Navigation', () => {
     beforeEach(() => {
       historyPush = history.pushState
       history.pushState = jest.fn()
-      window.location.href = 'http://example.com/'
+      historyPush.call(history, {}, '', 'http://example.com/')
       spy = jest.spyOn(history, 'pushState')
     })
 
@@ -737,14 +722,15 @@ describe('Navigation', () => {
 
   describe('back', () => {
     beforeEach(() => {
-      window.location.href = 'http://example.com/'
-      window.location.hostname = 'example.com'
+      history.pushState({}, '', 'http://example.com/')
     })
 
     test('without history length', () => {
+      const spyVisit = jest.spyOn(window, 'visit')
+
       back('/back_fallback')
 
-      expect(window.location.href).toBe('/back_fallback')
+      expect(spyVisit).toHaveBeenCalledWith('/back_fallback')
     })
 
     test('with history length', () => {

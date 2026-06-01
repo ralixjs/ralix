@@ -9,7 +9,7 @@
     "release:patch": "npm version patch && git push && git push --tags && npm publish",
     "release:minor": "npm version minor && git push && git push --tags && npm publish",
     "release:major": "npm version major && git push && git push --tags && npm publish",
-    "test": "NODE_OPTIONS=--experimental-vm-modules jest"
+    "test": "node --test --import ./tests/setup.js"
   },
   "keywords": [
     "html",
@@ -21,10 +21,6 @@
     "dompurify": "^3.2.6"
   },
   "devDependencies": {
-    "jest": "^29.4.2",
-    "jest-environment-jsdom": "^29.4.2"
-  },
-  "jest": {
-    "setupFiles": ["./tests/setup.js"]
+    "jsdom": "^29.1.1"
   }
 }
