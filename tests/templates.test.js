@@ -1,7 +1,6 @@
-/* @jest-environment jsdom */
-
-import Templates from '../src/templates'
-import * as ExampleTemplates from './fixtures/templates'
+import { describe, expect, test } from 'vitest'
+import Templates from '../src/templates.js'
+import * as ExampleTemplates from './fixtures/templates.js'
 
 const templates = new Templates(ExampleTemplates)
 

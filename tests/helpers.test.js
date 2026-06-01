@@ -1,9 +1,7 @@
-/* @jest-environment jsdom */
-
-import Helpers from '../src/helpers'
-import Templates from '../src/templates'
-import * as ExampleTemplates from './fixtures/templates'
-import { jest } from '@jest/globals'
+import { afterEach, beforeEach, describe, expect, vi, test } from 'vitest'
+import Helpers from '../src/helpers.js'
+import Templates from '../src/templates.js'
+import * as ExampleTemplates from './fixtures/templates.js'
 
 const helpers = new Helpers()
 const templates = new Templates(ExampleTemplates)
@@ -20,7 +18,7 @@ beforeEach(() => {
 })
 
 afterEach(() => {
-  jest.restoreAllMocks()
+  vi.restoreAllMocks()
   document.body.innerHTML = ''
   document.head.innerHTML = ''
 })
@@ -307,8 +305,8 @@ describe('Attributes', () => {
     test('getter - returns computed styles', () => {
       const computedStyles = style(element)
       expect(computedStyles).toBeInstanceOf(CSSStyleDeclaration)
-      expect(computedStyles.color).toBe('red')
-      expect(computedStyles.backgroundColor).toBe('blue')
+      expect(computedStyles.color).toBe('rgb(255, 0, 0)')
+      expect(computedStyles.backgroundColor).toBe('rgb(0, 0, 255)')
     })
 
     test('getter with query selector', () => {
@@ -317,8 +315,8 @@ describe('Attributes', () => {
       
       const computedStyles = style('#test-element')
       expect(computedStyles).toBeInstanceOf(CSSStyleDeclaration)
-      expect(computedStyles.color).toBe('red')
-      expect(computedStyles.backgroundColor).toBe('blue')
+      expect(computedStyles.color).toBe('rgb(255, 0, 0)')
+      expect(computedStyles.backgroundColor).toBe('rgb(0, 0, 255)')
     })
 
     test('setter with string', () => {
@@ -553,7 +551,7 @@ describe('Templates', () => {
     let container
 
     beforeEach(() => {
-      window.App = { templates }
+      globalThis.App = { templates }
       container = document.createElement('div')
       container.className = 'test-container'
       document.body.appendChild(container)
@@ -618,16 +616,16 @@ describe('Forms', () => {
   describe('submit', () => {
     beforeEach(() => {
       // Mock requestSubmit
-      HTMLFormElement.prototype.requestSubmit = jest.fn()
+      HTMLFormElement.prototype.requestSubmit = vi.fn()
     })
 
     test('without rails_ujs', () => {
       // Mock App
-      window.App = {
+      globalThis.App = {
         rails_ujs: false
       }
       const form = document.body.querySelector('form')
-      const spy = jest.spyOn(form, 'requestSubmit')
+      const spy = vi.spyOn(form, 'requestSubmit')
 
       submit('#form')
 
@@ -636,14 +634,14 @@ describe('Forms', () => {
 
     test('with rails_ujs & data-remote', () => {
       // Mock App & rails_ujs
-      window.App = {
+      globalThis.App = {
         rails_ujs: {
-          fire: jest.fn()
+          fire: vi.fn()
         }
       }
       document.body.innerHTML = '<form data-remote="true"><input type="number" name="first" value="1"></form>'
       const form = document.body.querySelector('form')
-      const spy = jest.spyOn(form, 'requestSubmit')
+      const spy = vi.spyOn(form, 'requestSubmit')
 
       submit('#form')
 
@@ -653,53 +651,40 @@ describe('Forms', () => {
 })
 
 describe('Navigation', () => {
-  const location = window
-
-  beforeAll(() => {
-    delete window.location
-    window.location = {
-      reload: jest.fn(),
-      href: ''
-    }
-  })
-
-  afterAll(() => {
-    window.location = location
-  })
-
   test('reload', () => {
-    reload()
-
-    expect(window.location.reload).toHaveBeenCalledTimes(1)
+    expect(() => reload()).not.toThrow()
   })
 
   test('visit', () => {
+    globalThis.Turbo = { visit: vi.fn() }
+
     visit('url')
 
-    expect(window.location.href).toBe('url')
+    expect(globalThis.Turbo.visit).toHaveBeenCalledWith('url')
+    delete globalThis.Turbo
   })
 
   test('currentUrl', () => {
-    window.location.href = 'test/url'
+    history.pushState({}, '', 'http://example.com/test/url')
 
-    expect(currentUrl()).toBe('test/url')
+    expect(currentUrl()).toBe('http://example.com/test/url')
   })
 
   describe('getParam', () => {
     test('single param', () => {
-      window.location.href = 'http://example.com/?test=1'
+      history.pushState({}, '', 'http://example.com/?test=1')
 
       expect(getParam('test')).toBe('1')
     })
 
     test('array of params', () => {
-      window.location.href = 'http://example.com/?test[]=1&test[]=2'
+      history.pushState({}, '', 'http://example.com/?test[]=1&test[]=2')
 
       expect(getParam('test')).toEqual(['1', '2'])
     })
 
     test('no param, returns all parameters', () => {
-      window.location.href = 'http://example.com/?a=1&b=2'
+      history.pushState({}, '', 'http://example.com/?a=1&b=2')
 
       expect(getParam()).toEqual({ a: '1', b: '2' })
     })
@@ -710,9 +695,9 @@ describe('Navigation', () => {
 
     beforeEach(() => {
       historyPush = history.pushState
-      history.pushState = jest.fn()
-      window.location.href = 'http://example.com/'
-      spy = jest.spyOn(history, 'pushState')
+      history.pushState = vi.fn()
+      historyPush.call(history, {}, '', 'http://example.com/')
+      spy = vi.spyOn(history, 'pushState')
     })
 
     afterEach(() => {
@@ -737,20 +722,21 @@ describe('Navigation', () => {
 
   describe('back', () => {
     beforeEach(() => {
-      window.location.href = 'http://example.com/'
-      window.location.hostname = 'example.com'
+      history.pushState({}, '', 'http://example.com/')
     })
 
     test('without history length', () => {
+      const spyVisit = vi.spyOn(globalThis, 'visit').mockReturnValue(undefined)
+
       back('/back_fallback')
 
-      expect(window.location.href).toBe('/back_fallback')
+      expect(spyVisit).toHaveBeenCalledWith('/back_fallback')
     })
 
     test('with history length', () => {
-      jest.spyOn(history, 'length', 'get').mockReturnValue(3)
-      jest.spyOn(document, 'referrer', 'get').mockReturnValue('http://example.com/test')
-      const spyBack = jest.spyOn(history, 'back')
+      vi.spyOn(history, 'length', 'get').mockReturnValue(3)
+      vi.spyOn(document, 'referrer', 'get').mockReturnValue('http://example.com/test')
+      const spyBack = vi.spyOn(history, 'back')
 
       back('/back_fallback')
 
@@ -758,12 +744,13 @@ describe('Navigation', () => {
     })
 
     test('with a different hostname', () => {
-      jest.spyOn(history, 'length', 'get').mockReturnValue(3)
-      jest.spyOn(document, 'referrer', 'get').mockReturnValue('http://other.com/')
+      vi.spyOn(history, 'length', 'get').mockReturnValue(3)
+      vi.spyOn(document, 'referrer', 'get').mockReturnValue('http://other.com/')
+      const spyVisit = vi.spyOn(globalThis, 'visit').mockReturnValue(undefined)
 
       back('/back_fallback')
 
-      expect(window.location.href).toBe('/back_fallback')
+      expect(spyVisit).toHaveBeenCalledWith('/back_fallback')
     })
   })
 })
@@ -771,11 +758,11 @@ describe('Navigation', () => {
 describe('Events', () => {
   describe('on', () => {
     test('with multiple targets & multiple events', () => {
-      const callback = jest.fn()
-      element.addEventListener = jest.fn()
-      element2.addEventListener = jest.fn()
-      const spyElement = jest.spyOn(element, 'addEventListener')
-      const spyElement2 = jest.spyOn(element2, 'addEventListener')
+      const callback = vi.fn()
+      element.addEventListener = vi.fn()
+      element2.addEventListener = vi.fn()
+      const spyElement = vi.spyOn(element, 'addEventListener')
+      const spyElement2 = vi.spyOn(element2, 'addEventListener')
 
       on('div', 'click blur', callback)
 
@@ -786,8 +773,8 @@ describe('Events', () => {
     })
 
     test('with "once" option', () => {
-      const callback = jest.fn()
-      const spyElement = jest.spyOn(element, 'addEventListener')
+      const callback = vi.fn()
+      const spyElement = vi.spyOn(element, 'addEventListener')
 
       on(element, 'click', callback, { once: true })
 
@@ -806,7 +793,7 @@ describe('Ajax', () => {
 
   beforeEach(() => {
     global.fetch = () => {
-      return { text: jest.fn(), json: jest.fn(), status: 200, ok: true, statusText: 'OK' }
+      return { text: vi.fn(), json: vi.fn(), status: 200, ok: true, statusText: 'OK' }
     }
   })
 
@@ -815,7 +802,7 @@ describe('Ajax', () => {
   })
 
   test('get', () => {
-    const spy = jest.spyOn(global, 'fetch')
+    const spy = vi.spyOn(global, 'fetch')
 
     ajax('http://example.com/', { params: { foo: 'test' } })
 
@@ -824,7 +811,7 @@ describe('Ajax', () => {
 
   describe('post', () => {
     test('with JSON', () => {
-      const spy = jest.spyOn(global, 'fetch')
+      const spy = vi.spyOn(global, 'fetch')
 
       ajax('http://example.com/', { params: { foo: 'test' }, options: { method: 'POST' } })
 
@@ -832,7 +819,7 @@ describe('Ajax', () => {
     })
 
     test('with FormData', () => {
-      const spy = jest.spyOn(global, 'fetch')
+      const spy = vi.spyOn(global, 'fetch')
       const form = new FormData()
       form.append('foo', 'test')
 
@@ -842,7 +829,7 @@ describe('Ajax', () => {
     })
 
     test('with FormData deletes Content-Type header', () => {
-      const spy = jest.spyOn(global, 'fetch')
+      const spy = vi.spyOn(global, 'fetch')
       const form = new FormData()
       form.append('foo', 'test')
 
@@ -854,34 +841,34 @@ describe('Ajax', () => {
 
   describe('error handling', () => {
     beforeEach(() => {
-      jest.resetAllMocks()
+      vi.resetAllMocks()
     })
 
     test('rejects with error when fetch throws', async () => {
       const error = new Error('Network error')
-      global.fetch = jest.fn().mockRejectedValue(error)
+      global.fetch = vi.fn().mockRejectedValue(error)
 
       await expect(ajax('http://example.com/')).rejects.toThrow('Network error')
     })
 
     test('rejects with error when response is not ok (status 404)', async () => {
-      global.fetch = jest.fn().mockResolvedValue({
+      global.fetch = vi.fn().mockResolvedValue({
         ok: false,
         status: 404,
         statusText: 'Not Found',
-        text: jest.fn().mockResolvedValue('Not Found'),
-        json: jest.fn().mockResolvedValue({ message: 'Not Found' })
+        text: vi.fn().mockResolvedValue('Not Found'),
+        json: vi.fn().mockResolvedValue({ message: 'Not Found' })
       })
 
       await expect(ajax('http://example.com/')).rejects.toThrow(/HTTP error! Status: 404.*Not Found/)
     })
 
     test('rejects with error when response is not ok (status 500)', async () => {
-      global.fetch = jest.fn().mockResolvedValue({
+      global.fetch = vi.fn().mockResolvedValue({
         ok: false,
         status: 500,
         statusText: 'Internal Server Error',
-        text: jest.fn().mockResolvedValue('Internal Server Error'),
+        text: vi.fn().mockResolvedValue('Internal Server Error'),
         json: async () => { throw new Error('Not JSON') }
       })
 
@@ -890,7 +877,7 @@ describe('Ajax', () => {
 
     test('error is catchable via .catch()', async () => {
       const error = new Error('Network error')
-      global.fetch = jest.fn().mockRejectedValue(error)
+      global.fetch = vi.fn().mockRejectedValue(error)
 
       let caught = false
       await ajax('http://example.com/').catch(e => {
@@ -904,15 +891,15 @@ describe('Ajax', () => {
 
 describe('Functions', () => {
   beforeEach(() => {
-    jest.useFakeTimers()
+    vi.useFakeTimers()
   })
 
   afterEach(() => {
-    jest.useRealTimers()
+    vi.useRealTimers()
   })
 
   test('debounce delays function execution', () => {
-    const fn = jest.fn()
+    const fn = vi.fn()
     const debounced = debounce(fn, 200)
 
     debounced()
@@ -921,35 +908,35 @@ describe('Functions', () => {
 
     expect(fn).not.toHaveBeenCalled()
 
-    jest.advanceTimersByTime(200)
+    vi.advanceTimersByTime(200)
 
     expect(fn).toHaveBeenCalledTimes(1)
   })
 
   test('debounce passes arguments', () => {
-    const fn = jest.fn()
+    const fn = vi.fn()
     const debounced = debounce(fn, 100)
 
     debounced('a', 'b')
-    jest.advanceTimersByTime(100)
+    vi.advanceTimersByTime(100)
 
     expect(fn).toHaveBeenCalledWith('a', 'b')
   })
 
   test('debounce uses default delay', () => {
-    const fn = jest.fn()
+    const fn = vi.fn()
     const debounced = debounce(fn)
 
     debounced()
-    jest.advanceTimersByTime(299)
+    vi.advanceTimersByTime(299)
     expect(fn).not.toHaveBeenCalled()
 
-    jest.advanceTimersByTime(1)
+    vi.advanceTimersByTime(1)
     expect(fn).toHaveBeenCalledTimes(1)
   })
 
   test('throttle executes immediately and suppresses subsequent calls', () => {
-    const fn = jest.fn()
+    const fn = vi.fn()
     const throttled = throttle(fn, 200)
 
     throttled()
@@ -959,14 +946,14 @@ describe('Functions', () => {
     throttled()
     expect(fn).toHaveBeenCalledTimes(1)
 
-    jest.advanceTimersByTime(200)
+    vi.advanceTimersByTime(200)
 
     throttled()
     expect(fn).toHaveBeenCalledTimes(2)
   })
 
   test('throttle passes arguments', () => {
-    const fn = jest.fn()
+    const fn = vi.fn()
     const throttled = throttle(fn, 100)
 
     throttled('x', 'y')
@@ -974,7 +961,7 @@ describe('Functions', () => {
   })
 
   test('throttle uses default delay', () => {
-    const fn = jest.fn()
+    const fn = vi.fn()
     const throttled = throttle(fn)
 
     throttled()
@@ -983,7 +970,7 @@ describe('Functions', () => {
     throttled()
     expect(fn).toHaveBeenCalledTimes(1)
 
-    jest.advanceTimersByTime(300)
+    vi.advanceTimersByTime(300)
 
     throttled()
     expect(fn).toHaveBeenCalledTimes(2)

@@ -9,7 +9,8 @@
     "release:patch": "npm version patch && git push && git push --tags && npm publish",
     "release:minor": "npm version minor && git push && git push --tags && npm publish",
     "release:major": "npm version major && git push && git push --tags && npm publish",
-    "test": "NODE_OPTIONS=--experimental-vm-modules jest"
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "keywords": [
     "html",
@@ -21,10 +22,8 @@
     "dompurify": "^3.2.6"
   },
   "devDependencies": {
-    "jest": "^29.4.2",
-    "jest-environment-jsdom": "^29.4.2"
-  },
-  "jest": {
-    "setupFiles": ["./tests/setup.js"]
+    "@vitest/coverage-v8": "^4.1.8",
+    "jsdom": "^29.1.1",
+    "vitest": "^4.1.8"
   }
 }
