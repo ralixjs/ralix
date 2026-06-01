@@ -7,9 +7,6 @@ const helpers = new Helpers()
 const templates = new Templates(ExampleTemplates)
 
 helpers.inject()
-helpers.getProperties(helpers, { onlyFunctions: true }).forEach(propName => {
-  if (propName !== 'inject') globalThis[propName] = window[propName]
-})
 
 let element, element2
 

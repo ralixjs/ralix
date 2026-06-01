@@ -9,7 +9,6 @@ export default defineConfig({
         url: 'http://example.com/'
       }
     },
-    setupFiles: ['./tests/setup.js'],
     include: ['tests/*.test.js'],
     coverage: {
       provider: 'v8',
