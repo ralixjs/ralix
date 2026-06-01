@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 ## [1.9.0]
 
 - New set of helpers: `debounce`, `throttle`, `deepMerge`, `pick`, `omit`, `getProperties` (#123)
-- Migrate From Jest to Vitest (#125)
+- Migrate tests from Jest to Vitest (#125)
 
 ## [1.8.4]
 
