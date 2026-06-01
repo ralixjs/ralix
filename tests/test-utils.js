@@ -102,7 +102,11 @@ function expect(received) {
 
   matchers.rejects = {
     toThrow: async (expected) => {
-      await assert.rejects(received, expected)
+      if (typeof expected === 'string') {
+        await assert.rejects(received, (error) => error?.message === expected)
+      } else {
+        await assert.rejects(received, expected)
+      }
     }
   }
 
@@ -124,7 +128,7 @@ const jest = {
     mock.reset()
   },
   useFakeTimers() {
-    mock.timers.enable({ apis: ['setTimeout', 'clearTimeout'] })
+    mock.timers.enable({ apis: ['setTimeout'] })
   },
   useRealTimers() {
     mock.timers.reset()

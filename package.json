@@ -9,7 +9,7 @@
     "release:patch": "npm version patch && git push && git push --tags && npm publish",
     "release:minor": "npm version minor && git push && git push --tags && npm publish",
     "release:major": "npm version major && git push && git push --tags && npm publish",
-    "test": "node --test --import ./tests/setup.js"
+    "test": "node --test --import ./tests/setup.js tests/*.test.js"
   },
   "keywords": [
     "html",

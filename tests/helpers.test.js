@@ -1,4 +1,4 @@
-import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, jest, test } from './test-utils.js'
+import { afterEach, beforeEach, describe, expect, jest, test } from './test-utils.js'
 import Helpers from '../src/helpers.js'
 import Templates from '../src/templates.js'
 import * as ExampleTemplates from './fixtures/templates.js'
@@ -7,6 +7,9 @@ const helpers = new Helpers()
 const templates = new Templates(ExampleTemplates)
 
 helpers.inject()
+helpers.getProperties(helpers, { onlyFunctions: true }).forEach(propName => {
+  if (propName !== 'inject') globalThis[propName] = window[propName]
+})
 
 let element, element2
 
@@ -305,8 +308,8 @@ describe('Attributes', () => {
     test('getter - returns computed styles', () => {
       const computedStyles = style(element)
       expect(computedStyles).toBeInstanceOf(CSSStyleDeclaration)
-      expect(computedStyles.color).toBe('red')
-      expect(computedStyles.backgroundColor).toBe('blue')
+      expect(computedStyles.color).toBe('rgb(255, 0, 0)')
+      expect(computedStyles.backgroundColor).toBe('rgb(0, 0, 255)')
     })
 
     test('getter with query selector', () => {
@@ -315,8 +318,8 @@ describe('Attributes', () => {
       
       const computedStyles = style('#test-element')
       expect(computedStyles).toBeInstanceOf(CSSStyleDeclaration)
-      expect(computedStyles.color).toBe('red')
-      expect(computedStyles.backgroundColor).toBe('blue')
+      expect(computedStyles.color).toBe('rgb(255, 0, 0)')
+      expect(computedStyles.backgroundColor).toBe('rgb(0, 0, 255)')
     })
 
     test('setter with string', () => {
@@ -551,7 +554,7 @@ describe('Templates', () => {
     let container
 
     beforeEach(() => {
-      window.App = { templates }
+      globalThis.App = { templates }
       container = document.createElement('div')
       container.className = 'test-container'
       document.body.appendChild(container)
@@ -621,7 +624,7 @@ describe('Forms', () => {
 
     test('without rails_ujs', () => {
       // Mock App
-      window.App = {
+      globalThis.App = {
         rails_ujs: false
       }
       const form = document.body.querySelector('form')
@@ -634,7 +637,7 @@ describe('Forms', () => {
 
     test('with rails_ujs & data-remote', () => {
       // Mock App & rails_ujs
-      window.App = {
+      globalThis.App = {
         rails_ujs: {
           fire: jest.fn()
         }
@@ -656,12 +659,12 @@ describe('Navigation', () => {
   })
 
   test('visit', () => {
-    window.Turbo = { visit: jest.fn() }
+    globalThis.Turbo = { visit: jest.fn() }
 
     visit('url')
 
-    expect(window.Turbo.visit).toHaveBeenCalledWith('url')
-    delete window.Turbo
+    expect(globalThis.Turbo.visit).toHaveBeenCalledWith('url')
+    delete globalThis.Turbo
   })
 
   test('currentUrl', () => {
@@ -672,19 +675,19 @@ describe('Navigation', () => {
 
   describe('getParam', () => {
     test('single param', () => {
-      window.location.href = 'http://example.com/?test=1'
+      history.pushState({}, '', 'http://example.com/?test=1')
 
       expect(getParam('test')).toBe('1')
     })
 
     test('array of params', () => {
-      window.location.href = 'http://example.com/?test[]=1&test[]=2'
+      history.pushState({}, '', 'http://example.com/?test[]=1&test[]=2')
 
       expect(getParam('test')).toEqual(['1', '2'])
     })
 
     test('no param, returns all parameters', () => {
-      window.location.href = 'http://example.com/?a=1&b=2'
+      history.pushState({}, '', 'http://example.com/?a=1&b=2')
 
       expect(getParam()).toEqual({ a: '1', b: '2' })
     })
@@ -726,7 +729,7 @@ describe('Navigation', () => {
     })
 
     test('without history length', () => {
-      const spyVisit = jest.spyOn(window, 'visit')
+      const spyVisit = jest.spyOn(globalThis, 'visit').mockReturnValue(undefined)
 
       back('/back_fallback')
 
@@ -746,10 +749,11 @@ describe('Navigation', () => {
     test('with a different hostname', () => {
       jest.spyOn(history, 'length', 'get').mockReturnValue(3)
       jest.spyOn(document, 'referrer', 'get').mockReturnValue('http://other.com/')
+      const spyVisit = jest.spyOn(globalThis, 'visit').mockReturnValue(undefined)
 
       back('/back_fallback')
 
-      expect(window.location.href).toBe('/back_fallback')
+      expect(spyVisit).toHaveBeenCalledWith('/back_fallback')
     })
   })
 })
