@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.9.0]
+
+- New set of helpers: `debounce`, `throttle`, `deepMerge`, `pick`, `omit`, `getProperties` (#123)
+- Migrate From Jest to Vitest (#125)
+
 ## [1.8.4]
 
 - Parameterize `sanitize` option in `render` and `insertTemplate` (#113)
@@ -98,6 +103,7 @@ All notable changes to this project will be documented in this file.
 - `serialize` works with objects too
 - Use `findAll` in `show`, `hide` and `on`
 
+[1.9.0]: https://github.com/ralixjs/ralix/compare/v1.8.4...v1.9.0
 [1.8.4]: https://github.com/ralixjs/ralix/compare/v1.8.3...v1.8.4
 [1.8.3]: https://github.com/ralixjs/ralix/compare/v1.8.2...v1.8.3
 [1.8.2]: https://github.com/ralixjs/ralix/compare/v1.8.1...v1.8.2
