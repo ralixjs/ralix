@@ -1,11 +1,10 @@
-import * as Utils from './internal_utils'
 import DOMPurify from 'dompurify'
 
 export default class Helpers {
   inject() {
-    Utils.getMethods(this).forEach(method => {
-      if (typeof this[method] === 'function' && method != 'inject')
-        window[method] = this[method].bind(this)
+    this.getProperties(this, { onlyFunctions: true }).forEach(propName => {
+      if (propName !== 'inject')
+        window[propName] = this[propName].bind(this)
     })
   }
 
@@ -468,5 +467,85 @@ export default class Helpers {
     options.method = 'POST'
 
     return ajax(path, { params: params, options: options })
+  }
+
+  // Functions
+  debounce(fn, ms = 300) {
+    let timer
+
+    return (...args) => {
+      clearTimeout(timer)
+      timer = setTimeout(() => fn(...args), ms)
+    }
+  }
+
+  throttle(fn, ms = 300) {
+    let waiting = false
+
+    return (...args) => {
+      if (waiting) return
+
+      fn(...args)
+      waiting = true
+      setTimeout(() => { waiting = false }, ms)
+    }
+  }
+
+  // Object
+  deepMerge(a, b) {
+    const result = structuredClone(a)
+
+    for (const key of Object.keys(b)) {
+      if (
+        b[key] !== null &&
+        typeof b[key] === 'object' &&
+        !Array.isArray(b[key]) &&
+        a[key] !== null &&
+        typeof a[key] === 'object' &&
+        !Array.isArray(a[key])
+      ) {
+        result[key] = this.deepMerge(a[key], b[key])
+      } else {
+        result[key] = structuredClone(b[key])
+      }
+    }
+
+    return result
+  }
+
+  pick(obj, keys) {
+    const result = {}
+
+    for (const key of keys) {
+      if (key in obj) result[key] = obj[key]
+    }
+
+    return result
+  }
+
+  omit(obj, keys) {
+    const result = Object.assign({}, obj)
+
+    for (const key of keys) {
+      delete result[key]
+    }
+
+    return result
+  }
+
+  getProperties(obj, { onlyFunctions = false } = {}) {
+    let properties = new Set()
+    let proto = Reflect.getPrototypeOf(obj)
+
+    while (proto) {
+      Reflect.ownKeys(proto).forEach(k => {
+        if (!onlyFunctions || typeof obj[k] === 'function') {
+          properties.add(k)
+        }
+      })
+      proto = Reflect.getPrototypeOf(proto)
+    }
+
+    return properties
   }
 }
