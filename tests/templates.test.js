@@ -1,4 +1,4 @@
-import { describe, expect, test } from './test-utils.js'
+import { describe, expect, test } from 'vitest'
 import Templates from '../src/templates.js'
 import * as ExampleTemplates from './fixtures/templates.js'
 

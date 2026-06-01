@@ -9,7 +9,8 @@
     "release:patch": "npm version patch && git push && git push --tags && npm publish",
     "release:minor": "npm version minor && git push && git push --tags && npm publish",
     "release:major": "npm version major && git push && git push --tags && npm publish",
-    "test": "node --test --import ./tests/setup.js tests/*.test.js"
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "keywords": [
     "html",
@@ -21,6 +22,8 @@
     "dompurify": "^3.2.6"
   },
   "devDependencies": {
-    "jsdom": "^29.1.1"
+    "@vitest/coverage-v8": "^4.1.8",
+    "jsdom": "^29.1.1",
+    "vitest": "^4.1.8"
   }
 }
