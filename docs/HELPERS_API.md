@@ -401,9 +401,11 @@ on(window, 'scroll', handleScroll)
 
 ## Object
 
-### `deepMerge(target, source)`
+### `deepMerge(base, overrides)`
 
-Deep merges two objects, returning a new object. Nested objects are merged recursively. Arrays and non-object values in `source` override those in `target`. The original objects are not mutated. Example:
+Returns a new object by recursively merging `overrides` into `base`. When both values are plain objects, they are merged recursively. Otherwise, the value from `overrides` replaces the value from `base`, including arrays. The original objects are not modified.
+
+Example:
 
 ```js
 const defaults = { ui: { theme: 'light', sidebar: true }, debug: false }
