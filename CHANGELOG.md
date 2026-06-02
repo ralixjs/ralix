@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## [Unreleased]
+
+- Restore backwards compatibility in `insertTemplate`: accept a *position* string as the 4th argument again (legacy `insertTemplate(query, template, data, position)` signature), normalized to `{ position }`. The `options` object (`{ position, sanitize }`) introduced in 1.8.4 (#113) silently broke callers using the old string form.
+
 ## [1.9.0]
 
 - New set of helpers: `debounce`, `throttle`, `deepMerge`, `pick`, `omit`, `getProperties` (#123)

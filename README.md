@@ -217,7 +217,7 @@ insertTemplate(
   '.cards-container',
   'itemCard',
   { title: item.title, description: item.description },
-  'end'
+  { position: 'end' }
 )
 ```
 

@@ -194,23 +194,32 @@ render('itemCard', { title: item.title }, { sanitize: false })
 
 **NOTE** The templates should be defined as JavaScript Functions and injected into the `App` object.
 
-### `insertTemplate(query, template, data, position)`
+### `insertTemplate(query, template, data, options = {})`
 
-Renders the template and inserts the generated HTML in the given _query_. Example:
+Renders the template and inserts the generated HTML in the given _query_. The `options` object accepts:
+
+- `position`: where the rendered HTML is inserted, forwarded to `insertHTML`. Accepts *inner*, *prepend*, *append*, *begin*, *end*. No default (falls back to `insertHTML`'s own default, *inner*).
+- `sanitize`: whether the `data` is sanitized before rendering. Default is `true`.
 
 ```js
 insertTemplate(
   '.cards-container',
   'itemCard',
   { title: item.title, description: item.description },
-  'end'
+  { position: 'end' }
 )
 ```
 
-The `options` are forwarded to `render` to sanitize the `data`. The rendered template is inserted via `insertHTML` with `sanitize: false`, so any HTML inside the template (e.g. `onclick`, `<script>`) is preserved. Default is `sanitize: true` (sanitizes data only):
+The `sanitize` option is forwarded to `render` to sanitize the `data`. The rendered template is inserted via `insertHTML` with `sanitize: false`, so any HTML inside the template (e.g. `onclick`, `<script>`) is preserved. Default is `sanitize: true` (sanitizes data only):
 
 ```js
 insertTemplate('.cards', 'itemCard', { title: item.title }, { sanitize: false })
+```
+
+For backwards compatibility, `options` also accepts a *position* string directly (the legacy signature `insertTemplate(query, template, data, position)`), which is normalized to `{ position }`:
+
+```js
+insertTemplate('.cards-container', 'itemCard', { title: item.title }, 'end')
 ```
 
 ## Forms
