@@ -273,6 +273,9 @@ export default class Helpers {
 
   insertTemplate(query, template, data, options = {}) {
     const defaults = { sanitize: true }
+
+    if (typeof options === 'string')
+      options = { position: options }
     options = Object.assign({}, defaults, options)
 
     const html = render(template, data, options)
