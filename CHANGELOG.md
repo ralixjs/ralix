@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [Unreleased]
+## [1.9.1]
 
 - Restore backwards compatibility in `insertTemplate`: accept a *position* string as the 4th argument again (legacy `insertTemplate(query, template, data, position)` signature), normalized to `{ position }`. The `options` object (`{ position, sanitize }`) introduced in 1.8.4 (#113) silently broke callers using the old string form.
 
@@ -107,6 +107,7 @@ All notable changes to this project will be documented in this file.
 - `serialize` works with objects too
 - Use `findAll` in `show`, `hide` and `on`
 
+[1.9.1]: https://github.com/ralixjs/ralix/compare/v1.9.0...v1.9.1
 [1.9.0]: https://github.com/ralixjs/ralix/compare/v1.8.4...v1.9.0
 [1.8.4]: https://github.com/ralixjs/ralix/compare/v1.8.3...v1.8.4
 [1.8.3]: https://github.com/ralixjs/ralix/compare/v1.8.2...v1.8.3
