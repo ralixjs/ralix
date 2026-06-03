@@ -236,6 +236,7 @@ insertTemplate(
 
 ### Others
 
+- Agent-ready skills: https://github.com/ralixjs/skills
 - Visual Studio Code plugin: https://github.com/franpb14/RalixBoost
 
 ## Development
