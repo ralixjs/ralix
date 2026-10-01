@@ -19,7 +19,8 @@ export default class Events {
           const originalEvent = element[eventType]
           element[eventType] = null
 
-          on(element, listener, originalEvent)
+          // Inline handlers expect `this` to be the element, as the browser does natively
+          on(element, listener, (e) => originalEvent.call(element, e))
         }
       })
     })
